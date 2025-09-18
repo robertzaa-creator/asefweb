@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios a Socios - ASEF</title>
+    <meta name="description" content="Conoce todos los beneficios, asistencias y convenios exclusivos que ASEF ofrece a sus empresas asociadas del sector funerario.">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <i class="fas fa-dove nav-logo-icon"></i>
+                    <a href="../index.html" style="text-decoration: none; color: inherit;">
+                        <span class="nav-logo-text">ASEF</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="servicios.html" class="nav-link active">Servicios</a></li>
+                    <li class="nav-item"><a href="desarrollo.html" class="nav-link">Desarrollo</a></li>
+                    <li class="nav-item"><a href="funerarias.html" class="nav-link">Funerarias</a></li>
+                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item">
+                        <button id="loginBtn" class="btn-login">
+                            <i class="fas fa-user"></i> Acceder
+                        </button>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" style="padding-top: 80px;">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Servicios a Socios</h1>
+                <p>Beneficios exclusivos y asistencia integral para empresas asociadas</p>
+            </div>
+        </section>
+
+        <!-- Services Grid -->
+        <section class="services-detail">
+            <div class="container">
+                <div class="services-grid">
+                    
+                    <!-- Asistencia Técnica -->
+                    <div class="service-detail-card">
+                        <div class="service-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Asistencia Técnica</h3>
+                        <ul>
+                            <li>Asesoramiento en normativas del sector</li>
+                            <li>Consultas sobre habilitaciones</li>
+                            <li>Apoyo en inspecciones oficiales</li>
+                            <li>Orientación en certificaciones</li>
+                        </ul>
+                        <div class="contact-info">
+                            <p><i class="fas fa-phone"></i> (011) 4567-8900</p>
+                            <p><i class="fas fa-envelope"></i> asistencia@asef.com.ar</p>
+                        </div>
+                    </div>
+
+                    <!-- Convenios Comerciales -->
+                    <div class="service-detail-card">
+                        <div class="service-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Convenios Comerciales</h3>
+                        <ul>
+                            <li>Descuentos en proveedores del sector</li>
+                            <li>Tarifas preferenciales en seguros</li>
+                            <li>Beneficios en servicios profesionales</li>
+                            <li>Condiciones especiales de financiación</li>
+                        </ul>
+                        <a href="#convenios" class="service-cta">Ver Convenios Activos</a>
+                    </div>
+
+                    <!-- Capacitación -->
+                    <div class="service-detail-card">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Programas de Capacitación</h3>
+                        <ul>
+                            <li>Cursos de formación continua</li>
+                            <li>Talleres especializados</li>
+                            <li>Seminarios web</li>
+                            <li>Certificaciones oficiales</li>
+                        </ul>
+                        <a href="desarrollo.html" class="service-cta">Ver Cronograma</a>
+                    </div>
+
+                    <!-- Representación -->
+                    <div class="service-detail-card">
+                        <div class="service-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Representación Sectorial</h3>
+                        <ul>
+                            <li>Gestión ante organismos oficiales</li>
+                            <li>Participación en mesas de trabajo</li>
+                            <li>Defensa de intereses comunes</li>
+                            <li>Negociaciones colectivas</li>
+                        </ul>
+                    </div>
+
+                    <!-- Comunicación -->
+                    <div class="service-detail-card">
+                        <div class="service-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3>Comunicación y Difusión</h3>
+                        <ul>
+                            <li>Newsletter mensual</li>
+                            <li>Alertas normativas</li>
+                            <li>Boletín informativo</li>
+                            <li>Portal web exclusivo</li>
+                        </ul>
+                        <a href="newsletter.html" class="service-cta">Suscribirse</a>
+                    </div>
+
+                    <!-- Networking -->
+                    <div class="service-detail-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Networking y Eventos</h3>
+                        <ul>
+                            <li>Reuniones mensuales</li>
+                            <li>Eventos de confraternidad</li>
+                            <li>Jornadas técnicas</li>
+                            <li>Asamblea general anual</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Convenios Section -->
+        <section id="convenios" class="convenios-section">
+            <div class="container">
+                <h2>Convenios Vigentes</h2>
+                <div class="convenios-grid">
+                    
+                    <div class="convenio-card">
+                        <img src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Seguros">
+                        <div class="convenio-content">
+                            <h4>Seguros del Sector</h4>
+                            <p>20% de descuento en seguros de responsabilidad civil y cobertura integral.</p>
+                            <div class="convenio-benefits">
+                                <span class="benefit">20% OFF</span>
+                                <span class="benefit">Cobertura Total</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="convenio-card">
+                        <img src="https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Servicios Legales">
+                        <div class="convenio-content">
+                            <h4>Servicios Legales</h4>
+                            <p>Asesoramiento jurídico especializado con tarifas preferenciales.</p>
+                            <div class="convenio-benefits">
+                                <span class="benefit">Consultas Gratuitas</span>
+                                <span class="benefit">Tarifas Especiales</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="convenio-card">
+                        <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Tecnología">
+                        <div class="convenio-content">
+                            <h4>Soluciones Tecnológicas</h4>
+                            <p>Software de gestión funeraria con descuentos exclusivos.</p>
+                            <div class="convenio-benefits">
+                                <span class="benefit">Software Gratuito</span>
+                                <span class="benefit">Soporte Técnico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Membership CTA -->
+        <section class="membership-cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>¿Aún no es socio de ASEF?</h2>
+                    <p>Acceda a todos estos beneficios y forme parte de la comunidad funeraria más importante de Buenos Aires.</p>
+                    <div class="membership-benefits">
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Acceso a todos los convenios</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Capacitación continua</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Representación sectorial</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check"></i>
+                            <span>Networking profesional</span>
+                        </div>
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="contacto.html" class="btn-primary">Solicitar Información</a>
+                        <a href="../index.html#contacto" class="btn-secondary">Asociarse</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Acceso para Socios</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn-primary">Ingresar</button>
+                <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
+            </form>
+            <div id="registerForm" style="display: none;">
+                <h2>Registro de Nuevo Socio</h2>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="regEmail">Email:</label>
+                        <input type="email" id="regEmail" name="regEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Contraseña:</label>
+                        <input type="password" id="regPassword" name="regPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyName">Nombre de la Empresa:</label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Registrarse</button>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- JavaScript Files -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/navigation.js"></script>
+    <script src="../js/main.js"></script>
+
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 80px 0 60px;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .services-detail {
+            padding: 0 0 60px;
+        }
+
+        .service-detail-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .service-detail-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .service-detail-card .service-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+        }
+
+        .service-detail-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .service-detail-card ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .service-detail-card ul li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-detail-card ul li::before {
+            content: "✓";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .contact-info {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .service-cta {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .service-cta:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .convenios-section {
+            background: var(--bg-light);
+            padding: 60px 0;
+        }
+
+        .convenios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .convenio-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .convenio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .convenio-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .convenio-content {
+            padding: 25px;
+        }
+
+        .convenio-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .convenio-benefits {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .benefit {
+            background: var(--accent-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .membership-cta {
+            background: var(--primary-color);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .membership-cta h2 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .membership-cta p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .membership-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .benefit-item i {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .convenios-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .membership-benefits {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
