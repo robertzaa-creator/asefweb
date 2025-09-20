@@ -7,8 +7,15 @@ class AuthManager {
         this.init();
     }
 
-    init() {
-        // Disable self-registration (keep visuals intact)
+    async init() {
+        // 🔒 Persistencia: NONE → no guarda sesión
+        try {
+            await firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.NONE);
+        } catch (e) {
+            console.warn('No se pudo setear persistence NONE:', e);
+        }
+
+        // Disable self-registration (mantener visuales)
         const regLink = document.getElementById('registerLink');
         if (regLink) {
             regLink.addEventListener('click', (e) => {
@@ -24,9 +31,10 @@ class AuthManager {
             });
         }
 
-        // Check authentication state
+        // Estado de autenticación
         firebaseAuth.onAuthStateChanged(async (user) => {
             this.currentUser = user;
+
             if (user) {
                 // asegurar doc mínimo en Firestore
                 const ref = firebaseDb.collection('users').doc(user.uid);
@@ -45,7 +53,8 @@ class AuthManager {
                 }
 
                 const profile = (await ref.get()).data();
-                // bloquear si está en status blocked
+
+                // bloqueado
                 if (String(profile?.status || '').toLowerCase() === 'blocked') {
                     alert('Acceso restringido: su cuenta está bloqueada.');
                     await firebaseAuth.signOut();
@@ -58,16 +67,10 @@ class AuthManager {
                     try { await window.members.audit('login', user); } catch(e){}
                 }
 
-                // si está en home o index, llevar al dashboard
-                const path = location.pathname;
-                const isHome = path.endsWith('/index.html') || path === '/' || path === '';
-                if (isHome) {
-                    window.location.href = '/pages/socios/dashboard.html';
-                }
             } else {
                 // no logueado → si está en socios, redirigir
-                const sociosPages = ['/pages/socios/'];
-                if (sociosPages.some(p => location.pathname.includes(p))) {
+                const sociosPrefix = '/pages/socios/';
+                if (location.pathname.startsWith(sociosPrefix)) {
                     window.location.href = '/index.html';
                 }
             }
@@ -75,92 +78,131 @@ class AuthManager {
             this.updateUI();
         });
 
-        // Event listeners
         this.setupEventListeners();
-    }
-
-    setupEventListeners() {
-        // Login button
-        this.loginBtn.addEventListener('click', () => {
-            if (this.currentUser) {
-                this.signOut();
-            } else {
-                this.showLoginModal();
-            }
-        });
-
-        // Modal close
-        const closeBtn = this.loginModal.querySelector('.close');
-        closeBtn.addEventListener('click', () => {
-            this.hideLoginModal();
-        });
-
-        // Click outside modal
-        window.addEventListener('click', (event) => {
-            if (event.target === this.loginModal) {
-                this.hideLoginModal();
-            }
-        });
-
-        // Form submissions
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.signIn();
-        });
-
-        document.getElementById('signupForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.signUp();
-        });
-
-        // Toggle forms
-        document.getElementById('registerLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            this.showRegisterForm();
-        });
-
-        document.getElementById('loginLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            this.showLoginForm();
-        });
-
-        // Protect member resources
         this.protectMemberContent();
     }
 
+    setupEventListeners() {
+        // Botón login
+        if (this.loginBtn) {
+            this.loginBtn.addEventListener('click', () => {
+                if (this.currentUser) {
+                    this.signOut();
+                } else {
+                    this.showLoginModal();
+                }
+            });
+        }
+
+        // Modal close
+        if (this.loginModal) {
+            const closeBtn = this.loginModal.querySelector('.close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    this.hideLoginModal();
+                });
+            }
+
+            window.addEventListener('click', (event) => {
+                if (event.target === this.loginModal) {
+                    this.hideLoginModal();
+                }
+            });
+        }
+
+        // Forms
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.signIn();
+            });
+        }
+
+        const signupForm = document.getElementById('signupForm');
+        if (signupForm) {
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.signUp();
+            });
+        }
+
+        // Toggle
+        const registerLink = document.getElementById('registerLink');
+        if (registerLink) {
+            registerLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showRegisterForm();
+            });
+        }
+        const loginLink = document.getElementById('loginLink');
+        if (loginLink) {
+            loginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showLoginForm();
+            });
+        }
+
+        // (Opcional) Link socios
+        const sociosLink = document.getElementById('socios-link');
+        if (sociosLink) {
+            sociosLink.addEventListener('click', (e) => {
+                if (!this.currentUser) {
+                    e.preventDefault();
+                    this.showLoginModal();
+                    this.showNotification('Debe iniciar sesión para ingresar al Área de Socios', 'info');
+                }
+            });
+        }
+    }
+
     showLoginModal() {
+        if (!this.loginModal) return;
         this.loginModal.style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
 
     hideLoginModal() {
+        if (!this.loginModal) return;
         this.loginModal.style.display = 'none';
         document.body.style.overflow = 'auto';
         this.showLoginForm();
     }
 
     showRegisterForm() {
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('registerForm').style.display = 'block';
+        const lf = document.getElementById('loginForm');
+        const rf = document.getElementById('registerForm');
+        if (lf && rf) {
+            lf.style.display = 'none';
+            rf.style.display = 'block';
+        }
     }
 
     showLoginForm() {
-        document.getElementById('loginForm').style.display = 'block';
-        document.getElementById('registerForm').style.display = 'none';
+        const lf = document.getElementById('loginForm');
+        const rf = document.getElementById('registerForm');
+        if (lf && rf) {
+            lf.style.display = 'block';
+            rf.style.display = 'none';
+        }
     }
 
     async signIn() {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const emailEl = document.getElementById('email');
+        const passEl  = document.getElementById('password');
         const submitBtn = document.querySelector('#loginForm button[type="submit"]');
 
+        const email = emailEl ? emailEl.value : '';
+        const password = passEl ? passEl.value : '';
+
         try {
-            submitBtn.innerHTML = '<span class="loading"></span> Ingresando...';
-            submitBtn.disabled = true;
+            if (submitBtn) {
+                submitBtn.innerHTML = '<span class="loading"></span> Ingresando...';
+                submitBtn.disabled = true;
+            }
 
-            const cred = await firebaseAuth.signInWithEmailAndPassword(email, password);
+            await firebaseAuth.signInWithEmailAndPassword(email, password);
 
-            // Enforce members-only access
             if (!(await this.ensureMemberOrSignOut(firebaseAuth.currentUser))) {
                 return;
             }
@@ -168,19 +210,19 @@ class AuthManager {
             this.hideLoginModal();
             this.showNotification('¡Bienvenido!', 'success');
 
-            // Redirigir al dashboard de socios
             window.location.href = '/pages/socios/dashboard.html';
 
-            // Clear form
-            document.getElementById('email').value = '';
-            document.getElementById('password').value = '';
+            if (emailEl) emailEl.value = '';
+            if (passEl)  passEl.value  = '';
 
         } catch (error) {
             console.error('Error signing in:', error);
             this.showNotification(this.getErrorMessage(error.code), 'error');
         } finally {
-            submitBtn.innerHTML = 'Ingresar';
-            submitBtn.disabled = false;
+            if (submitBtn) {
+                submitBtn.innerHTML = 'Ingresar';
+                submitBtn.disabled = false;
+            }
         }
     }
 
@@ -215,7 +257,6 @@ class AuthManager {
     async signOut() {
         try {
             const u = firebaseAuth.currentUser;
-            // auditoría logout
             if (window.members?.audit && u) {
                 try { await window.members.audit('logout', u); } catch(e){}
             }
@@ -229,6 +270,7 @@ class AuthManager {
     }
 
     updateUI() {
+        if (!this.loginBtn) return;
         if (this.currentUser) {
             this.loginBtn.innerHTML = '<i class="fas fa-user-check"></i> Salir';
             this.loginBtn.title = `Conectado como: ${this.currentUser.email}`;
@@ -239,7 +281,6 @@ class AuthManager {
     }
 
     protectMemberContent() {
-        // Protect resources link
         const resourcesLink = document.getElementById('recursos-link');
         if (resourcesLink) {
             resourcesLink.addEventListener('click', (e) => {
@@ -250,8 +291,6 @@ class AuthManager {
                 }
             });
         }
-
-        // Check for member-only content on page load
         this.checkPageAccess();
     }
 
@@ -267,16 +306,12 @@ class AuthManager {
         if (protectedPages.some(page => currentPage.includes(page))) {
             firebaseAuth.onAuthStateChanged(async (user) => {
                 if (!user) {
-                    setTimeout(() => {
-                        window.location.href = '/index.html';
-                    }, 1000);
+                    setTimeout(() => { window.location.href = '/index.html'; }, 500);
                     this.showNotification('Debe iniciar sesión para acceder a esta página', 'warning');
                 } else {
                     const ok = await this.ensureMemberOrSignOut(user);
                     if (!ok) {
-                        setTimeout(() => {
-                            window.location.href = '/index.html';
-                        }, 1000);
+                        setTimeout(() => { window.location.href = '/index.html'; }, 500);
                     }
                 }
             });
@@ -346,20 +381,13 @@ class AuthManager {
         setTimeout(() => {
             notification.style.animation = 'slideInRight 0.3s ease reverse';
             setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
+                if (notification.parentNode) notification.parentNode.removeChild(notification);
             }, 300);
         }, 4000);
     }
 
-    isAuthenticated() {
-        return !!this.currentUser;
-    }
-
-    getCurrentUser() {
-        return this.currentUser;
-    }
+    isAuthenticated() { return !!this.currentUser; }
+    getCurrentUser() { return this.currentUser; }
 
     async getUserProfile() {
         if (!this.currentUser) return null;
@@ -373,7 +401,7 @@ class AuthManager {
     }
 }
 
-// Initialize authentication when DOM is loaded
+// Inicializar auth al cargar
 document.addEventListener('DOMContentLoaded', () => {
     window.authManager = new AuthManager();
 });
