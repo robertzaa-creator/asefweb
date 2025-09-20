@@ -13,7 +13,7 @@
   <!-- Sidebar -->
   <aside class="members-sidebar">
     <div class="members-brand">
-      <img src="../../dist/vite.svg" alt="ASEF"/>
+      <!-- <img src="../../dist/vite.svg" alt="ASEF"/> -->
       <div>Área de Socios</div>
     </div>
     <nav class="members-nav">
@@ -70,6 +70,81 @@
 <script src="../../js/auth.js"></script>
 <script src="../../js/members.js"></script>
 <!-- opcional, pero puedes dejarlo -->
+<script>window.members?.boot && window.members.boot('dashboard')</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Socios · Dashboard</title>
+  <link rel="stylesheet" href="../../css/main.css"/>
+  <link rel="stylesheet" href="../../css/members.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+<div class="members-shell" id="app">
+  <!-- Sidebar -->
+  <aside class="members-sidebar">
+    <div class="members-brand">
+      <!-- <img src="../../dist/vite.svg" alt="ASEF"/> -->
+      <div>Área de Socios</div>
+    </div>
+    <nav class="members-nav">
+      <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+      <a href="./profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+      <a id="logoutBtn" href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+    </nav>
+    <div class="members-foot sidebar-muted">
+      <div>Conectado: <span id="userEmail">—</span></div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="members-main">
+    <div class="members-topbar">
+      <div class="members-title">Dashboard</div>
+      <input class="input" id="dashSearch" placeholder="Buscar documentos o secciones..." />
+    </div>
+
+    <div class="members-content">
+      <!-- Quick Stats -->
+      <div class="grid stats" id="quickStats">
+        <div class="card"><h3>Secciones</h3><div class="kpi" id="statSections">—</div></div>
+        <div class="card"><h3>Documentos</h3><div class="kpi" id="statDocs">—</div></div>
+        <div class="card"><h3>Último ingreso</h3><div class="kpi" id="statLastLogin">—</div></div>
+        <div class="card"><h3>Descargas (mes)</h3><div class="kpi" id="statDownloads">0 <small>beta</small></div></div>
+        <div class="card"><h3>Estado de cuenta</h3><div class="kpi"><span id="statStatus">—</span></div></div>
+      </div>
+
+      <!-- Avisos / Novedades -->
+      <div class="grid" style="grid-template-columns: 2fr 1.2fr; margin-top:18px;">
+        <div class="card">
+          <h3>Últimos documentos agregados</h3>
+          <div class="list" id="latestDocs"></div>
+        </div>
+        <div class="card">
+          <h3>Secciones destacadas</h3>
+          <div class="list" id="featuredSections"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+
+<!-- Core -->
+<script src="../../js/firebase-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/members.js"></script>
 <script>window.members?.boot && window.members.boot('dashboard')</script>
 
 </body>
