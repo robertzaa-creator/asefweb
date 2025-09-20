@@ -8,7 +8,6 @@ class AuthManager {
     }
 
     init() {
-        
         // Disable self-registration (keep visuals intact)
         const regLink = document.getElementById('registerLink');
         if (regLink) {
@@ -24,9 +23,55 @@ class AuthManager {
                 this.showNotification('El registro está deshabilitado. Solicite alta al administrador.', 'warning');
             });
         }
-    // Check authentication state
+
+        // Check authentication state
         firebaseAuth.onAuthStateChanged(async (user) => {
             this.currentUser = user;
+            if (user) {
+                // asegurar doc mínimo en Firestore
+                const ref = firebaseDb.collection('users').doc(user.uid);
+                const snap = await ref.get();
+                if (!snap.exists) {
+                    await ref.set({
+                        uid: user.uid,
+                        email: user.email || '',
+                        name: user.displayName || '',
+                        photoURL: user.photoURL || '',
+                        role: 'member',
+                        status: 'active',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true });
+                }
+
+                const profile = (await ref.get()).data();
+                // bloquear si está en status blocked
+                if (String(profile?.status || '').toLowerCase() === 'blocked') {
+                    alert('Acceso restringido: su cuenta está bloqueada.');
+                    await firebaseAuth.signOut();
+                    window.location.href = '/index.html';
+                    return;
+                }
+
+                // auditoría login
+                if (window.members?.audit) {
+                    try { await window.members.audit('login', user); } catch(e){}
+                }
+
+                // si está en home o index, llevar al dashboard
+                const path = location.pathname;
+                const isHome = path.endsWith('/index.html') || path === '/' || path === '';
+                if (isHome) {
+                    window.location.href = '/pages/socios/dashboard.html';
+                }
+            } else {
+                // no logueado → si está en socios, redirigir
+                const sociosPages = ['/pages/socios/'];
+                if (sociosPages.some(p => location.pathname.includes(p))) {
+                    window.location.href = '/index.html';
+                }
+            }
+
             this.updateUI();
         });
 
@@ -113,20 +158,23 @@ class AuthManager {
             submitBtn.innerHTML = '<span class="loading"></span> Ingresando...';
             submitBtn.disabled = true;
 
-            await firebaseAuth.signInWithEmailAndPassword(email, password);
+            const cred = await firebaseAuth.signInWithEmailAndPassword(email, password);
+
             // Enforce members-only access
             if (!(await this.ensureMemberOrSignOut(firebaseAuth.currentUser))) {
-                // Block access if not member
                 return;
             }
-            
+
             this.hideLoginModal();
             this.showNotification('¡Bienvenido!', 'success');
-            
+
+            // Redirigir al dashboard de socios
+            window.location.href = '/pages/socios/dashboard.html';
+
             // Clear form
             document.getElementById('email').value = '';
             document.getElementById('password').value = '';
-            
+
         } catch (error) {
             console.error('Error signing in:', error);
             this.showNotification(this.getErrorMessage(error.code), 'error');
@@ -136,21 +184,23 @@ class AuthManager {
         }
     }
 
-        async signUp() {
+    async signUp() {
         this.showNotification('El registro está deshabilitado. Solicite alta al administrador.', 'warning');
     }
-
 
     async ensureMemberOrSignOut(user) {
         try {
             if (!user) return false;
             const docRef = firebaseDb.collection('users').doc(user.uid);
             const snap = await docRef.get();
-            const role = (snap.exists && snap.data().role) ? String(snap.data().role).toLowerCase() : '';
-            const isMember = snap.exists && (role === 'member' || snap.data().isMember === true);
-            if (!isMember) {
+            const data = snap.exists ? snap.data() : {};
+            const role = data?.role ? String(data.role).toLowerCase() : '';
+            const status = data?.status ? String(data.status).toLowerCase() : 'active';
+
+            const isMember = snap.exists && (role === 'member' || data.isMember === true);
+            if (!isMember || status === 'blocked') {
                 await firebaseAuth.signOut();
-                this.showNotification('Su cuenta no tiene membresía activa. Contacte al administrador.', 'error');
+                this.showNotification('Su cuenta no tiene membresía activa o está bloqueada.', 'error');
                 return false;
             }
             return true;
@@ -162,10 +212,16 @@ class AuthManager {
         }
     }
 
-async signOut() {
+    async signOut() {
         try {
+            const u = firebaseAuth.currentUser;
+            // auditoría logout
+            if (window.members?.audit && u) {
+                try { await window.members.audit('logout', u); } catch(e){}
+            }
             await firebaseAuth.signOut();
             this.showNotification('Sesión cerrada correctamente', 'success');
+            window.location.href = '/index.html';
         } catch (error) {
             console.error('Error signing out:', error);
             this.showNotification('Error al cerrar sesión', 'error');
@@ -183,7 +239,7 @@ async signOut() {
     }
 
     protectMemberContent() {
-        // Protect resources page
+        // Protect resources link
         const resourcesLink = document.getElementById('recursos-link');
         if (resourcesLink) {
             resourcesLink.addEventListener('click', (e) => {
@@ -201,22 +257,26 @@ async signOut() {
 
     checkPageAccess() {
         const currentPage = window.location.pathname;
-        const protectedPages = ['/pages/recursos.html'];
-        
+        const protectedPages = [
+            '/pages/recursos.html',
+            '/pages/socios/dashboard.html',
+            '/pages/socios/sections.html',
+            '/pages/socios/profile.html'
+        ];
+
         if (protectedPages.some(page => currentPage.includes(page))) {
             firebaseAuth.onAuthStateChanged(async (user) => {
                 if (!user) {
-                    // Redirect to home with message
                     setTimeout(() => {
                         window.location.href = '/index.html';
-                    }, 2000);
+                    }, 1000);
                     this.showNotification('Debe iniciar sesión para acceder a esta página', 'warning');
                 } else {
                     const ok = await this.ensureMemberOrSignOut(user);
                     if (!ok) {
                         setTimeout(() => {
                             window.location.href = '/index.html';
-                        }, 2000);
+                        }, 1000);
                     }
                 }
             });
@@ -236,7 +296,6 @@ async signOut() {
     }
 
     showNotification(message, type = 'info') {
-        // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.innerHTML = `
@@ -246,7 +305,6 @@ async signOut() {
             </div>
         `;
 
-        // Add styles if not already added
         if (!document.querySelector('#notification-styles')) {
             const styles = document.createElement('style');
             styles.id = 'notification-styles';
@@ -264,44 +322,27 @@ async signOut() {
                     font-weight: 500;
                     animation: slideInRight 0.3s ease;
                 }
-                
                 .notification-success { background: #27ae60; }
                 .notification-error { background: #e74c3c; }
                 .notification-warning { background: #f39c12; }
                 .notification-info { background: #3498db; }
-                
                 .notification-content {
                     display: flex;
                     align-items: center;
                     gap: 10px;
                 }
-                
                 @keyframes slideInRight {
-                    from {
-                        opacity: 0;
-                        transform: translateX(100%);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
+                    from { opacity: 0; transform: translateX(100%); }
+                    to   { opacity: 1; transform: translateX(0); }
                 }
-                
                 @media (max-width: 480px) {
-                    .notification {
-                        right: 10px;
-                        left: 10px;
-                        min-width: auto;
-                    }
+                    .notification { right: 10px; left: 10px; min-width: auto; }
                 }
             `;
             document.head.appendChild(styles);
         }
 
-        // Add to DOM
         document.body.appendChild(notification);
-
-        // Remove after 4 seconds
         setTimeout(() => {
             notification.style.animation = 'slideInRight 0.3s ease reverse';
             setTimeout(() => {
@@ -312,20 +353,16 @@ async signOut() {
         }, 4000);
     }
 
-    // Check if user is authenticated
     isAuthenticated() {
         return !!this.currentUser;
     }
 
-    // Get current user data
     getCurrentUser() {
         return this.currentUser;
     }
 
-    // Get user profile data from Firestore
     async getUserProfile() {
         if (!this.currentUser) return null;
-        
         try {
             const doc = await firebaseDb.collection('users').doc(this.currentUser.uid).get();
             return doc.exists ? doc.data() : null;

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Socios · Secciones</title>
+  <link rel="stylesheet" href="../../css/main.css"/>
+  <link rel="stylesheet" href="../../css/members.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+<div class="members-shell">
+  <aside class="members-sidebar">
+    <div class="members-brand">
+      <img src="../../dist/vite.svg" alt="ASEF"/><div>Área de Socios</div>
+    </div>
+    <nav class="members-nav">
+      <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a class="active" href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+      <a href="./profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+      <a id="logoutBtn" href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+    </nav>
+    <div class="members-foot sidebar-muted">Conectado: <span id="userEmail">—</span></div>
+  </aside>
+
+  <main class="members-main">
+    <div class="members-topbar">
+      <div class="members-title">Secciones</div>
+      <input class="input" id="secSearch" placeholder="Buscar…" />
+    </div>
+
+    <div class="members-content">
+      <div class="sections-grid" id="sectionsGrid"></div>
+
+      <div class="card" id="docsPanel" style="margin-top:18px; display:none;">
+        <h3 id="docsTitle">Documentos</h3>
+        <div class="list" id="docsList"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<script src="../../js/firebase-config.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/members.js"></script>
+<script>window.members?.boot('sections')</script>
+</body>
+</html>
