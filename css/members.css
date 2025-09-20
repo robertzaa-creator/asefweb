@@ -1,0 +1,75 @@
+/* members.css — estilos del módulo SOCIOS (no cambia estilos existentes) */
+:root{
+  --sidebar-bg: var(--secondary-color);
+  --sidebar-fg: #ecf0f1;
+  --sidebar-fg-dim: rgba(236,240,241,.75);
+  --chip-bg: #eef2f7;
+}
+
+.members-shell{
+  display:flex; min-height:100vh; background:var(--bg-light);
+}
+
+/* Sidebar */
+.members-sidebar{
+  width:260px; background:var(--sidebar-bg); color:var(--sidebar-fg);
+  display:flex; flex-direction:column; box-shadow: var(--shadow);
+}
+.members-brand{
+  display:flex; align-items:center; gap:.6rem; padding:18px 20px; border-bottom:1px solid rgba(255,255,255,.06);
+  font-weight:600; letter-spacing:.3px;
+}
+.members-brand img{ width:28px; height:28px; border-radius:6px; }
+.members-nav{ padding:12px; display:flex; flex-direction:column; gap:6px; }
+.members-nav a{
+  display:flex; align-items:center; gap:.6rem; color:var(--sidebar-fg); text-decoration:none;
+  padding:10px 12px; border-radius:8px; transition:var(--transition);
+}
+.members-nav a:hover{ background:rgba(255,255,255,.08); }
+.members-nav a.active{ background:rgba(255,255,255,.16); }
+.members-foot{ margin-top:auto; padding:14px 12px; color:var(--sidebar-fg-dim); font-size:.9rem; }
+
+/* Topbar */
+.members-main{ flex:1; display:flex; flex-direction:column; }
+.members-topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  background:#fff; padding:14px 18px; box-shadow:var(--shadow); position:sticky; top:0; z-index:5;
+}
+.members-topbar .input{
+  background:var(--bg-light); border:1px solid #e8eaef; padding:8px 12px; border-radius:8px; min-width:280px;
+}
+
+/* Content */
+.members-content{ padding:24px; }
+.members-title{ font-size:1.8rem; margin:6px 0 16px; }
+.grid{ display:grid; gap:16px; }
+.grid.stats{ grid-template-columns: repeat(5, minmax(180px,1fr)); }
+@media (max-width:1200px){ .grid.stats{ grid-template-columns: repeat(3,1fr); } }
+@media (max-width:768px){ .grid.stats{ grid-template-columns: repeat(2,1fr); } }
+
+.card{
+  background:#fff; border-radius:var(--border-radius); box-shadow:var(--shadow); padding:18px;
+}
+.card h3{ font-size:1rem; color:var(--text-light); margin-bottom:6px; }
+.kpi{ font-size:1.6rem; font-weight:700; color:var(--text-color); }
+.kpi small{ font-size:.82rem; color:var(--text-light); margin-left:6px; }
+
+.list{ display:flex; flex-direction:column; gap:12px; }
+.list-item{ display:flex; justify-content:space-between; align-items:center; padding:12px; border:1px solid #eef0f4; border-radius:10px; background:#fff; }
+.list-item h4{ margin:0 0 4px; }
+.badge{ background:var(--chip-bg); color:#334; padding:4px 8px; border-radius:999px; font-size:.8rem; }
+
+.actions{ display:flex; gap:8px; }
+.btn-xs{ font-size:.85rem; padding:6px 10px; border-radius:8px; border:1px solid #e6e8ee; background:#fff; cursor:pointer; }
+.btn-xs:hover{ box-shadow:var(--shadow-hover); }
+.btn-primary{ background:var(--accent-color); color:#fff; border:none; }
+.sidebar-muted{ color:var(--sidebar-fg-dim); font-size:.9rem; }
+
+/* Profile */
+.profile-header{ display:flex; align-items:center; gap:16px; }
+.profile-avatar{ width:72px; height:72px; border-radius:50%; object-fit:cover; border:3px solid #f1f3f5; }
+
+/* Sections */
+.sections-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:16px; }
+.section-card h4{ margin:.4rem 0 .2rem; }
+.section-card p{ color:var(--text-light); font-size:.92rem; }
