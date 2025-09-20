@@ -1,214 +1,259 @@
 // js/members.js
-(function(){
-  const db = window.firebaseDb;
-  const auth = window.firebaseAuth;
-  const storage = window.firebaseStorage;
+// Evitar doble carga del archivo
+if (window.__MEMBERS_JS__) {
+  console.warn('members.js already loaded; skipping.');
+} else {
+  window.__MEMBERS_JS__ = true;
 
-  const fmtDate = (ts) => {
-    if (!ts) return '—';
-    try{
-      const d = ts.toDate ? ts.toDate() : new Date(ts);
-      return d.toLocaleDateString('es-AR', {day:'2-digit', month:'short', year:'numeric'});
-    }catch{ return '—'; }
-  };
+  (function () {
+    const db = firebaseDb; // uso local, no creamos global "db"
 
-  async function ensureSessionAndProfile(){
-    return new Promise((resolve)=>{
-      auth.onAuthStateChanged(async (user)=>{
-        if(!user){ window.location.href='../../index.html'; return; }
-        // trae perfil
-        const snap = await db.collection('users').doc(user.uid).get();
-        if(!snap.exists){
-          // crea doc mínimo
-          await db.collection('users').doc(user.uid).set({
-            uid: user.uid, name: user.displayName || '', email: user.email || '',
-            photoURL: user.photoURL || '', role: 'member', status: 'active',
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          }, {merge:true});
-        }
-        const profile = (await db.collection('users').doc(user.uid).get()).data();
-        // bloqueado => modal y logout
-        if(String(profile?.status || '').toLowerCase()==='blocked'){
-          alert('Acceso restringido: su cuenta se encuentra bloqueada.');
-          await auth.signOut();
-          window.location.href='../../index.html';
-          return;
-        }
-        // pintar email en sidebar
-        const emailEl = document.getElementById('userEmail');
-        if(emailEl) emailEl.textContent = user.email || '—';
-        resolve({user, profile});
-      });
-    });
-  }
+    // ===== helpers =====
+    function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
+    function fmt(ts) { if (!ts) return '—'; const d = ts.toDate ? ts.toDate() : new Date(ts); return d.toLocaleString(); }
 
-  async function kpis(){
-    const [secs, docs, events] = await Promise.all([
-      db.collection('sections').get(),
-      db.collection('documents').get(),
-      db.collection('loginEvents').orderBy('createdAt','desc').limit(1).get()
-    ]);
-    document.getElementById('statSections')?.replaceChildren(document.createTextNode(secs.size));
-    document.getElementById('statDocs')?.replaceChildren(document.createTextNode(docs.size));
-    const last = events.docs[0]?.data();
-    document.getElementById('statLastLogin')?.replaceChildren(document.createTextNode(last ? fmtDate(last.createdAt) : '—'));
-    document.getElementById('statStatus')?.replaceChildren(document.createTextNode('Activo'));
-  }
-
-  async function latestDocuments(){
-    const qs = await db.collection('documents').orderBy('createdAt','desc').limit(6).get();
-    const box = document.getElementById('latestDocs'); if(!box) return;
-    box.innerHTML = '';
-    qs.forEach(doc=>{
-      const d = doc.data();
-      const row = document.createElement('div'); row.className='list-item';
-      const left = document.createElement('div');
-      left.innerHTML = `<h4>${d.title||'Documento'}</h4><div class="sidebar-muted">${d.type?.toUpperCase()||''}</div>`;
-      const act = document.createElement('div'); act.className='actions';
-      const btn = document.createElement('button'); btn.className='btn-xs btn-primary'; btn.textContent = d.type==='link'?'Abrir link':'Ver PDF';
-      btn.onclick = ()=> openDocument(d);
-      act.appendChild(btn);
-      row.appendChild(left); row.appendChild(act);
-      box.appendChild(row);
-    });
-  }
-
-  async function featuredSections(){
-    const qs = await db.collection('sections').orderBy('createdAt','desc').limit(4).get();
-    const box = document.getElementById('featuredSections'); if(!box) return;
-    box.innerHTML = '';
-    qs.forEach(doc=>{
-      const d = doc.data();
-      const row = document.createElement('div'); row.className='list-item';
-      row.innerHTML = `<div><h4>${d.title}</h4><div class="sidebar-muted">${d.description||''}</div></div>`;
-      const act = document.createElement('div'); act.className='actions';
-      const btn = document.createElement('button'); btn.className='btn-xs'; btn.textContent='Ver';
-      btn.onclick = ()=> window.location.href = `./sections.html#${doc.id}`;
-      act.appendChild(btn); row.appendChild(act); box.appendChild(row);
-    });
-  }
-
-  async function renderSections(){
-    const {profile} = await ensureSessionAndProfile();
-    document.getElementById('logoutBtn')?.addEventListener('click', async (e)=>{ e.preventDefault(); await auth.signOut(); window.location.href='../../index.html'; });
-
-    const grid = document.getElementById('sectionsGrid');
-    if(!grid) return;
-
-    const qs = await db.collection('sections').orderBy('title').get();
-    grid.innerHTML='';
-    qs.forEach(doc=>{
-      const d = doc.data();
-      const card = document.createElement('div'); card.className='card section-card';
-      card.innerHTML = `<h4>${d.title}</h4><p>${d.description||''}</p><div class="actions"><button class="btn-xs btn-primary">Abrir</button></div>`;
-      card.querySelector('button').onclick = ()=> loadDocs(doc.id, d.title);
-      grid.appendChild(card);
-    });
-
-    // si viene hash con sección puntual
-    const hash = location.hash?.slice(1);
-    if(hash) loadDocs(hash);
-  }
-
-  async function loadDocs(sectionId, titleFromCard){
-    const title = document.getElementById('docsTitle');
-    if(titleFromCard) title.textContent = `Documentos · ${titleFromCard}`;
-    const panel = document.getElementById('docsPanel'); panel.style.display='block';
-    const list = document.getElementById('docsList'); list.innerHTML='';
-
-    const qs = await db.collection('documents').where('sectionId','==', sectionId).orderBy('createdAt','desc').get();
-    if(qs.empty){ list.innerHTML = '<div class="sidebar-muted">No hay documentos en esta sección.</div>'; return; }
-
-    qs.forEach(doc=>{
-      const d = doc.data();
-      const row = document.createElement('div'); row.className='list-item';
-      row.innerHTML = `<div><h4>${d.title}</h4><div class="sidebar-muted">${d.type==='link'?'Enlace externo':'PDF'}</div></div>`;
-      const act = document.createElement('div'); act.className='actions';
-      const btnView = document.createElement('button'); btnView.className='btn-xs btn-primary'; btnView.textContent = d.type==='link'?'Abrir link':'Ver PDF';
-      btnView.onclick = ()=> openDocument(d);
-      act.appendChild(btnView);
-
-      if(d.type!=='link'){ // permitir descargar
-        const btnDl = document.createElement('button'); btnDl.className='btn-xs'; btnDl.textContent='Descargar';
-        btnDl.onclick = ()=> downloadDocument(d);
-        act.appendChild(btnDl);
+    // ===== normalización de perfil =====
+    async function normalizeUserProfile(user) {
+      const ref = db.collection('users').doc(user.uid);
+      let snap = await ref.get();
+      let data = snap.exists ? snap.data() : {};
+      const patch = {};
+      if (!data.role)   patch.role = 'member';
+      if (!data.status) patch.status = 'active';
+      if (Object.keys(patch).length) {
+        patch.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+        await ref.set(patch, { merge: true });
       }
-      row.appendChild(act); list.appendChild(row);
-    });
+    }
+
+    // ===== auditoría =====
+    async function audit(eventType, user) {
+      try {
+        await db.collection('loginEvents').add({
+          uid: user.uid,
+          email: user.email || '',
+          type: eventType, // 'login' | 'logout'
+          ua: navigator.userAgent || '',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+      } catch (e) { console.warn('audit fail', e); }
+    }
+
+    // ===== dashboard =====
+    async function kpis() {
+  try {
+    // Lecturas permitidas para miembro: sections y documents
+    const [secs, docs] = await Promise.all([
+      db.collection('sections').get(),
+      db.collection('documents').get()
+    ]);
+
+    // Último ingreso: lo tomamos del doc del usuario (no de loginEvents)
+    let lastLogin = null;
+    try {
+      const uid = firebaseAuth.currentUser?.uid;
+      if (uid) {
+        const udoc = await db.collection('users').doc(uid).get();
+        lastLogin = udoc.exists ? udoc.data()?.lastLoginAt || null : null;
+      }
+    } catch (e) {
+      console.warn('No se pudo leer lastLoginAt del perfil', e);
+    }
+
+    setText('statSections', secs.size ?? '—');
+    setText('statDocs', docs.size ?? '—');
+    setText('statLastLogin', lastLogin ? fmt(lastLogin) : '—');
+    setText('statDownloads', '0');   // beta
+    setText('statStatus', 'Activo');
+  } catch (e) {
+    console.warn('KPIs error:', e);
+    if (e.code === 'permission-denied') {
+      setText('statSections', '—'); setText('statDocs', '—');
+      setText('statLastLogin', '—'); setText('statDownloads', '—');
+      setText('statStatus', 'Revisar permisos');
+    }
   }
+}
 
-  async function openDocument(d){
-    if(d.type==='link' && d.fileUrl){ window.open(d.fileUrl, '_blank'); return; }
-    // si es PDF en storage, priorizar storagePath; si no, usar fileUrl (descarga firmada que ya guardaste)
-    if(d.storagePath){
-      const ref = storage.ref(d.storagePath);
-      const url = await ref.getDownloadURL();
-      window.open(url, '_blank');
-    }else if(d.fileUrl){ window.open(d.fileUrl,'_blank'); }
-  }
-  async function downloadDocument(d){
-    // mismo que open, pero forzar descarga (depende del header; si no, simplemente abre)
-    await openDocument(d);
-  }
 
-  async function renderProfile(){
-    const {user, profile} = await ensureSessionAndProfile();
-    document.getElementById('logoutBtn')?.addEventListener('click', async (e)=>{ e.preventDefault(); await auth.signOut(); window.location.href='../../index.html'; });
+    async function latestDocuments() {
+      const box = document.getElementById('latestDocs'); if (!box) return;
+      box.innerHTML = '';
+      try {
+        const qs = await db.collection('documents').orderBy('createdAt', 'desc').limit(6).get();
+        if (qs.empty) { box.innerHTML = '<div class="sidebar-muted">No hay documentos</div>'; return; }
+        qs.forEach(doc => {
+          const d = doc.data();
+          const row = document.createElement('div'); row.className = 'list-item';
+          row.innerHTML = `<div>
+            <h4>${d.title || 'Documento'}</h4>
+            <div class="sidebar-muted">${(d.type || '').toUpperCase()}</div>
+          </div>`;
+          const act = document.createElement('div'); act.className = 'actions';
+          const btn = document.createElement('button'); btn.className = 'btn-xs btn-primary';
+          btn.textContent = d.type === 'link' ? 'Abrir link' : 'Ver PDF';
+          btn.onclick = () => openDocument(d);
+          act.appendChild(btn); row.appendChild(act); box.appendChild(row);
+        });
+      } catch (e) {
+        console.warn('latestDocuments error:', e);
+        if (e.code === 'permission-denied') box.innerHTML = '<div class="sidebar-muted">Permisos insuficientes para ver documentos.</div>';
+      }
+    }
 
-    const avatar = document.getElementById('profileAvatar');
-    const nameEl = document.getElementById('profileName');
-    const emailEl= document.getElementById('profileEmail');
-    const metaEl = document.getElementById('profileMeta');
+    async function featuredSections() {
+      const box = document.getElementById('featuredSections'); if (!box) return;
+      box.innerHTML = '';
+      try {
+        const qs = await db.collection('sections').orderBy('createdAt', 'desc').limit(4).get();
+        if (qs.empty) { box.innerHTML = '<div class="sidebar-muted">No hay secciones</div>'; return; }
+        qs.forEach(doc => {
+          const d = doc.data();
+          const row = document.createElement('div'); row.className = 'list-item';
+          row.innerHTML = `<div><h4>${d.title}</h4><div class="sidebar-muted">${d.description || ''}</div></div>`;
+          const act = document.createElement('div'); act.className = 'actions';
+          const btn = document.createElement('button'); btn.className = 'btn-xs'; btn.textContent = 'Ver';
+          btn.onclick = () => window.location.href = `./sections.html#${doc.id}`;
+          act.appendChild(btn); row.appendChild(act); box.appendChild(row);
+        });
+      } catch (e) {
+        console.warn('featuredSections error:', e);
+        if (e.code === 'permission-denied') box.innerHTML = '<div class="sidebar-muted">Permisos insuficientes para ver secciones.</div>';
+      }
+    }
 
-    avatar.src = profile.photoURL || 'https://ui-avatars.com/api/?name='+encodeURIComponent(profile.name||user.email)+'&background=eee&color=555';
-    nameEl.textContent = profile.name || '(sin nombre)';
-    emailEl.textContent = user.email;
-    metaEl.textContent = 'Alta: ' + fmtDate(profile.createdAt);
+    function openDocument(d) {
+      if (!d || !d.fileUrl) return;
+      window.open(d.fileUrl, '_blank', 'noopener');
+    }
 
-    document.getElementById('inpName').value = profile.name || '';
-    document.getElementById('btnSaveName').onclick = async ()=>{
-      const newName = document.getElementById('inpName').value.trim();
-      await db.collection('users').doc(user.uid).set({ name:newName, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, {merge:true});
-      alert('Nombre actualizado'); location.reload();
-    };
+    // ===== secciones =====
+    async function renderSectionsPage() {
+      const list = document.getElementById('sectionsList'); if (!list) return;
+      list.innerHTML = '';
+      try {
+        const qs = await db.collection('sections').orderBy('createdAt', 'desc').get();
+        if (qs.empty) { list.innerHTML = '<div class="sidebar-muted p-3">No hay secciones disponibles.</div>'; return; }
+        qs.forEach(doc => {
+          const s = doc.data();
+          const item = document.createElement('div'); item.className = 'list-item';
+          item.innerHTML = `<div><h4>${s.title}</h4><div class="sidebar-muted">${s.description || ''}</div></div>`;
+          const act = document.createElement('div'); act.className = 'actions';
+          const btn = document.createElement('button'); btn.className = 'btn-xs'; btn.textContent = 'Ver documentos';
+          btn.onclick = () => renderDocumentsForSection(doc.id);
+          act.appendChild(btn); item.appendChild(act); list.appendChild(item);
+        });
+      } catch (e) {
+        console.warn('renderSectionsPage error:', e);
+        list.innerHTML = '<div class="sidebar-muted p-3">No fue posible cargar secciones (permiso o conexión).</div>';
+      }
+    }
 
-    document.getElementById('btnSavePhoto').onclick = async ()=>{
-      const file = document.getElementById('inpPhoto').files?.[0];
-      if(!file) return;
-      const path = `avatars/${user.uid}.jpg`;
-      await storage.ref(path).put(file);
-      const url = await storage.ref(path).getDownloadURL();
-      await db.collection('users').doc(user.uid).set({ photoURL:url, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, {merge:true});
-      alert('Foto actualizada'); location.reload();
-    };
-  }
+    async function renderDocumentsForSection(sectionId) {
+      const list = document.getElementById('sectionDocuments'); if (!list) return;
+      list.innerHTML = '<div class="sidebar-muted p-2">Cargando…</div>';
+      try {
+        const qs = await db.collection('documents')
+          .where('sectionId', '==', sectionId)
+          .orderBy('createdAt', 'desc')
+          .get();
 
-  async function renderDashboard(){
-    await ensureSessionAndProfile();
-    document.getElementById('logoutBtn')?.addEventListener('click', async (e)=>{ e.preventDefault(); await auth.signOut(); window.location.href='../../index.html'; });
-    await kpis();
-    await latestDocuments();
-    await featuredSections();
-  }
+        if (qs.empty) { list.innerHTML = '<div class="sidebar-muted p-2">No hay documentos en esta sección.</div>'; return; }
 
-  // Auditoría: registrar login/logout (llamado desde auth.js en Paso 2)
-  async function audit(eventType, user){
-    try{
-      await db.collection('loginEvents').add({
-        uid: user.uid, email: user.email || '',
-        type: eventType, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        ua: navigator.userAgent || ''
-      });
-    }catch(e){ console.warn('audit fail', e); }
-  }
+        list.innerHTML = '';
+        qs.forEach(doc => {
+          const d = doc.data();
+          const row = document.createElement('div'); row.className = 'list-item';
+          row.innerHTML = `<div><h4>${d.title || 'Documento'}</h4><div class="sidebar-muted">${(d.type || '').toUpperCase()}</div></div>`;
+          const act = document.createElement('div'); act.className = 'actions';
+          const btn = document.createElement('button'); btn.className = 'btn-xs btn-primary';
+          btn.textContent = d.type === 'link' ? 'Abrir link' : 'Ver PDF';
+          btn.onclick = () => openDocument(d);
+          act.appendChild(btn); row.appendChild(act); list.appendChild(row);
+        });
+      } catch (e) {
+        console.warn('renderDocumentsForSection error:', e);
+        list.innerHTML = '<div class="sidebar-muted p-2">No fue posible cargar documentos (permiso o conexión).</div>';
+      }
+    }
 
-  window.members = {
-    boot: async (page)=>{
-      if(page==='dashboard') await renderDashboard();
-      if(page==='sections')  await renderSections();
-      if(page==='profile')   await renderProfile();
-    },
-    audit
-  };
-})();
+    // ===== perfil =====
+    async function renderProfilePage() {
+      const u = firebaseAuth.currentUser; if (!u) return;
+      const nameEl  = document.getElementById('profileName');
+      const emailEl = document.getElementById('profileEmail');
+      const dateEl  = document.getElementById('profileCreatedAt');
+      const photoEl = document.getElementById('profilePhoto');
+
+      try {
+        const doc = await db.collection('users').doc(u.uid).get();
+        const data = doc.data() || {};
+        if (nameEl)  nameEl.value  = data.name || u.displayName || '';
+        if (emailEl) emailEl.value = data.email || u.email || '';
+        if (dateEl)  dateEl.textContent = data.createdAt ? fmt(data.createdAt) : '—';
+        if (photoEl) photoEl.src = data.photoURL || u.photoURL || '/assets/img/avatar.png';
+
+        const saveBtn = document.getElementById('saveProfileBtn');
+        if (saveBtn) {
+          saveBtn.onclick = async () => {
+            const patch = {
+              name: nameEl ? nameEl.value.trim() : data.name || '',
+              photoURL: photoEl ? photoEl.src : data.photoURL || '',
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            try {
+              await db.collection('users').doc(u.uid).set(patch, { merge: true });
+              toast('Perfil actualizado', 'success');
+            } catch (e) {
+              console.error('profile save error', e);
+              toast('No se pudo guardar el perfil', 'error');
+            }
+          };
+        }
+      } catch (e) {
+        console.error('renderProfilePage error', e);
+      }
+    }
+
+    function toast(msg, type = 'info') {
+      if (window.authManager && typeof window.authManager.showNotification === 'function') {
+        window.authManager.showNotification(msg, type);
+      } else { alert(msg); }
+    }
+
+    // ===== exposición =====
+    let started = false;
+    async function boot(page) {
+      if (started) return;
+      started = true;
+
+      const user = firebaseAuth.currentUser;
+      if (user) await normalizeUserProfile(user);
+
+      const path = location.pathname;
+      const target =
+        page ||
+        (path.includes('/dashboard.html') ? 'dashboard' :
+         path.includes('/sections.html')  ? 'sections'  :
+         path.includes('/profile.html')   ? 'profile'   : '');
+
+      if (target === 'dashboard') {
+        await kpis(); await latestDocuments(); await featuredSections();
+      } else if (target === 'sections') {
+        await renderSectionsPage();
+        const sid = location.hash ? location.hash.substring(1) : '';
+        if (sid) await renderDocumentsForSection(sid);
+      } else if (target === 'profile') {
+        await renderProfilePage();
+      }
+    }
+
+    // Exponer para otros módulos
+    window.members = window.members || {};
+    window.members.audit = audit;
+    window.members.boot  = boot;
+
+    // Boot automático (por si no lo llaman desde el HTML)
+    document.addEventListener('DOMContentLoaded', () => { if (!started) boot(); });
+  })();
+}
