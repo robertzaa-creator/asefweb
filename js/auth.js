@@ -48,17 +48,16 @@ class AuthManager {
         } catch (_) {}
       } else {
         // si intenta entrar a páginas protegidas sin login → redirigir
-        const sociosPrefix = 'pages/socios/';
+        const sociosPrefix = '/pages/socios/';
         const protectedPages = [
-          'pages/recursos.html',
+          '/pages/recursos.html',
           `${sociosPrefix}dashboard.html`,
           `${sociosPrefix}sections.html`,
           `${sociosPrefix}profile.html`
         ];
-       if (protectedPages.some(p => location.pathname.includes(p))) {
-  window.location.href = '/asefweb/'; // o '/asefweb/index.html'
-}
-
+        if (protectedPages.some(p => location.pathname.includes(p))) {
+          window.location.href = '/index.html';
+        }
       }
 
       this.updateUI();
@@ -230,7 +229,7 @@ class AuthManager {
         alert('Acceso restringido: su cuenta está bloqueada.');
 
         await firebaseAuth.signOut();
-        window.location.href = '/asefweb/';
+        window.location.href = '/index.html';
         return false;
       }
 
@@ -272,7 +271,7 @@ try {
 }
 
       this.showNotification('Sesión cerrada correctamente', 'success');
-      window.location.href = '/asefweb/';
+      window.location.href = '/index.html';
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
       this.showNotification('Error al cerrar sesión', 'error');
@@ -333,11 +332,11 @@ try {
     if (protectedPages.some(page => currentPage.includes(page))) {
       firebaseAuth.onAuthStateChanged(async (user) => {
         if (!user) {
-          setTimeout(() => { window.location.href = '/asefweb/'; }, 500);
+          setTimeout(() => { window.location.href = '/index.html'; }, 500);
           this.showNotification('Debe iniciar sesión para acceder a esta página', 'warning');
         } else {
           const ok = await this.ensureMemberOrSignOut(user);
-          if (!ok) setTimeout(() => { window.location.href = '/asefweb/'; }, 500);
+          if (!ok) setTimeout(() => { window.location.href = '/index.html'; }, 500);
         }
       });
     }
