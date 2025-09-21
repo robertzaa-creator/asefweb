@@ -31,17 +31,6 @@ class AuthManager {
         this.showNotification('El registro está deshabilitado. Solicite alta al administrador.', 'warning');
       });
     }
-    // Ruta raíz del sitio (GitHub Pages vs local)
-function getSiteRoot() {
-  // si estás en GitHub Pages bajo /asefweb/
-  if (location.pathname.includes('/asefweb/')) return '/asefweb/';
-  // si estás en localhost o servido en raíz
-  return '/';
-}
-function go(path) {
-  window.location.href = getSiteRoot() + path.replace(/^\/+/, '');
-}
-
 
     // Estado de autenticación
     firebaseAuth.onAuthStateChanged(async (user) => {
@@ -67,7 +56,7 @@ function go(path) {
           `${sociosPrefix}profile.html`
         ];
         if (protectedPages.some(p => location.pathname.includes(p))) {
-          window.location.href = '/asefweb/';
+          window.location.href = '/index.html';
         }
       }
 
@@ -82,92 +71,69 @@ function go(path) {
   }
 
   setupEventListeners() {
-  // Botón Acceder/Salir (navbar principal)
-  if (this.loginBtn) {
-    this.loginBtn.addEventListener('click', () => {
-      if (this.currentUser) this.signOut();
-      else this.showLoginModal();
-    });
-  }
-
-  // ===== Modal de login =====
-  if (this.loginModal) {
-    const closeBtn = this.loginModal.querySelector('.close');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => this.hideLoginModal());
+    // Botón Acceder/Salir (navbar principal)
+    if (this.loginBtn) {
+      this.loginBtn.addEventListener('click', () => {
+        if (this.currentUser) this.signOut();
+        else this.showLoginModal();
+      });
     }
 
-    // 🔒 Bloquear clic en el overlay (no cierra, no pasa el clic)
-    // Listener en fase de captura para ganarle a cualquier handler global
-    this.loginModal.addEventListener('click', (e) => {
-      if (e.target === this.loginModal) {
+    // Modal login
+    if (this.loginModal) {
+      const closeBtn = this.loginModal.querySelector('.close');
+      if (closeBtn) closeBtn.addEventListener('click', () => this.hideLoginModal());
+      window.addEventListener('click', (event) => {
+        if (event.target === this.loginModal) this.hideLoginModal();
+      });
+    }
+
+    // Form login
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+      loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        e.stopImmediatePropagation();
-        e.stopPropagation();
-        return false;
-      }
-    }, true);
+        this.signIn();
+      });
+    }
 
-    // (Opcional) bloquear cierre con la tecla ESC
-    document.addEventListener('keydown', (e) => {
-      if (this.loginModal.style.display === 'block' && e.key === 'Escape') {
+    // Toggle formularios
+    const registerLink = document.getElementById('registerLink');
+    if (registerLink) {
+      registerLink.addEventListener('click', (e) => { e.preventDefault(); this.showRegisterForm(); });
+    }
+    const loginLink = document.getElementById('loginLink');
+    if (loginLink) {
+      loginLink.addEventListener('click', (e) => { e.preventDefault(); this.showLoginForm(); });
+    }
+
+    // Botón/Link del sidebar: "Cerrar sesión"
+    const logoutSelectors = [
+      '#logoutBtn',              // tu id actual en el sidebar
+      '#logoutLink',
+      '#logoutSidebar',
+      'a[data-action="logout"]',
+      'button[data-action="logout"]'
+    ];
+    document.querySelectorAll(logoutSelectors.join(',')).forEach(el => {
+      el.addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopImmediatePropagation();
-      }
-    }, true);
-  }
-
-  // Form login
-  const loginForm = document.getElementById('loginForm');
-  if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      this.signIn();
+        this.signOut();
+      });
     });
+
+    // Link opcional a área de socios (si existe)
+    const sociosLink = document.getElementById('socios-link');
+    if (sociosLink) {
+      sociosLink.addEventListener('click', (e) => {
+        if (!this.currentUser) {
+          e.preventDefault();
+          this.showLoginModal();
+          this.showNotification('Debe iniciar sesión para ingresar al Área de Socios', 'info');
+        }
+      });
+    }
   }
-
-  // Toggle formularios
-const registerLink = document.getElementById('registerLink');
-if (registerLink) {
-  registerLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Llevá a la página de Contacto (o donde quieras tramitar el alta)
-    go('pages/contacto.html');
-  });
-}
-
-  const loginLink = document.getElementById('loginLink');
-  if (loginLink) {
-    loginLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.showLoginForm();
-    });
-  }
-
-  // Botones/links de "Cerrar sesión" en sidebar
-  const logoutSelectors = [
-    '#logoutBtn', '#logoutLink', '#logoutSidebar',
-    'a[data-action="logout"]', 'button[data-action="logout"]'
-  ];
-  document.querySelectorAll(logoutSelectors.join(',')).forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.signOut();
-    });
-  });
-
-  // Link opcional a "Área de Socios" si existe
-  const sociosLink = document.getElementById('socios-link');
-  if (sociosLink) {
-    sociosLink.addEventListener('click', (e) => {
-      if (!this.currentUser) {
-        e.preventDefault();
-        this.showLoginModal();
-        this.showNotification('Debe iniciar sesión para ingresar al Área de Socios', 'info');
-      }
-    });
-  }
-}
 
   showLoginModal() {
     if (!this.loginModal) return;
@@ -220,7 +186,7 @@ if (registerLink) {
       // Cerrar modal y redirigir
       this.hideLoginModal();
       this.showNotification('¡Bienvenido!', 'success');
-      window.location.href = 'pages/socios/dashboard.html';
+      window.location.href = '/pages/socios/dashboard.html';
 
       if (emailEl) emailEl.value = '';
       if (passEl)  passEl.value  = '';
@@ -263,7 +229,7 @@ if (registerLink) {
         alert('Acceso restringido: su cuenta está bloqueada.');
 
         await firebaseAuth.signOut();
-        window.location.href = '/asefweb/';
+        window.location.href = '/index.html';
         return false;
       }
 
@@ -305,7 +271,7 @@ try {
 }
 
       this.showNotification('Sesión cerrada correctamente', 'success');
-      window.location.href = '/asefweb/';
+      window.location.href = '/index.html';
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
       this.showNotification('Error al cerrar sesión', 'error');
@@ -357,20 +323,20 @@ try {
   checkPageAccess() {
     const currentPage = window.location.pathname;
     const protectedPages = [
-      'pages/recursos.html',
-      'pages/socios/dashboard.html',
-      'pages/socios/sections.html',
-      'pages/socios/profile.html'
+      '/pages/recursos.html',
+      '/pages/socios/dashboard.html',
+      '/pages/socios/sections.html',
+      '/pages/socios/profile.html'
     ];
 
     if (protectedPages.some(page => currentPage.includes(page))) {
       firebaseAuth.onAuthStateChanged(async (user) => {
         if (!user) {
-          setTimeout(() => { window.location.href = '/asefweb/'; }, 500);
+          setTimeout(() => { window.location.href = '/index.html'; }, 500);
           this.showNotification('Debe iniciar sesión para acceder a esta página', 'warning');
         } else {
           const ok = await this.ensureMemberOrSignOut(user);
-          if (!ok) setTimeout(() => { window.location.href = '/asefweb/'; }, 500);
+          if (!ok) setTimeout(() => { window.location.href = '/index.html'; }, 500);
         }
       });
     }
