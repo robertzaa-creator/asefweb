@@ -546,3 +546,29 @@ p {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+/* --- Fix modal header/title --- */
+#loginModal .modal-content{
+  padding: 12px 20px 20px !important;   /* menos espacio arriba */
+}
+
+#loginModal .modal-content h2{
+  margin: 0 28px 10px 0 !important;     /* sin margen arriba, compacto abajo */
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  color: #ffffff !important;            /* asegurar contraste en fondo oscuro */
+  text-align: left !important;          /* evita centrado que pueda venir de h2 global */
+}
+
+/* X bien alineada */
+#loginModal .modal-content .close{
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  color: #cfd8e3 !important;
+  cursor: pointer;
+}
+#loginModal .modal-content .close:hover{ color:#fff !important; }
