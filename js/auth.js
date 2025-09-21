@@ -79,16 +79,31 @@ class AuthManager {
     });
   }
 
-  // Modal login
+  // ===== Modal de login =====
   if (this.loginModal) {
     const closeBtn = this.loginModal.querySelector('.close');
     if (closeBtn) {
       closeBtn.addEventListener('click', () => this.hideLoginModal());
     }
-    // ❌ quitamos el listener que cerraba el modal al hacer clic afuera
-    // window.addEventListener('click', (event) => {
-    //   if (event.target === this.loginModal) this.hideLoginModal();
-    // });
+
+    // 🔒 Bloquear clic en el overlay (no cierra, no pasa el clic)
+    // Listener en fase de captura para ganarle a cualquier handler global
+    this.loginModal.addEventListener('click', (e) => {
+      if (e.target === this.loginModal) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        e.stopPropagation();
+        return false;
+      }
+    }, true);
+
+    // (Opcional) bloquear cierre con la tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (this.loginModal.style.display === 'block' && e.key === 'Escape') {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+    }, true);
   }
 
   // Form login
@@ -116,13 +131,10 @@ class AuthManager {
     });
   }
 
-  // Botón/Link del sidebar: "Cerrar sesión"
+  // Botones/links de "Cerrar sesión" en sidebar
   const logoutSelectors = [
-    '#logoutBtn',
-    '#logoutLink',
-    '#logoutSidebar',
-    'a[data-action="logout"]',
-    'button[data-action="logout"]'
+    '#logoutBtn', '#logoutLink', '#logoutSidebar',
+    'a[data-action="logout"]', 'button[data-action="logout"]'
   ];
   document.querySelectorAll(logoutSelectors.join(',')).forEach(el => {
     el.addEventListener('click', (e) => {
@@ -131,7 +143,7 @@ class AuthManager {
     });
   });
 
-  // Link opcional a área de socios (si existe)
+  // Link opcional a "Área de Socios" si existe
   const sociosLink = document.getElementById('socios-link');
   if (sociosLink) {
     sociosLink.addEventListener('click', (e) => {
