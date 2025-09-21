@@ -572,3 +572,13 @@ p {
   cursor: pointer;
 }
 #loginModal .modal-content .close:hover{ color:#fff !important; }
+
+/* Ajuste de espacio del título del modal */
+#loginModal .modal-content h2{
+  margin: 10px 28px 18px 0 !important;  /* 10px arriba, 18px abajo */
+  font-size: 20px !important;           /* un poco más grande */
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  color: #ffffff !important;
+}
+
