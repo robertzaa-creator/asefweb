@@ -56,7 +56,7 @@ class AuthManager {
           `${sociosPrefix}profile.html`
         ];
         if (protectedPages.some(p => location.pathname.includes(p))) {
-          window.location.href = '/index.html';
+          window.location.href = '/asefweb/';
         }
       }
 
@@ -332,11 +332,11 @@ try {
     if (protectedPages.some(page => currentPage.includes(page))) {
       firebaseAuth.onAuthStateChanged(async (user) => {
         if (!user) {
-          setTimeout(() => { window.location.href = '/index.html'; }, 500);
+          setTimeout(() => { window.location.href = '/asefweb/'; }, 500);
           this.showNotification('Debe iniciar sesión para acceder a esta página', 'warning');
         } else {
           const ok = await this.ensureMemberOrSignOut(user);
-          if (!ok) setTimeout(() => { window.location.href = '/index.html'; }, 500);
+          if (!ok) setTimeout(() => { window.location.href = '/asefweb/'; }, 500);
         }
       });
     }
