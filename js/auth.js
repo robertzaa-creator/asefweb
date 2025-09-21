@@ -31,6 +31,17 @@ class AuthManager {
         this.showNotification('El registro está deshabilitado. Solicite alta al administrador.', 'warning');
       });
     }
+    // Ruta raíz del sitio (GitHub Pages vs local)
+function getSiteRoot() {
+  // si estás en GitHub Pages bajo /asefweb/
+  if (location.pathname.includes('/asefweb/')) return '/asefweb/';
+  // si estás en localhost o servido en raíz
+  return '/';
+}
+function go(path) {
+  window.location.href = getSiteRoot() + path.replace(/^\/+/, '');
+}
+
 
     // Estado de autenticación
     firebaseAuth.onAuthStateChanged(async (user) => {
@@ -116,13 +127,15 @@ class AuthManager {
   }
 
   // Toggle formularios
-  const registerLink = document.getElementById('registerLink');
-  if (registerLink) {
-    registerLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.showRegisterForm();
-    });
-  }
+const registerLink = document.getElementById('registerLink');
+if (registerLink) {
+  registerLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Llevá a la página de Contacto (o donde quieras tramitar el alta)
+    go('pages/contacto.html');
+  });
+}
+
   const loginLink = document.getElementById('loginLink');
   if (loginLink) {
     loginLink.addEventListener('click', (e) => {

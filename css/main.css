@@ -601,4 +601,24 @@ p {
   margin-top: 6px !important;
 }
 
+/* Centrar título del modal de login */
+#loginModal .modal-content h2 {
+    text-align: center !important;
+    margin: 0 0 20px 0 !important;
+    width: 100%;
+    padding: 0;
+}
+
+/* Ajustar posición de la X para que no interfiera con el título centrado */
+#loginModal .modal-content .close {
+    top: 15px !important;
+    right: 15px !important;
+}
+
+/* Asegurar que el formulario de registro también tenga el título centrado */
+#loginModal #registerForm h2 {
+    text-align: center !important;
+    margin: 0 0 20px 0 !important;
+    width: 100%;
+}
 
