@@ -229,7 +229,7 @@ class AuthManager {
         alert('Acceso restringido: su cuenta está bloqueada.');
 
         await firebaseAuth.signOut();
-        window.location.href = '/index.html';
+        window.location.href = '/asefweb/';
         return false;
       }
 
@@ -271,7 +271,7 @@ try {
 }
 
       this.showNotification('Sesión cerrada correctamente', 'success');
-      window.location.href = '/index.html';
+      window.location.href = '/asefweb/';
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
       this.showNotification('Error al cerrar sesión', 'error');
