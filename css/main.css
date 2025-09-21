@@ -432,23 +432,43 @@ p {
   z-index: 1000;
 }
 
-.modal-content {
+.modal-content{
   position: relative;
   width: 420px;
   max-width: 90vw;
   margin: 8vh auto;
-  background: #1f2a36;       /* tu estilo actual */
-  color: #fff;
+  padding: 16px 20px 20px;     /* menos padding arriba */
   border-radius: 10px;
-  padding: 24px;
+  background: #223142;         /* tu tono actual */
+  color: #fff;
+  box-sizing: border-box;
 }
 
-.modal .close {
+/* Título visible y sin “bloque vacío” */
+.modal-content h2{
+  margin: 0 28px 12px 0;       /* sin margen arriba, espacio a la derecha por la X */
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff;                 /* aseguro contraste */
+}
+
+/* Botón de cierre (X) bien alineado */
+.modal-content .close{
   position: absolute;
-  right: 14px;
   top: 10px;
-  font-size: 20px;
+  right: 12px;
+  font-size: 18px;
+  line-height: 1;
+  color: #cfd8e3;
   cursor: pointer;
+  user-select: none;
+}
+.modal-content .close:hover{ color:#fff; }
+
+/* Primer grupo del formulario sin salto extra arriba */
+.modal-content .form-group:first-of-type{
+  margin-top: 6px;
 }
 
 
