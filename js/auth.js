@@ -186,7 +186,7 @@ class AuthManager {
       // Cerrar modal y redirigir
       this.hideLoginModal();
       this.showNotification('¡Bienvenido!', 'success');
-      window.location.href = '/pages/socios/dashboard.html';
+      window.location.href = 'pages/socios/dashboard.html';
 
       if (emailEl) emailEl.value = '';
       if (passEl)  passEl.value  = '';
@@ -323,10 +323,10 @@ try {
   checkPageAccess() {
     const currentPage = window.location.pathname;
     const protectedPages = [
-      '/pages/recursos.html',
-      '/pages/socios/dashboard.html',
-      '/pages/socios/sections.html',
-      '/pages/socios/profile.html'
+      'pages/recursos.html',
+      'pages/socios/dashboard.html',
+      'pages/socios/sections.html',
+      'pages/socios/profile.html'
     ];
 
     if (protectedPages.some(page => currentPage.includes(page))) {
