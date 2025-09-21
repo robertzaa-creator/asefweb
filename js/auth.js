@@ -71,69 +71,78 @@ class AuthManager {
   }
 
   setupEventListeners() {
-    // Botón Acceder/Salir (navbar principal)
-    if (this.loginBtn) {
-      this.loginBtn.addEventListener('click', () => {
-        if (this.currentUser) this.signOut();
-        else this.showLoginModal();
-      });
-    }
-
-    // Modal login
-    if (this.loginModal) {
-      const closeBtn = this.loginModal.querySelector('.close');
-      if (closeBtn) closeBtn.addEventListener('click', () => this.hideLoginModal());
-      //window.addEventListener('click', (event) => {
-        //if (event.target === this.loginModal) this.hideLoginModal();
-      //});
-    }
-
-    // Form login
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        this.signIn();
-      });
-    }
-
-    // Toggle formularios
-    const registerLink = document.getElementById('registerLink');
-    if (registerLink) {
-      registerLink.addEventListener('click', (e) => { e.preventDefault(); this.showRegisterForm(); });
-    }
-    const loginLink = document.getElementById('loginLink');
-    if (loginLink) {
-      loginLink.addEventListener('click', (e) => { e.preventDefault(); this.showLoginForm(); });
-    }
-
-    // Botón/Link del sidebar: "Cerrar sesión"
-    const logoutSelectors = [
-      '#logoutBtn',              // tu id actual en el sidebar
-      '#logoutLink',
-      '#logoutSidebar',
-      'a[data-action="logout"]',
-      'button[data-action="logout"]'
-    ];
-    document.querySelectorAll(logoutSelectors.join(',')).forEach(el => {
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.signOut();
-      });
+  // Botón Acceder/Salir (navbar principal)
+  if (this.loginBtn) {
+    this.loginBtn.addEventListener('click', () => {
+      if (this.currentUser) this.signOut();
+      else this.showLoginModal();
     });
-
-    // Link opcional a área de socios (si existe)
-    const sociosLink = document.getElementById('socios-link');
-    if (sociosLink) {
-      sociosLink.addEventListener('click', (e) => {
-        if (!this.currentUser) {
-          e.preventDefault();
-          this.showLoginModal();
-          this.showNotification('Debe iniciar sesión para ingresar al Área de Socios', 'info');
-        }
-      });
-    }
   }
+
+  // Modal login
+  if (this.loginModal) {
+    const closeBtn = this.loginModal.querySelector('.close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.hideLoginModal());
+    }
+    // ❌ quitamos el listener que cerraba el modal al hacer clic afuera
+    // window.addEventListener('click', (event) => {
+    //   if (event.target === this.loginModal) this.hideLoginModal();
+    // });
+  }
+
+  // Form login
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.signIn();
+    });
+  }
+
+  // Toggle formularios
+  const registerLink = document.getElementById('registerLink');
+  if (registerLink) {
+    registerLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.showRegisterForm();
+    });
+  }
+  const loginLink = document.getElementById('loginLink');
+  if (loginLink) {
+    loginLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.showLoginForm();
+    });
+  }
+
+  // Botón/Link del sidebar: "Cerrar sesión"
+  const logoutSelectors = [
+    '#logoutBtn',
+    '#logoutLink',
+    '#logoutSidebar',
+    'a[data-action="logout"]',
+    'button[data-action="logout"]'
+  ];
+  document.querySelectorAll(logoutSelectors.join(',')).forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.signOut();
+    });
+  });
+
+  // Link opcional a área de socios (si existe)
+  const sociosLink = document.getElementById('socios-link');
+  if (sociosLink) {
+    sociosLink.addEventListener('click', (e) => {
+      if (!this.currentUser) {
+        e.preventDefault();
+        this.showLoginModal();
+        this.showNotification('Debe iniciar sesión para ingresar al Área de Socios', 'info');
+      }
+    });
+  }
+}
 
   showLoginModal() {
     if (!this.loginModal) return;
