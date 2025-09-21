@@ -83,9 +83,9 @@ class AuthManager {
     if (this.loginModal) {
       const closeBtn = this.loginModal.querySelector('.close');
       if (closeBtn) closeBtn.addEventListener('click', () => this.hideLoginModal());
-      window.addEventListener('click', (event) => {
-        if (event.target === this.loginModal) this.hideLoginModal();
-      });
+      //window.addEventListener('click', (event) => {
+        //if (event.target === this.loginModal) this.hideLoginModal();
+      //});
     }
 
     // Form login
