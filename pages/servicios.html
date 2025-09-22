@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+    (function () {
+      // Localhost o file:// → base "/"
+      // GitHub Pages → base "/asefweb/"
+      var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+      var base = document.createElement('base');
+      base.href = isLocal ? '/' : '/asefweb/';
+      document.head.prepend(base);
+    })();
+  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios a Socios - ASEF</title>
+    <title>Servicios · ASEF</title>
     <meta name="description" content="Conoce todos los beneficios, asistencias y convenios exclusivos que ASEF ofrece a sus empresas asociadas del sector funerario.">
     
     <link rel="stylesheet" href="css/main.css">
