@@ -343,43 +343,55 @@
     </footer>
 
     <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Acceso para Socios</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn-primary">Ingresar</button>
-                <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
-            </form>
-            <div id="registerForm" style="display: none;">
-                <h2>Registro de Nuevo Socio</h2>
-                <form id="signupForm">
-                    <div class="form-group">
-                        <label for="regEmail">Email:</label>
-                        <input type="email" id="regEmail" name="regEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="regPassword">Contraseña:</label>
-                        <input type="password" id="regPassword" name="regPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="companyName">Nombre de la Empresa:</label>
-                        <input type="text" id="companyName" name="companyName" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Registrarse</button>
-                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
-                </form>
-            </div>
+    <!-- Login Modal -->
+<div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal-content" role="document">
+    <span class="close" aria-label="Cerrar">&times;</span>
+
+    <h2>Acceso para Socios</h2>
+
+    <form id="loginForm" novalidate>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn-primary">Ingresar</button>
+
+      <p class="auth-link">
+        ¿No tiene cuenta?
+        <a href="#" id="registerLink">Registrarse</a>
+      </p>
+    </form>
+
+    <!-- (opcional) formulario de registro deshabilitado -->
+    <div id="registerForm" style="display:none;">
+      <h2>Registro de Nuevo Socio</h2>
+      <form id="signupForm" novalidate>
+        <div class="form-group">
+          <label for="regEmail">Email:</label>
+          <input type="email" id="regEmail" name="regEmail" required>
         </div>
+        <div class="form-group">
+          <label for="regPassword">Contraseña:</label>
+          <input type="password" id="regPassword" name="regPassword" required>
+        </div>
+        <div class="form-group">
+          <label for="companyName">Nombre de la Empresa:</label>
+          <input type="text" id="companyName" name="companyName" required>
+        </div>
+        <button type="submit" class="btn-primary">Registrarse</button>
+        <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
+      </form>
     </div>
+  </div>
+</div>
+
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>

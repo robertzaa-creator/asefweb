@@ -422,39 +422,63 @@ p {
     margin: 0;
 }
 
-/* Modal Styles */
+/* ===== Modal Styles (revisado) ===== */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    animation: fadeIn 0.3s ease;
+  display: none;                 /* se muestra con JS */
+  position: fixed;
+  inset: 0;                      /* top/right/bottom/left = 0 */
+  background: rgba(0,0,0,.6);
+  z-index: 1000;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.modal-content{
+  position: relative;
+  width: 420px;
+  max-width: 90vw;
+  margin: 8vh auto;
+  padding: 24px 24px 22px;       /* +espacio arriba y laterales */
+  border-radius: 10px;
+  background: #223142;           /* fondo oscuro */
+  color: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
 }
 
-.modal-content {
-    background-color: var(--white);
-    margin: 5% auto;
-    padding: 40px;
-    border-radius: var(--border-radius);
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    animation: slideIn 0.3s ease;
+/* Título sin “bloque vacío” arriba y con buen aire abajo */
+.modal-content h2{
+  margin: 8px 32px 20px 0;       /* 8px arriba, 20px abajo */
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #fff;
+  text-align: left;
 }
 
-@keyframes slideIn {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+/* Botón de cierre (X) alineado */
+.modal-content .close{
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 18px;
+  line-height: 1;
+  color: #cfd8e3;
+  cursor: pointer;
+  user-select: none;
 }
+.modal-content .close:hover{ color:#fff; }
+
+/* Espaciados de campos */
+.modal-content .form-group{
+  margin-bottom: 18px;
+}
+.modal-content .form-group:first-of-type{
+  margin-top: 6px;
+}
+
+/* Evita que el overlay “absorba” clics fuera del contenido
+   (el bloqueo real de cierre por clic fuera lo hace el JS) */
+.modal[aria-hidden="false"] { pointer-events: auto; }
+.modal[aria-hidden="false"] .modal-content { pointer-events: auto; }
 
 .close {
     position: absolute;
