@@ -1,37 +1,28 @@
 // js/members.js
 // Evitar doble carga del archivo
 if (window.__MEMBERS_JS__) {
-  console.warn('members.js already loaded; skipping file load.');
+  console.warn('members.js already loaded; skipping.');
 } else {
   window.__MEMBERS_JS__ = true;
 
   (function () {
-    const db = firebaseDb; // uso local, no creamos global "db"
-
-    // ====== BLOQUEO GLOBAL DE DOBLE BOOT ======
-    // Si en algún lado llaman a boot dos veces o se carga el script dos veces,
-    // este flag global garantiza que la inicialización ocurra solo una vez.
-    window.__MEMBERS_BOOTED__ = window.__MEMBERS_BOOTED__ || false;
+    const db = window.firebaseDb;
 
     // ===== helpers =====
     function setText(id, v) { const el = document.getElementById(id); if (el) el.textContent = v; }
-    function fmt(ts) { if (!ts) return '—'; const d = ts?.toDate ? ts.toDate() : new Date(ts); return d.toLocaleString(); }
+    function fmt(ts) { if (!ts) return '—'; const d = ts.toDate ? ts.toDate() : new Date(ts); return d.toLocaleString(); }
 
-    // ===== normalización de perfil =====
+    // ===== normalización mínima de perfil =====
     async function normalizeUserProfile(user) {
+      // No tocamos role/status (tus reglas no lo permiten al owner)
       const ref = db.collection('users').doc(user.uid);
-      let snap = await ref.get();
-      let data = snap.exists ? snap.data() : {};
-      const patch = {};
-      if (!data.role)   patch.role   = 'member';
-      if (!data.status) patch.status = 'active';
-      if (Object.keys(patch).length) {
-        patch.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-        await ref.set(patch, { merge: true });
-      }
+      const snap = await ref.get();
+      const patch = { email: user.email || '' };
+      if (!snap.exists) patch.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+      if (Object.keys(patch).length) await ref.set(patch, { merge: true });
     }
 
-    // ===== auditoría =====
+    // ===== auditoría (no rompe si falla) =====
     async function audit(eventType, user) {
       try {
         await db.collection('loginEvents').add({
@@ -44,42 +35,45 @@ if (window.__MEMBERS_JS__) {
       } catch (e) { console.warn('audit fail', e); }
     }
 
-    // ===== dashboard =====
+    // ===== dashboard KPIs =====
     async function kpis() {
       try {
         const [secs, docs] = await Promise.all([
           db.collection('sections').get(),
           db.collection('documents').get()
         ]);
-
-        // Último ingreso: desde el doc del usuario (no loginEvents)
-        let lastLogin = null;
-        try {
-          const uid = firebaseAuth.currentUser?.uid;
-          if (uid) {
-            const udoc = await db.collection('users').doc(uid).get();
-            lastLogin = udoc.exists ? (udoc.data()?.lastLoginAt || null) : null;
-          }
-        } catch (e) { console.warn('No se pudo leer lastLoginAt del perfil', e); }
-
         setText('statSections', secs.size ?? '—');
         setText('statDocs', docs.size ?? '—');
-        setText('statLastLogin', lastLogin ? fmt(lastLogin) : '—');
-        setText('statDownloads', '0');   // beta
-        setText('statStatus', 'Activo');
       } catch (e) {
-        console.warn('KPIs error:', e);
-        if (e.code === 'permission-denied') {
-          setText('statSections', '—'); setText('statDocs', '—');
-          setText('statLastLogin', '—'); setText('statDownloads', '—');
-          setText('statStatus', 'Revisar permisos');
+        console.warn('KPIs error (collections):', e);
+        setText('statSections', '—'); setText('statDocs', '—');
+      }
+
+      // Estado y último ingreso desde /users/{uid}
+      let status = '—', lastLogin = '—';
+      const u = firebaseAuth.currentUser;
+      if (u) {
+        try {
+          const me = await db.collection('users').doc(u.uid).get();
+          const d = me.data() || {};
+          if (d.status) {
+            const s = String(d.status).toLowerCase();
+            status = (s === 'active' || s === 'activo') ? 'Activo' : d.status;
+          }
+          if (d.lastLoginAt) lastLogin = fmt(d.lastLoginAt);
+        } catch (e) {
+          console.warn('KPIs error (user profile):', e);
         }
       }
+      setText('statStatus', status);
+      setText('statLastLogin', lastLogin);
+      setText('statDownloads', '0'); // beta
     }
 
+    // ===== documentos destacados / últimos =====
     async function latestDocuments() {
       const box = document.getElementById('latestDocs'); if (!box) return;
-      box.innerHTML = ''; // <-- limpiar SIEMPRE antes de renderizar
+      box.innerHTML = '';
       try {
         const qs = await db.collection('documents').orderBy('createdAt', 'desc').limit(6).get();
         if (qs.empty) { box.innerHTML = '<div class="sidebar-muted">No hay documentos</div>'; return; }
@@ -98,13 +92,13 @@ if (window.__MEMBERS_JS__) {
         });
       } catch (e) {
         console.warn('latestDocuments error:', e);
-        if (e.code === 'permission-denied') box.innerHTML = '<div class="sidebar-muted">Permisos insuficientes para ver documentos.</div>';
+        box.innerHTML = '<div class="sidebar-muted">Permisos insuficientes o sin datos.</div>';
       }
     }
 
     async function featuredSections() {
       const box = document.getElementById('featuredSections'); if (!box) return;
-      box.innerHTML = ''; // <-- limpiar SIEMPRE antes de renderizar
+      box.innerHTML = '';
       try {
         const qs = await db.collection('sections').orderBy('createdAt', 'desc').limit(4).get();
         if (qs.empty) { box.innerHTML = '<div class="sidebar-muted">No hay secciones</div>'; return; }
@@ -119,19 +113,16 @@ if (window.__MEMBERS_JS__) {
         });
       } catch (e) {
         console.warn('featuredSections error:', e);
-        if (e.code === 'permission-denied') box.innerHTML = '<div class="sidebar-muted">Permisos insuficientes para ver secciones.</div>';
+        box.innerHTML = '<div class="sidebar-muted">Permisos insuficientes o sin datos.</div>';
       }
     }
 
-    function openDocument(d) {
-      if (!d || !d.fileUrl) return;
-      window.open(d.fileUrl, '_blank', 'noopener');
-    }
+    function openDocument(d) { if (d?.fileUrl) window.open(d.fileUrl, '_blank', 'noopener'); }
 
     // ===== secciones =====
     async function renderSectionsPage() {
       const list = document.getElementById('sectionsList'); if (!list) return;
-      list.innerHTML = ''; // limpiar
+      list.innerHTML = '';
       try {
         const qs = await db.collection('sections').orderBy('createdAt', 'desc').get();
         if (qs.empty) { list.innerHTML = '<div class="sidebar-muted p-3">No hay secciones disponibles.</div>'; return; }
@@ -146,7 +137,7 @@ if (window.__MEMBERS_JS__) {
         });
       } catch (e) {
         console.warn('renderSectionsPage error:', e);
-        list.innerHTML = '<div class="sidebar-muted p-3">No fue posible cargar secciones (permiso o conexión).</div>';
+        list.innerHTML = '<div class="sidebar-muted p-3">No fue posible cargar secciones.</div>';
       }
     }
 
@@ -161,7 +152,7 @@ if (window.__MEMBERS_JS__) {
 
         if (qs.empty) { list.innerHTML = '<div class="sidebar-muted p-2">No hay documentos en esta sección.</div>'; return; }
 
-        list.innerHTML = ''; // limpiar
+        list.innerHTML = '';
         qs.forEach(doc => {
           const d = doc.data();
           const row = document.createElement('div'); row.className = 'list-item';
@@ -174,7 +165,7 @@ if (window.__MEMBERS_JS__) {
         });
       } catch (e) {
         console.warn('renderDocumentsForSection error:', e);
-        list.innerHTML = '<div class="sidebar-muted p-2">No fue posible cargar documentos (permiso o conexión).</div>';
+        list.innerHTML = '<div class="sidebar-muted p-2">No fue posible cargar documentos.</div>';
       }
     }
 
@@ -217,19 +208,15 @@ if (window.__MEMBERS_JS__) {
     }
 
     function toast(msg, type = 'info') {
-      if (window.authManager && typeof window.authManager.showNotification === 'function') {
-        window.authManager.showNotification(msg, type);
-      } else { alert(msg); }
+      if (window.authManager?.showNotification) window.authManager.showNotification(msg, type);
+      else alert(msg);
     }
 
     // ===== exposición =====
+    let started = false;
     async function boot(page) {
-      // BLOQUEO global (garantiza una sola inicialización)
-      if (window.__MEMBERS_BOOTED__) {
-        console.debug('members.boot: already booted, skipping.');
-        return;
-      }
-      window.__MEMBERS_BOOTED__ = true;
+      if (started) return;
+      started = true;
 
       const user = firebaseAuth.currentUser;
       if (user) await normalizeUserProfile(user);
@@ -252,15 +239,10 @@ if (window.__MEMBERS_JS__) {
       }
     }
 
-    // Exponer para otros módulos
     window.members = window.members || {};
     window.members.audit = audit;
     window.members.boot  = boot;
 
-    // Boot automático (si no lo llaman manualmente)
-    document.addEventListener('DOMContentLoaded', () => {
-      // Solo si aún no se booteó
-      if (!window.__MEMBERS_BOOTED__) boot();
-    });
+    document.addEventListener('DOMContentLoaded', () => { if (!started) boot(); });
   })();
 }

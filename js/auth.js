@@ -1,18 +1,22 @@
 // js/auth.js
-// Evita doble carga y fija raíz (local vs GitHub Pages)
-const ROOT = location.pathname.includes('/asefweb/') ? '/asefweb/' : '/';
+// =======================================================
+//  Autenticación + redirecciones robustas (GH Pages / local)
+// =======================================================
 
-if (window.__AUTH_JS__) {
-  console.warn('auth.js already loaded; skipping.');
-} else {
+// Raíz del sitio (funciona en Github Pages /asefweb/ y en local /)
+const ROOT = location.pathname.includes('/asefweb/') ? '/asefweb/' : '/';
+const goto = (path = '') => location.assign(ROOT + String(path).replace(/^\/+/, ''));
+
+// Evitar doble carga del script
+if (!window.__AUTH_JS__) {
   window.__AUTH_JS__ = true;
 
   (function () {
     class AuthManager {
       constructor() {
         this.currentUser = null;
-        this.loginModal = document.getElementById('loginModal'); // existe sólo en index
-        this.loginBtn   = document.getElementById('loginBtn');   // botón "Acceder/Salir" del navbar (index)
+        this.loginModal  = document.getElementById('loginModal');   // modal del index
+        this.loginBtn    = document.getElementById('loginBtn');     // botón Acceder/Salir
         this.init();
       }
 
@@ -24,13 +28,15 @@ if (window.__AUTH_JS__) {
           console.warn('setPersistence warn:', e);
         }
 
-        // Estado de autenticación
+        // Cambios de sesión
         firebaseAuth.onAuthStateChanged(async (user) => {
           this.currentUser = user;
           this.updateUI();
+          // Guardia de páginas protegidas
+          this.guardProtectedPages(user);
         });
 
-        // ====== NAVBAR (Acceder / Salir) ======
+        // --- Botón Acceder/Salir
         if (this.loginBtn) {
           this.loginBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -39,16 +45,7 @@ if (window.__AUTH_JS__) {
           });
         }
 
-        // ====== SIDEBAR (socios) — cerrar sesión si existe ======
-        const logoutEl = document.getElementById('logoutBtn');
-        if (logoutEl) {
-          logoutEl.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.signOut();
-          });
-        }
-
-        // ====== FORM LOGIN ======
+        // --- Form login (index)
         const loginForm = document.getElementById('loginForm');
         if (loginForm) {
           loginForm.addEventListener('submit', (e) => {
@@ -57,47 +54,17 @@ if (window.__AUTH_JS__) {
           });
         }
 
-        // ====== MODAL: wiring y bloqueos ======
-        if (this.loginModal) {
-          // estado accesibilidad por defecto
-          this.loginModal.setAttribute('aria-hidden', 'true');
-
-          // Botón X
-          const closeBtn = this.loginModal.querySelector('.close');
-          if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.hideLoginModal());
-          }
-
-          // 🔒 Bloquear clic en overlay (no cierra, no deja “pasar” el clic)
-          this.loginModal.addEventListener('click', (e) => {
-            if (e.target === this.loginModal) {
-              e.preventDefault();
-              e.stopImmediatePropagation();
-              e.stopPropagation();
-              return false;
-            }
-          }, true);
-
-          // (Opcional) Bloquear ESC mientras el modal está abierto
-          document.addEventListener('keydown', (e) => {
-            if (this.loginModal.style.display === 'block' && e.key === 'Escape') {
-              e.preventDefault();
-              e.stopImmediatePropagation();
-            }
-          }, true);
-        }
-
-        // ====== “Registrarse” → Contacto (CIERRA modal y redirige) ======
-        const regLink = document.getElementById('registerLink');
-        if (regLink) {
-          regLink.addEventListener('click', (e) => {
+        // --- Enlace “Registrarse” → Contacto (siempre a la página correcta)
+        const registerLink = document.getElementById('registerLink');
+        if (registerLink) {
+          registerLink.addEventListener('click', (e) => {
             e.preventDefault();
             if (this.loginModal) this.hideLoginModal();
-            window.location.href = ROOT + 'pages/contacto.html';
+            goto('pages/contacto.html');
           });
         }
 
-        // Si por algún motivo aparece el form de registro, lo anulamos
+        // (Si existiera un form de signup en el modal, lo bloqueamos)
         const signupForm = document.getElementById('signupForm');
         if (signupForm) {
           signupForm.addEventListener('submit', (e) => {
@@ -105,9 +72,20 @@ if (window.__AUTH_JS__) {
             this.showNotification('El registro está deshabilitado. Solicite alta al administrador.', 'warning');
           });
         }
+
+        // --- Cerrar sesión desde sidebar (páginas de socios)
+        ['#logoutBtn', '#logoutLink', '#logoutSidebar', 'a[data-action="logout"]', 'button[data-action="logout"]']
+          .forEach(sel => {
+            document.querySelectorAll(sel).forEach(el => {
+              el.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.signOut();
+              });
+            });
+          });
       }
 
-      // ---- Login
+      // ------------------ LOGIN ------------------
       async signIn() {
         const emailEl = document.getElementById('email');
         const passEl  = document.getElementById('password');
@@ -138,11 +116,15 @@ if (window.__AUTH_JS__) {
           // Auditoría opcional
           try { window.members?.audit && (await window.members.audit('login', u)); } catch (_) {}
 
+          // Cerrar modal, limpiar y notificar
           if (this.loginModal) this.hideLoginModal();
-          this.showNotification('¡Bienvenido!', 'success');
-
           if (emailEl) emailEl.value = '';
           if (passEl)  passEl.value  = '';
+          this.showNotification('¡Bienvenido!', 'success');
+
+          // 👉 Redirigir SIEMPRE al dashboard de socios
+          goto('pages/socios/dashboard.html');
+
         } catch (error) {
           console.error('Error signing in:', error);
           this.showNotification(this.getErrorMessage(error.code), 'error');
@@ -154,7 +136,7 @@ if (window.__AUTH_JS__) {
         }
       }
 
-      // ---- Logout
+      // ------------------ LOGOUT ------------------
       async signOut() {
         try {
           const u = firebaseAuth.currentUser;
@@ -163,15 +145,29 @@ if (window.__AUTH_JS__) {
           await firebaseAuth.signOut();
           this.showNotification('Sesión cerrada correctamente', 'success');
 
-          // Volver a la raíz (funciona en local y en GitHub Pages)
-          setTimeout(() => { window.location.href = ROOT; }, 300);
+          // Volver al home correcto
+          setTimeout(() => goto(''), 300);
         } catch (error) {
           console.error('Error signing out:', error);
           this.showNotification('Error al cerrar sesión', 'error');
         }
       }
 
-      // ---- UI helpers (mínimos)
+      // ------------------ GUARDIAS ------------------
+      guardProtectedPages(user) {
+        // Cualquier HTML dentro de /pages/socios/ + recursos.html
+        const path = location.pathname;
+        const isProtected =
+          /\/pages\/socios\//.test(path) ||
+          /\/pages\/recursos\.html$/.test(path);
+
+        if (!user && isProtected) {
+          this.showNotification('Debe iniciar sesión para acceder a esta página', 'warning');
+          setTimeout(() => goto(''), 500);
+        }
+      }
+
+      // ------------------ UI ------------------
       updateUI() {
         // Navbar (index)
         if (this.loginBtn) {
@@ -184,26 +180,24 @@ if (window.__AUTH_JS__) {
           }
         }
 
-        // Footer de las páginas de socios (si existe)
+        // Footer (si existe en páginas de socios)
         const emailFoot = document.querySelector('.members-foot #userEmail') || document.getElementById('userEmail');
         if (emailFoot) emailFoot.textContent = this.currentUser?.email ?? '—';
       }
 
-      // ---- Modal show/hide con accesibilidad
+      // ------------------ MODAL ------------------
       showLoginModal() {
         if (!this.loginModal) return;
         this.loginModal.style.display = 'block';
-        this.loginModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
       }
       hideLoginModal() {
         if (!this.loginModal) return;
         this.loginModal.style.display = 'none';
-        this.loginModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = 'auto';
       }
 
-      // ---- Utilidades
+      // ------------------ UX helpers ------------------
       getErrorMessage(code) {
         const m = {
           'auth/user-not-found': 'Usuario no encontrado',
