@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="/asefweb/">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASEF · Admin · Usuarios</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../css/main.css" />
+  <link rel="stylesheet" href="../../css/members.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <div class="members-shell" id="app">
+
+    <!-- Sidebar -->
+    <aside class="members-sidebar">
+      <div class="members-brand">
+        <img src="../../dist/vite.svg" alt="ASEF" />
+        <div>Panel Admin</div>
+      </div>
+      <nav class="members-nav">
+        <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a class="active" href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
+        <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+        <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
+        <a href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="members-main">
+
+      <!-- Topbar -->
+      <header class="members-header">
+        <h1>Gestión de Usuarios</h1>
+        <button id="logoutBtn" class="btn logout">
+          <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+        </button>
+      </header>
+
+      <!-- Content -->
+      <section class="members-content">
+        <!-- Tabla de usuarios -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Listado de Usuarios</h2>
+            <div class="actions">
+              <input type="text" id="userSearch" placeholder="Buscar usuario..." />
+              <button id="reloadUsers" class="btn sm">
+                <i class="fa-solid fa-rotate"></i> Recargar
+              </button>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <table class="members-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Estado</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="usersTbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Formulario de invitación -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Invitar Usuario</h2>
+          </div>
+          <div class="card-body">
+            <form id="formInvite" class="form-grid">
+              <input type="text" name="name" placeholder="Nombre" required />
+              <input type="email" name="email" placeholder="Email" required />
+              <select name="role">
+                <option value="member">Miembro</option>
+                <option value="admin">Administrador</option>
+              </select>
+              <button type="submit" class="btn">
+                <i class="fa-solid fa-paper-plane"></i> Crear invitación
+              </button>
+            </form>
+            <div id="inviteResult" class="form-result"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Scripts -->
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+<!-- Inicialización -->
+<script src="../../js/firebase-init.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/members.js"></script>
+<script src="../../js/admin-users.js"></script>
+  <script src="../../js/admin.js"></script>
+</body>
+</html>

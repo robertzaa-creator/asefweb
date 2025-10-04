@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <base href="/asefweb/">
+  <base href="/asefweb/">
+  <base href="/asefweb/">
 <script>
   (function () {
     // Si corro en localhost o en un file:// quiero base "/".
@@ -406,14 +409,15 @@
 
 
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
-    <!-- JavaScript Files -->
-    <script src="js/firebase-config.js"></script>
-    <script src="js/auth.js"></script>
+<!-- Inicialización y lógica global -->
+<script src="js/firebase-init.js"></script>
+<script src="js/auth.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/main.js"></script>

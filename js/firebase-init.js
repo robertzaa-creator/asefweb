@@ -1,4 +1,4 @@
-// js/firebase-config.js
+// js/firebase-init.js
 (function () {
   // Evita ejecutar este archivo más de una vez
   if (window.__FIREBASE_CONFIG_LOADED__) return;

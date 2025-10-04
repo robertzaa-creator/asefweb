@@ -1,153 +1,175 @@
-(() => {
-  const ROOT = location.pathname.includes('/asefweb/') ? '/asefweb/' : '/';
-  const db = firebase.firestore();
-  const auth = firebase.auth();
+// js/admin.js
+// =======================================================
+//  Funciones del Panel de Administración ASEF
+// =======================================================
 
-  const $ = (s) => document.querySelector(s);
-  const $$ = (s) => Array.from(document.querySelectorAll(s));
-  const fmt = (ms) => ms ? new Date(ms).toLocaleString() : '—';
+if (!window.__ADMIN_JS__) {
+  window.__ADMIN_JS__ = true;
 
-  // Tabs
-  $$('.members-nav a').forEach(a => a.addEventListener('click', (e) => {
-    e.preventDefault();
-    const id = a.dataset.tab;
-    $$('.tab').forEach(t => t.classList.add('hidden'));
-    $(`#${id}`).classList.remove('hidden');
-    $$('.members-nav a').forEach(x => x.classList.remove('active'));
-    a.classList.add('active');
-  }));
+  (function () {
+    const db = window.firebaseDb;
+    const auth = window.firebaseAuth;
 
-  // Guard admin
-  async function assertAdmin() {
-    const u = auth.currentUser;
-    if (!u) { location.href = `${ROOT}index.html`; return false; }
-    await u.getIdToken(true);
-    const doc = await db.collection('users').doc(u.uid).get();
-    if (!doc.exists || doc.data().role !== 'admin') {
-      alert('Acceso restringido a administradores.');
-      location.href = `${ROOT}index.html`;
-      return false;
+    class AdminPanel {
+      constructor() {
+        this.user = null;
+        this.init();
+      }
+
+      init() {
+        auth.onAuthStateChanged(async (user) => {
+          this.user = user;
+          if (!user) return;
+
+          // Cargar información de rol
+          const snap = await db.collection("users").doc(user.uid).get();
+          const data = snap.data();
+          const role = data?.role || "member";
+
+          const roleLabel = document.getElementById("adminRole");
+          if (roleLabel) roleLabel.textContent = role.toUpperCase();
+
+          // Carga condicional según la página actual
+          const path = location.pathname;
+
+          if (path.includes("dashboard.html")) {
+            this.loadDashboard();
+          } else if (path.includes("users.html")) {
+            this.loadUsers();
+          } else if (path.includes("sections.html")) {
+            this.loadSections();
+          }
+        });
+      }
+
+      // ------------------ DASHBOARD ------------------
+      async loadDashboard() {
+        console.log("Dashboard cargado correctamente ✅");
+      }
+
+      // ------------------ USUARIOS ------------------
+      async loadUsers() {
+        const tbody = document.getElementById("usersTbody");
+        if (!tbody) return;
+
+        try {
+          const snap = await db.collection("users").get();
+
+          if (snap.empty) {
+            tbody.innerHTML = `<tr><td colspan="5">No hay usuarios registrados</td></tr>`;
+            return;
+          }
+
+          let html = "";
+          snap.forEach((doc) => {
+            const u = doc.data();
+            html += `
+              <tr>
+                <td>${u.name || "-"}</td>
+                <td>${u.email || "-"}</td>
+                <td>${u.status || "Activo"}</td>
+                <td>${u.role || "Miembro"}</td>
+                <td>
+                  <button class="btn sm" data-id="${doc.id}" data-action="edit">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                  </button>
+                  <button class="btn sm danger" data-id="${doc.id}" data-action="delete">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+
+          // Eventos de acción (editar/eliminar)
+          tbody.querySelectorAll("button[data-action]").forEach((btn) => {
+            btn.addEventListener("click", (e) => this.handleUserAction(e));
+          });
+        } catch (err) {
+          console.error("Error al cargar usuarios:", err);
+          if (tbody)
+            tbody.innerHTML = `<tr><td colspan="5">Error al cargar usuarios</td></tr>`;
+        }
+
+        // Recargar manual
+        const reloadBtn = document.getElementById("reloadUsers");
+        if (reloadBtn) reloadBtn.addEventListener("click", () => this.loadUsers());
+      }
+
+      async handleUserAction(e) {
+        const btn = e.currentTarget;
+        const id = btn.dataset.id;
+        const action = btn.dataset.action;
+
+        if (action === "delete") {
+          const ok = confirm("¿Eliminar este usuario?");
+          if (!ok) return;
+          await db.collection("users").doc(id).delete();
+          this.showNotification("Usuario eliminado", "success");
+          this.loadUsers();
+        }
+
+        if (action === "edit") {
+          this.showNotification("Función de edición en desarrollo", "info");
+        }
+      }
+
+      // ------------------ SECCIONES ------------------
+      async loadSections() {
+        const tbody = document.getElementById("sectionsTbody");
+        if (!tbody) return;
+
+        try {
+          const snap = await db.collection("sections").get();
+          if (snap.empty) {
+            tbody.innerHTML = `<tr><td colspan="3">No hay secciones creadas</td></tr>`;
+            return;
+          }
+
+          let html = "";
+          snap.forEach((doc) => {
+            const s = doc.data();
+            html += `
+              <tr>
+                <td>${s.name || "-"}</td>
+                <td>${s.description || "-"}</td>
+                <td>${s.visible ? "Visible" : "Oculta"}</td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+        } catch (err) {
+          console.error("Error al cargar secciones:", err);
+          tbody.innerHTML = `<tr><td colspan="3">Error al cargar secciones</td></tr>`;
+        }
+      }
+
+      // ------------------ NOTIFICACIONES ------------------
+      showNotification(message, type = "info") {
+        const n = document.createElement("div");
+        n.className = `notification notification-${type}`;
+        n.innerHTML = `
+          <div class="notification-content">
+            <i class="fas fa-${
+              type === "success"
+                ? "check-circle"
+                : type === "error"
+                ? "exclamation-circle"
+                : type === "warning"
+                ? "exclamation-triangle"
+                : "info-circle"
+            }"></i>
+            <span>${message}</span>
+          </div>
+        `;
+        document.body.appendChild(n);
+        setTimeout(() => n.remove(), 3500);
+      }
     }
-    $('#adminUserBadge').style.display = 'inline-flex';
-    return true;
-  }
 
-  // ----- Invitaciones -----
-  function randomToken(len = 40) {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let t = '';
-    for (let i = 0; i < len; i++) t += chars[Math.floor(Math.random() * chars.length)];
-    return t;
-  }
-
-  const formInvite = $('#formInvite');
-  const inviteResult = $('#inviteResult');
-
-  formInvite?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = e.target.name.value.trim();
-    const email = e.target.email.value.trim().toLowerCase();
-    const role = e.target.role.value;
-    const token = randomToken(44);
-    const now = Date.now();
-
-    await db.collection('invites').doc(token).set({
-      name, email, role, status: 'pending', createdAt: now, createdBy: auth.currentUser.uid,
-      expiresAt: now + 1000*60*60*48
+    document.addEventListener("DOMContentLoaded", () => {
+      window.adminPanel = new AdminPanel();
     });
-
-    const link = `${location.origin}${ROOT}pages/auth/accept-invite.html?token=${encodeURIComponent(token)}`;
-    inviteResult.innerHTML = `
-      <div class="alert success">
-        Invitación creada:<br/><code>${link}</code>
-      </div>`;
-    e.target.reset();
-  });
-
-  // ----- Usuarios -----
-  const usersTbody = $('#usersTbody');
-  $('#reloadUsers')?.addEventListener('click', loadUsers);
-  $('#userSearch')?.addEventListener('input', loadUsers);
-
-  async function loadUsers() {
-    const q = ($('#userSearch')?.value || '').toLowerCase();
-    const snap = await db.collection('users').orderBy('createdAt','desc').limit(200).get();
-    usersTbody.innerHTML = '';
-    snap.forEach(doc => {
-      const u = doc.data();
-      if (q && !(u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q))) return;
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${u.name||'—'}</td>
-        <td>${u.email||'—'}</td>
-        <td><span class="chip ${u.status==='active'?'chip-success':'chip-warning'}">${u.status||'—'}</span></td>
-        <td>${u.role||'—'}</td>
-        <td>
-          <button class="btn xs toggle-status" data-id="${doc.id}" data-status="${u.status}">
-            ${u.status==='active'?'Bloquear':'Activar'}
-          </button>
-          <button class="btn xs role-admin" data-id="${doc.id}">Hacer admin</button>
-        </td>`;
-      usersTbody.appendChild(tr);
-    });
-
-    $$('.toggle-status').forEach(b=>b.addEventListener('click',async()=>{
-      const id = b.dataset.id;
-      const next = (b.dataset.status==='active')?'blocked':'active';
-      await db.collection('users').doc(id).update({status:next,updatedAt:Date.now()});
-      loadUsers();
-    }));
-
-    $$('.role-admin').forEach(b=>b.addEventListener('click',async()=>{
-      const id = b.dataset.id;
-      await db.collection('users').doc(id).update({role:'admin',updatedAt:Date.now()});
-      loadUsers();
-    }));
-  }
-
-  // ----- Secciones -----
-  const formCreateSection = $('#formCreateSection');
-  const sectionsTbody = $('#sectionsTbody');
-
-  formCreateSection?.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const title = e.target.title.value.trim();
-    const order = Number(e.target.order.value);
-    const active = e.target.active.checked;
-    const now = Date.now();
-    await db.collection('sections').add({title,order,active,createdAt:now,updatedAt:now,createdBy:auth.currentUser.uid});
-    e.target.reset(); e.target.order.value=0; e.target.active.checked=true;
-    loadSections();
-  });
-
-  async function loadSections() {
-    const snap = await db.collection('sections').orderBy('order').get();
-    sectionsTbody.innerHTML='';
-    snap.forEach(d=>{
-      const s=d.data();
-      const tr=document.createElement('tr');
-      tr.innerHTML=`
-        <td>${s.order||0}</td>
-        <td>${s.title}</td>
-        <td>${s.active?'Sí':'No'}</td>
-        <td>
-          <button class="btn xs danger del" data-id="${d.id}"><i class="fa-regular fa-trash-can"></i></button>
-        </td>`;
-      sectionsTbody.appendChild(tr);
-    });
-    $$('.del').forEach(b=>b.addEventListener('click',async()=>{
-      if(!confirm('Eliminar sección?'))return;
-      await db.collection('sections').doc(b.dataset.id).delete();
-      loadSections();
-    }));
-  }
-
-  // Boot
-  auth.onAuthStateChanged(async (u)=>{
-    if(!u){ location.href=`${ROOT}index.html`; return; }
-    if(await assertAdmin()){
-      loadUsers();
-      loadSections();
-    }
-  });
-})();
+  })();
+}

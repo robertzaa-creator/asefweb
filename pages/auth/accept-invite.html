@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <base href="/asefweb/">
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aceptar invitación · ASEF</title>
@@ -22,9 +23,16 @@
     </div>
   </main>
 
-  <script src="../../js/firebase-app-compat.js"></script>
-  <script src="../../js/firebase-auth-compat.js"></script>
-  <script src="../../js/firebase-firestore-compat.js"></script>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+<!-- Inicialización -->
+<script src="../../js/firebase-init.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/members.js"></script>
   <script src="../../js/accept-invite.js"></script>
 </body>
 </html>

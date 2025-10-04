@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="/asefweb/">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ASEF · Admin · Secciones</title>
+  <link rel="stylesheet" href="../../css/main.css"/>
+  <link rel="stylesheet" href="../../css/members.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="members-shell" id="app">
+    <aside class="members-sidebar">
+      <div class="members-brand"><img src="../../dist/vite.svg" alt="ASEF"/><div>Panel Admin</div></div>
+      <nav class="members-nav">
+        <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
+        <a class="active" href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+        <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
+        <a href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
+      </nav>
+    </aside>
+
+    <main class="members-main">
+      <header class="members-header">
+        <h1>Gestión de Secciones</h1>
+        <button id="logoutBtn" class="btn">Cerrar sesión</button>
+      </header>
+
+      <section class="members-content">
+        <div class="card">
+          <h2>Crear Sección</h2>
+          <form id="formCreateSection" class="form">
+            <input type="text" name="title" placeholder="Título de la sección" required/>
+            <input type="number" name="order" value="0" required/>
+            <label><input type="checkbox" name="active" checked/> Activa</label>
+            <button type="submit" class="btn">Crear sección</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Listado de Secciones</h2>
+          <table class="members-table">
+            <thead><tr><th>Orden</th><th>Título</th><th>Activa</th><th>Acciones</th></tr></thead>
+            <tbody id="sectionsTbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+<!-- Inicialización -->
+<script src="../../js/firebase-init.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/members.js"></script>
+  <script src="../../js/admin.js"></script>
+</body>
+</html>
