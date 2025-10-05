@@ -1,40 +1,25 @@
-import os
 import re
 
-# --- Configuración ---
-BASE_DIR = os.path.join(os.getcwd(), "js")  # carpeta donde están tus JS
-PATTERN = re.compile(r"\?\s+\.", re.UNICODE)  # detecta '? .' con espacios
+file_path = r"js/admin.js"   # ajustá la ruta si está en otra carpeta
 
-def clean_js_file(path):
-    with open(path, "r", encoding="utf-8", errors="ignore") as f:
-        original = f.read()
+# lee el archivo crudo
+with open(file_path, "rb") as f:
+    content = f.read()
 
-    # 1️⃣ Corrige '? .' → '?.'
-    fixed = PATTERN.sub("?.", original)
+# decodifica ignorando caracteres corruptos
+text = content.decode("utf-8", errors="ignore")
 
-    # 2️⃣ Elimina caracteres invisibles de control (como BOM o U+FEFF)
-    fixed = fixed.replace("\ufeff", "")
-    fixed = re.sub(r"[\u200b\u200c\u200d\u2060]", "", fixed)
+# 🔹 elimina caracteres invisibles problemáticos
+text = text.replace("\ufeff", "")  # BOM
+text = re.sub(r"[\u00A0\u200B\u200C\u200D\uFEFF]", "", text)  # non-breaking/invisibles
 
-    # 3️⃣ Limpieza general de espacios en blanco innecesarios
-    fixed = re.sub(r"[ \t]+(\n)", r"\1", fixed)
+# 🔹 corrige todas las variantes erróneas de '? .' con o sin espacios
+text = re.sub(r"\?\s*\.", "?.", text)
 
-    if fixed != original:
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(fixed)
-        print(f"✅ Corregido: {path}")
-    else:
-        print(f"✔ Sin cambios: {path}")
+# 🔹 limpia espacios antes de saltos de línea
+text = re.sub(r"[ \t]+(\r?\n)", r"\1", text)
 
-def run_cleanup():
-    print("🔍 Buscando archivos JS para limpiar...\n")
-    count = 0
-    for root, _, files in os.walk(BASE_DIR):
-        for file in files:
-            if file.endswith(".js"):
-                count += 1
-                clean_js_file(os.path.join(root, file))
-    print(f"\n✨ Limpieza completa. {count} archivos escaneados en {BASE_DIR}")
+with open(file_path, "w", encoding="utf-8") as f:
+    f.write(text)
 
-if __name__ == "__main__":
-    run_cleanup()
+print("✅ Archivo js/admin.js limpiado correctamente.")
