@@ -1,7 +1,8 @@
 // /js/auth.js
-// Mantiene compatibilidad con tu estructura actual (Vite + Firebase + carpeta /pages/socios/)
+// Mantiene compatibilidad con la estructura actual (Vite + Firebase + /pages/socios/ + /pages/admin/)
 const ROOT = location.pathname.includes('/asefweb/') ? '/asefweb/' : '/';
 const SOCIOS_PATH = ROOT + "pages/socios/";
+const ADMIN_PATH = ROOT + "pages/admin/";
 
 if (window.__AUTH_JS__) {
     console.warn('auth.js ya cargado; se omite.');
@@ -12,7 +13,6 @@ if (window.__AUTH_JS__) {
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Elementos (si existen en la página actual)
         const loginBtn = document.getElementById('loginBtn');
         const logoutBtn = document.getElementById('logoutBtn');
         const loginForm = document.getElementById('loginForm');
@@ -25,16 +25,14 @@ if (window.__AUTH_JS__) {
                 const password = e.target.password.value;
 
                 try {
-                    // Persistencia por pestaña
                     await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
-
                     const { user } = await auth.signInWithEmailAndPassword(email, password);
                     console.log('[auth.js] Sesión iniciada:', user.email);
 
-                    // Alta/actualización básica en Firestore
                     const userRef = db.collection('users').doc(user.uid);
                     const snap = await userRef.get();
 
+                    // Alta o actualización
                     if (!snap.exists) {
                         await userRef.set({
                             uid: user.uid,
@@ -52,8 +50,23 @@ if (window.__AUTH_JS__) {
                         });
                     }
 
-                    // Redirige al área de socios
-                    window.location.href = SOCIOS_PATH + 'dashboard.html';
+                    // 🔹 Leer el rol y estado actualizados
+                    const data = (await userRef.get()).data() || {};
+                    const role = data.role || 'member';
+                    const status = (data.status || 'active').toLowerCase();
+
+                    if (status !== 'active') {
+                        alert('Tu cuenta está bloqueada o inactiva.');
+                        await auth.signOut();
+                        return;
+                    }
+
+                    // 🔹 Redirección según rol
+                    if (role === 'admin') {
+                        window.location.href = ADMIN_PATH + 'dashboard.html';
+                    } else {
+                        window.location.href = SOCIOS_PATH + 'dashboard.html';
+                    }
                 } catch (err) {
                     console.error('[auth.js] Error al iniciar sesión:', err);
                     alert('Error al iniciar sesión. Verifique sus credenciales.');
@@ -84,32 +97,42 @@ if (window.__AUTH_JS__) {
 
             if (!user) {
                 if (!isPublic) {
-                    console.warn('[auth.js] Usuario no autenticado, redirigiendo a inicio…');
+                    console.warn('[auth.js] Usuario no autenticado → redirigiendo a inicio');
                     window.location.href = ROOT + 'index.html';
-                } else {
-                    console.info('[auth.js] Usuario no autenticado (página pública).');
                 }
                 return;
             }
 
             console.info('[auth.js] Sesión activa:', user.email);
 
-            // Actualiza último login
+            // Actualiza lastLoginAt
             try {
                 await db.collection('users').doc(user.uid).update({
                     lastLoginAt: firebase.firestore.FieldValue.serverTimestamp(),
                 });
             } catch (err) {
-                console.error('[auth.js] No se pudo actualizar lastLoginAt:', err);
+                console.warn('[auth.js] No se pudo actualizar lastLoginAt:', err);
             }
 
-            // Redirige automáticamente si el usuario está en una página pública
+            // 🔹 Cargar datos del usuario para saber su rol
+            let role = 'member';
+            try {
+                const snap = await db.collection('users').doc(user.uid).get();
+                if (snap.exists) role = snap.data().role || 'member';
+            } catch (err) {
+                console.warn('[auth.js] Error leyendo rol del usuario:', err);
+            }
+
+            // Si está en página pública → redirigir según rol
             if (isPublic) {
-                console.log('[auth.js] Redirigiendo al dashboard de socios…');
-                window.location.href = SOCIOS_PATH + 'dashboard.html';
+                if (role === 'admin') {
+                    window.location.href = ADMIN_PATH + 'dashboard.html';
+                } else {
+                    window.location.href = SOCIOS_PATH + 'dashboard.html';
+                }
             }
 
-            // Si existe botón de navbar, lo volvemos “Salir”
+            // Actualiza botón de sesión si existe
             if (loginBtn) {
                 loginBtn.textContent = 'Salir';
                 loginBtn.onclick = async(e) => {
