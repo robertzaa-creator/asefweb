@@ -12,7 +12,7 @@ class CarouselManager {
 
     init() {
         if (this.totalSlides === 0) return;
-        
+
         this.startAutoPlay();
         this.setupEventListeners();
         this.showSlide(0);

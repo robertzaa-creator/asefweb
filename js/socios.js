@@ -133,7 +133,7 @@ if (window.__MEMBERS_JS__) {
             }
         }
 
-        function openDocument(d) { if (d ? .fileUrl) window.open(d.fileUrl, '_blank', 'noopener'); }
+        function openDocument(d) { if (d ?.fileUrl) window.open(d.fileUrl, '_blank', 'noopener'); }
 
         // ===== secciones =====
         async function renderSectionsPage() {
@@ -238,7 +238,7 @@ if (window.__MEMBERS_JS__) {
         }
 
         function toast(msg, type = 'info') {
-            if (window.authManager ? .showNotification) window.authManager.showNotification(msg, type);
+            if (window.authManager ?.showNotification) window.authManager.showNotification(msg, type);
             else alert(msg);
         }
 

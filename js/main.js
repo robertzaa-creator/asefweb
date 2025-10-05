@@ -296,10 +296,10 @@ class ASEFApp {
     setupAccessibilityFeatures() {
         // Keyboard navigation improvements
         this.setupKeyboardNavigation();
-        
+
         // Skip to content link
         this.createSkipLink();
-        
+
         // Focus management
         this.manageFocus();
     }
@@ -308,7 +308,7 @@ class ASEFApp {
         // Add keyboard support for interactive elements
         document.querySelectorAll('.card, .service-card, .news-card').forEach(element => {
             element.setAttribute('tabindex', '0');
-            
+
             element.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     const link = element.querySelector('a');

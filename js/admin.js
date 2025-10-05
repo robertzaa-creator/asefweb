@@ -7,7 +7,6 @@ if (!window.__ADMIN_JS__) {
     window.__ADMIN_JS__ = true;
 
     (function() {
-        // 🔹 Espera a que Firebase esté inicializado antes de usarlo
         async function waitForFirebase() {
             let retries = 10;
             while ((!window.firebaseDb || !window.firebaseAuth) && retries > 0) {
@@ -17,13 +16,10 @@ if (!window.__ADMIN_JS__) {
             if (!window.firebaseDb) throw new Error("Firestore no inicializado");
             return {
                 db: window.firebaseDb,
-                auth: window.firebaseAuth
+                auth: window.firebaseAuth,
             };
         }
 
-        // =======================================================
-        //  Clase principal del panel admin
-        // =======================================================
         class AdminPanel {
             constructor() {
                 this.user = null;
@@ -39,7 +35,6 @@ if (!window.__ADMIN_JS__) {
                     this.auth = auth;
                     console.log("[admin.js] ✅ Firebase listo para AdminPanel.");
 
-                    // Observa el estado de autenticación
                     auth.onAuthStateChanged(async(user) => {
                         this.user = user;
                         if (!user) return;
@@ -47,13 +42,12 @@ if (!window.__ADMIN_JS__) {
                         try {
                             const snap = await db.collection("users").doc(user.uid).get();
                             const data = snap.data();
-                            const role = data ? .role || "member";
+                            const role = data ?.role || "member"; // ✅ limpio
 
                             const roleLabel = document.getElementById("adminRole");
                             if (roleLabel) roleLabel.textContent = role.toUpperCase();
 
                             const path = location.pathname;
-
                             if (path.includes("dashboard.html")) {
                                 this.loadDashboard();
                             } else if (path.includes("users.html")) {
@@ -74,16 +68,10 @@ if (!window.__ADMIN_JS__) {
                 }
             }
 
-            // =======================================================
-            //  DASHBOARD
-            // =======================================================
             async loadDashboard() {
                 console.log("[admin.js] Dashboard cargado correctamente ✅");
             }
 
-            // =======================================================
-            //  USUARIOS
-            // =======================================================
             async loadUsers() {
                 const db = this.db;
                 const tbody = document.getElementById("usersTbody");
@@ -91,7 +79,6 @@ if (!window.__ADMIN_JS__) {
 
                 try {
                     const snap = await db.collection("users").orderBy("createdAt", "desc").get();
-
                     if (snap.empty) {
                         tbody.innerHTML = `<tr><td colspan="5">No hay usuarios registrados</td></tr>`;
                         return;
@@ -114,12 +101,10 @@ if (!window.__ADMIN_JS__) {
                     <i class="fa-regular fa-trash-can"></i>
                   </button>
                 </td>
-              </tr>
-            `;
+              </tr>`;
                     });
                     tbody.innerHTML = html;
 
-                    // Eventos de acción (editar/eliminar)
                     tbody.querySelectorAll("button[data-action]").forEach((btn) => {
                         btn.addEventListener("click", (e) => this.handleUserAction(e));
                     });
@@ -129,7 +114,7 @@ if (!window.__ADMIN_JS__) {
                 }
 
                 const reloadBtn = document.getElementById("reloadUsers");
-                if (reloadBtn) reloadBtn.addEventListener("click", () => this.loadUsers());
+                reloadBtn ?.addEventListener("click", () => this.loadUsers()); // ✅ limpio
             }
 
             async handleUserAction(e) {
@@ -156,9 +141,6 @@ if (!window.__ADMIN_JS__) {
                 }
             }
 
-            // =======================================================
-            //  SECCIONES
-            // =======================================================
             async loadSections() {
                 const db = this.db;
                 const tbody = document.getElementById("sectionsTbody");
@@ -179,8 +161,7 @@ if (!window.__ADMIN_JS__) {
                 <td>${s.name || "-"}</td>
                 <td>${s.description || "-"}</td>
                 <td>${s.visible ? "Visible" : "Oculta"}</td>
-              </tr>
-            `;
+              </tr>`;
                     });
                     tbody.innerHTML = html;
                 } catch (err) {
@@ -189,23 +170,14 @@ if (!window.__ADMIN_JS__) {
                 }
             }
 
-            // =======================================================
-            //  DOCUMENTOS (placeholder)
-            // =======================================================
             async loadDocuments() {
                 console.log("[admin.js] Documentos: módulo en preparación 📄");
             }
 
-            // =======================================================
-            //  NOTICIAS (placeholder)
-            // =======================================================
             async loadNews() {
                 console.log("[admin.js] Noticias: módulo en preparación 📰");
             }
 
-            // =======================================================
-            //  NOTIFICACIONES
-            // =======================================================
             showNotification(message, type = "info") {
                 const n = document.createElement("div");
                 n.className = `notification notification-${type}`;
@@ -221,16 +193,12 @@ if (!window.__ADMIN_JS__) {
                 : "info-circle"
             }"></i>
             <span>${message}</span>
-          </div>
-        `;
+          </div>`;
                 document.body.appendChild(n);
                 setTimeout(() => n.remove(), 3500);
             }
         }
 
-        // =======================================================
-        //  Inicialización global
-        // =======================================================
         document.addEventListener("DOMContentLoaded", () => {
             window.adminPanel = new AdminPanel();
         });
