@@ -1,0 +1,50 @@
+/**
+ * setUserRole.js — script para asignar role y status a un usuario de Firebase Auth
+ * Uso:
+ *   node setUserRole.js <UID> <role> <status>
+ * Ejemplo:
+ *   node setUserRole.js XyZ123abc admin active
+ */
+
+import admin from "firebase-admin";
+import fs from "fs";
+
+// Inicializa Firebase Admin
+if (!fs.existsSync("../serviceAccountKey.json")) {
+  console.error("❌ Faltante: debes colocar serviceAccountKey.json en la raíz del proyecto.");
+  console.error("→ Descargalo desde Firebase Console > Configuración del Proyecto > Cuentas de servicio.");
+  process.exit(1);
+}
+
+const serviceAccount = JSON.parse(fs.readFileSync("../serviceAccountKey.json", "utf8"));
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const args = process.argv.slice(2);
+if (args.length < 3) {
+  console.log("Uso correcto: node setUserRole.js <UID> <role> <status>");
+  console.log("Ejemplo: node setUserRole.js abC123 member active");
+  process.exit(1);
+}
+
+const [uid, role, status] = args;
+
+async function setRole() {
+  try {
+    await admin.auth().setCustomUserClaims(uid, { role, status });
+    const user = await admin.auth().getUser(uid);
+    console.log(`✅ Usuario actualizado:
+  Email: ${user.email}
+  UID: ${uid}
+  Role: ${role}
+  Status: ${status}`);
+    process.exit(0);
+  } catch (err) {
+    console.error("❌ Error al asignar role/status:", err);
+    process.exit(1);
+  }
+}
+
+setRole();

@@ -18,11 +18,13 @@ if (!window.__FIREBASE_INIT__) {
     const app = firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+    const storage = firebase.storage();
 
     // --- Exposición global ---
     window.firebaseApp = app;
     window.firebaseAuth = auth;
     window.firebaseDB = db;
+    window.firebaseStorage = storage;
 
-    console.log('[Firebase] Inicializado correctamente');
+    console.log("[Firebase] Inicializado correctamente");
 }

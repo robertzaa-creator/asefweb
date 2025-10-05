@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helpers
+    function isSignedIn() { return request.auth != null; }
+    function userDoc() {
+      return isSignedIn() ? get(/databases/$(database)/documents/users/$(request.auth.uid)) : null;
+    }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.role == 'admin' ||
+        (userDoc() != null && userDoc().data.role == 'admin')
+      );
+    }
+    function isActiveMember() {
+      return isSignedIn() && (userDoc() != null && userDoc().data.status == 'active');
+    }
+
+    // USERS
+    match /users/{uid} {
+      // crear: dueño o admin
+      allow create: if isSignedIn() && (isOwner(uid) || isAdmin());
+
+      // leer: dueño o admin
+      allow read: if isOwner(uid) || isAdmin();
+
+      // actualizar:
+      // - dueño: puede actualizar su doc, pero NO puede cambiar role/status si ya existían
+      // - admin: puede todo
+      allow update: if isSignedIn() && (
+        (
+          isOwner(uid) &&
+          (
+            (!resource.data.keys().hasAny(['role'])   || request.resource.data.role   == resource.data.role) &&
+            (!resource.data.keys().hasAny(['status']) || request.resource.data.status == resource.data.status)
+          )
+        )
+        || isAdmin()
+      );
+
+      allow delete: if false;
+    }
+
+    // INVITES (para alta de usuarios vía invitación)
+    match /invites/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // SOCIOS (solo lectura para activos; escritura admin)
+    match /sections/{id} {
+      allow read: if isActiveMember();
+      allow write: if isAdmin();
+    }
+    match /subsections/{id} {
+      allow read: if isActiveMember();
+      allow write: if isAdmin();
+    }
+    match /documents/{id} {
+      allow read: if isActiveMember();
+      allow write: if isAdmin();
+    }
+
+    // Público (fase futura)
+    match /news/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /newsletters/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Auditoría (login/logout)
+    match /loginEvents/{id} {
+      allow create: if isSignedIn(); // cualquiera logueado registra login/logout
+      allow read: if isAdmin();      // solo admin lee auditoría
+      allow update, delete: if false;
+    }
+  }
+}

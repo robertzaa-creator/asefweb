@@ -1,0 +1,9 @@
+{
+  "name": "asef-functions",
+  "description": "Cloud Functions para gestión de usuarios ASEF",
+  "main": "setUserRole.js",
+  "type": "module",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}

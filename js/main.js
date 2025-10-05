@@ -16,7 +16,7 @@ class ASEFApp {
     setupContactForm() {
         const contactForm = document.getElementById('contactForm');
         if (contactForm) {
-            contactForm.addEventListener('submit', async (e) => {
+            contactForm.addEventListener('submit', async(e) => {
                 e.preventDefault();
                 await this.handleContactSubmission(e.target);
             });
@@ -26,7 +26,7 @@ class ASEFApp {
     async handleContactSubmission(form) {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-        
+
         // Show loading state
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
@@ -36,7 +36,7 @@ class ASEFApp {
         try {
             // Simulate API call - replace with actual endpoint
             await this.simulateAPICall(2000);
-            
+
             // Save to Firebase (if needed)
             if (window.firebaseDb) {
                 await window.firebaseDb.collection('contactMessages').add({
@@ -50,9 +50,9 @@ class ASEFApp {
             if (window.authManager) {
                 window.authManager.showNotification('Mensaje enviado correctamente. Nos pondremos en contacto pronto.', 'success');
             }
-            
+
             form.reset();
-            
+
         } catch (error) {
             console.error('Error sending message:', error);
             if (window.authManager) {
@@ -78,13 +78,13 @@ class ASEFApp {
         if (!resultsContainer) return;
 
         const items = resultsContainer.querySelectorAll('.searchable-item');
-        
+
         items.forEach(item => {
             const text = item.textContent.toLowerCase();
             const matches = text.includes(query.toLowerCase());
-            
+
             item.style.display = matches ? 'block' : 'none';
-            
+
             // Add highlight effect
             if (matches && query.length > 2) {
                 this.highlightSearchTerm(item, query);
@@ -113,7 +113,7 @@ class ASEFApp {
 
             const text = textNode.textContent;
             const regex = new RegExp(`(${term})`, 'gi');
-            
+
             if (regex.test(text)) {
                 const highlightedText = text.replace(regex, '<mark>$1</mark>');
                 const wrapper = document.createElement('span');
@@ -126,7 +126,7 @@ class ASEFApp {
     setupNewsletterForm() {
         const newsletterForm = document.getElementById('newsletterForm');
         if (newsletterForm) {
-            newsletterForm.addEventListener('submit', async (e) => {
+            newsletterForm.addEventListener('submit', async(e) => {
                 e.preventDefault();
                 await this.handleNewsletterSubscription(e.target);
             });
@@ -136,7 +136,7 @@ class ASEFApp {
     async handleNewsletterSubscription(form) {
         const email = form.querySelector('input[type="email"]').value;
         const submitBtn = form.querySelector('button[type="submit"]');
-        
+
         submitBtn.innerHTML = '<span class="loading"></span> Suscribiendo...';
         submitBtn.disabled = true;
 
@@ -153,9 +153,9 @@ class ASEFApp {
             if (window.authManager) {
                 window.authManager.showNotification('¡Suscripción exitosa! Recibirá nuestro newsletter.', 'success');
             }
-            
+
             form.reset();
-            
+
         } catch (error) {
             console.error('Error subscribing to newsletter:', error);
             if (window.authManager) {
@@ -170,10 +170,10 @@ class ASEFApp {
     async loadDynamicContent() {
         // Load news articles
         await this.loadNews();
-        
+
         // Load funeral homes
         await this.loadFuneralHomes();
-        
+
         // Load events
         await this.loadEvents();
     }
@@ -185,8 +185,7 @@ class ASEFApp {
             if (!newsContainer) return;
 
             // Sample news data
-            const news = [
-                {
+            const news = [{
                     title: 'Nueva Normativa para Servicios Funerarios',
                     excerpt: 'Se establecen nuevos protocolos de calidad para empresas del sector...',
                     date: '2024-12-15',
@@ -201,7 +200,7 @@ class ASEFApp {
             ];
 
             this.renderNews(news, newsContainer);
-            
+
         } catch (error) {
             console.error('Error loading news:', error);
         }
@@ -223,8 +222,7 @@ class ASEFApp {
 
     async loadFuneralHomes() {
         // Sample data - in production this would come from database
-        const funeralHomes = [
-            {
+        const funeralHomes = [{
                 name: 'Funeraria San José',
                 location: 'La Plata',
                 phone: '(0221) 423-1234',
@@ -245,7 +243,7 @@ class ASEFApp {
     }
 
     renderFuneralHomes(homes, container) {
-        container.innerHTML = homes.map(home => `
+            container.innerHTML = homes.map(home => `
             <div class="funeral-home-card searchable-item">
                 <h3>${home.name}</h3>
                 <p><i class="fas fa-map-marker-alt"></i> ${home.location}</p>
@@ -409,8 +407,45 @@ class ASEFApp {
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.asefApp = new ASEFApp();
-});
+  const loginBtn   = document.getElementById('loginBtn');
+  const loginModal = document.getElementById('loginModal');
+  const closeModal = document.getElementById('closeModal');
 
-// Export for external use
-window.ASEFApp = ASEFApp;
+  if (!loginBtn || !loginModal) {
+    console.info('[main.js] Sin loginBtn o loginModal en esta página (OK).');
+    return;
+  }
+
+  const showModal = () => {
+    // Quita clases de oculto que puedas tener
+    loginModal.classList.remove('hidden', 'is-hidden');
+    // Agrega clases de visible que puedas usar
+    loginModal.classList.add('open', 'is-open', 'show');
+    // Fallback inline (por si el CSS depende de display)
+    loginModal.style.display = 'block';
+    loginModal.removeAttribute('aria-hidden');
+  };
+
+  const hideModal = () => {
+    loginModal.classList.add('hidden', 'is-hidden');
+    loginModal.classList.remove('open', 'is-open', 'show');
+    loginModal.style.display = 'none';
+    loginModal.setAttribute('aria-hidden', 'true');
+  };
+
+  // Abrir modal solo si el botón sigue diciendo “Acceder”
+  loginBtn.addEventListener('click', (e) => {
+    const label = loginBtn.textContent.trim().toLowerCase();
+    if (label === 'acceder') {
+      e.preventDefault();
+      showModal();
+    }
+  });
+
+  // Cerrar
+  closeModal?.addEventListener('click', hideModal);
+  loginModal.addEventListener('click', (e) => { if (e.target === loginModal) hideModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideModal(); });
+
+  console.log('ASEF Website initialized');
+});

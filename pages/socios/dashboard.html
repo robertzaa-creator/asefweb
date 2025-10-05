@@ -2,26 +2,30 @@
 <html lang="es">
 
 <head>
-    <script>
-        (function() {
-            // Si corre en localhost → usa rutas relativas
-            // En GitHub Pages → usa /asefweb/
-            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-            var base = document.createElement('base');
-            base.href = isLocal ? '../../' : '/asefweb/';
-            document.head.prepend(base);
-        })();
-    </script>
+<script>
+(function() {
+  const isLocal = location.hostname === 'localhost' ||
+                  location.hostname === '127.0.0.1' ||
+                  location.protocol === 'file:';
+  const base = document.createElement('base');
+  base.href = isLocal ? '/pages/socios/' : '/asefweb/pages/socios/';
+  document.head.prepend(base);
+})();
+</script>
+
+
+
+    
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socios · Dashboard</title>
 
     <!-- Estilos -->
-    <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/members.css" />
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="../../css/members.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-
 
 <body>
     <div class="members-shell" id="app">
@@ -94,62 +98,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
     <!-- Inicialización -->
-    <script src="js/firebase-init.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/members.js"></script>
+    <script src="../../js/firebase-init.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/members.js"></script>
 
-    <script>
-        // Protección de sesión
-        firebaseAuth.onAuthStateChanged(async(user) => {
-            if (!user) {
-                console.warn("Usuario no autenticado → redirigiendo al inicio...");
-                window.location.href = "index.html";
-                return;
-            }
-
-            // Mostrar email
-            document.getElementById("userEmail").textContent = user.email;
-
-            // Verificar si está activo
-            const userRef = firebaseDB.collection("users").doc(user.uid);
-            const snap = await userRef.get();
-            if (!snap.exists) {
-                console.warn("Usuario sin registro en Firestore → cerrando sesión...");
-                await firebaseAuth.signOut();
-                window.location.href = "index.html";
-                return;
-            }
-
-            const data = snap.data();
-            if (data.status !== "active") {
-                alert("Tu cuenta está suspendida o inactiva.");
-                await firebaseAuth.signOut();
-                window.location.href = "index.html";
-                return;
-            }
-
-            // Mostrar stats mínimos
-            document.getElementById("statStatus").textContent = data.status;
-            document.getElementById("statLastLogin").textContent =
-                data.lastLoginAt ? .toDate ?
-                data.lastLoginAt.toDate().toLocaleString("es-AR") :
-                "—";
-        });
-
-        // Botón Cerrar sesión
-        const logoutBtn = document.getElementById("logoutBtn");
-        if (logoutBtn) {
-            logoutBtn.addEventListener("click", async(e) => {
-                e.preventDefault();
-                try {
-                    await firebaseAuth.signOut();
-                    window.location.href = "index.html";
-                } catch (err) {
-                    console.error("Error al cerrar sesión:", err);
-                }
-            });
-        }
-    </script>
+    
 </body>
 
 </html>
