@@ -23,15 +23,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recursos para Socios - ASEF</title>
     <meta name="description" content="Área exclusiva para socios de ASEF. Acceso a documentos, reglamentos, instructivos y recursos técnicos del sector funerario.">
-    
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/navigation.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -166,7 +166,7 @@
                 <div class="container">
                     <h2>Categorías de Recursos</h2>
                     <div class="categories-grid">
-                        
+
                         <!-- Normativas -->
                         <div class="category-section">
                             <div class="category-header">
@@ -479,7 +479,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Check authentication status on page load
             checkAuthentication();
-            
+
             // Override auth manager to show resources when authenticated
             if (window.firebaseAuth) {
                 window.firebaseAuth.onAuthStateChanged((user) => {
@@ -523,19 +523,19 @@
         function downloadDocument(filename) {
             // In a real application, this would trigger actual file download
             // For demo purposes, we'll simulate the download
-            
+
             if (window.authManager) {
                 window.authManager.showNotification(`Descargando ${filename}...`, 'info');
-                
+
                 // Simulate download delay
                 setTimeout(() => {
                     window.authManager.showNotification('Descarga completada', 'success');
-                    
+
                     // Create a sample downloadable content
                     const sampleContent = createSampleDocument(filename);
                     const blob = new Blob([sampleContent], {type: getFileType(filename)});
                     const url = window.URL.createObjectURL(blob);
-                    
+
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = filename;
@@ -543,7 +543,7 @@
                     a.click();
                     document.body.removeChild(a);
                     window.URL.revokeObjectURL(url);
-                    
+
                 }, 1500);
             }
         }
@@ -551,7 +551,7 @@
         function previewDocument(filename) {
             const modal = document.getElementById('documentModal');
             const preview = document.getElementById('documentPreview');
-            
+
             // Create preview content
             preview.innerHTML = createDocumentPreview(filename);
             modal.style.display = 'block';
@@ -635,7 +635,7 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
         function createDocumentPreview(filename) {
             const content = createSampleDocument(filename);
             const fileType = filename.split('.').pop().toLowerCase();
-            
+
             return `
                 <div class="document-preview-header">
                     <h3><i class="fas fa-file-${getFileIcon(fileType)}"></i> ${filename}</h3>
@@ -1044,35 +1044,35 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             .page-header h1 {
                 font-size: 2.5rem;
             }
-            
+
             .member-check-content {
                 padding: 40px 20px;
             }
-            
+
             .search-bar {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
+
             .search-input-container {
                 min-width: auto;
             }
-            
+
             .filter-controls {
                 flex-wrap: wrap;
             }
-            
+
             .document-item {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
-            
+
             .document-actions {
                 width: 100%;
                 justify-content: center;
             }
-            
+
             .update-item {
                 flex-direction: column;
                 text-align: center;

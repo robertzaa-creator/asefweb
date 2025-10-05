@@ -17,17 +17,25 @@ if (!window.__ADMIN_JS__) {
     (function() {
 
         async function waitForFirebase() {
-            let retries = 20;
-            while ((!window.firebaseDb || !window.firebaseAuth) && retries > 0) {
-                await new Promise(r => setTimeout(r, 200));
+            let retries = 20; // más tiempo de espera
+            while (retries > 0) {
+                if (
+                    window.firebase &&
+                    firebase.apps ? .length &&
+                    window.firebaseDb &&
+                    window.firebaseAuth
+                ) {
+                    return {
+                        db: window.firebaseDb,
+                        auth: window.firebaseAuth,
+                    };
+                }
+                await new Promise(r => setTimeout(r, 300));
                 retries--;
             }
-            if (!window.firebaseDb) throw new Error("Firestore no inicializado");
-            return {
-                db: window.firebaseDb,
-                auth: window.firebaseAuth
-            };
+            throw new Error("Firestore no inicializado");
         }
+
 
 
 
