@@ -1,110 +1,113 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<script>
-  (function () {
-    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-    var base = document.createElement('base');
-    base.href = isLocal ? '/' : '/asefweb/';
-    document.head.prepend(base);
-  })();
-</script>
-<meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ASEF · Panel Admin</title>
-  <link rel="stylesheet" href="../../css/main.css"/>
-  <link rel="stylesheet" href="../../css/members.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script>
+        (function() {
+            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+            var base = document.createElement('base');
+            base.href = isLocal ? '/' : '/asefweb/';
+            document.head.prepend(base);
+        })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASEF · Panel Admin</title>
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="../../css/members.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
-  <div class="members-shell" id="app">
-    <!-- Sidebar -->
-    <aside class="members-sidebar">
-      <div class="members-brand">
-        <img src="../../dist/vite.svg" alt="ASEF"/>
-        <div>Panel Admin</div>
-      </div>
-      <nav class="members-nav">
-        <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-        <a href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
-        <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-        <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
-        <a href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
-      </nav>
-    </aside>
+    <div class="members-shell" id="app">
+        <!-- Sidebar -->
+        <aside class="members-sidebar">
+            <div class="members-brand">
+                <img src="../../dist/vite.svg" alt="ASEF" />
+                <div>Panel Admin</div>
+            </div>
+            <nav class="members-nav">
+                <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
+                <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+                <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
+                <a href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
+            </nav>
+        </aside>
 
-    <!-- Main -->
-    <main class="members-main">
-      <!-- Topbar -->
-      <header class="members-topbar">
-<script>
-  (function () {
-    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-    var base = document.createElement('base');
-    base.href = isLocal ? '/' : '/asefweb/';
-    document.head.prepend(base);
-  })();
-</script>
+        <!-- Main -->
+        <main class="members-main">
+            <!-- Topbar -->
+            <header class="members-topbar">
+                <script>
+                    (function() {
+                        var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+                        var base = document.createElement('base');
+                        base.href = isLocal ? '/' : '/asefweb/';
+                        document.head.prepend(base);
+                    })();
+                </script>
 
-        <h2 class="members-title">Dashboard de Administración</h2>
-        <div class="actions">
-          <span id="adminUserBadge" class="chip chip-success" style="display:none;">ADMIN</span>
-          <button id="logoutBtn" class="btn btn-primary">Cerrar sesión</button>
-        </div>
-      </header>
+                <h2 class="members-title">Dashboard de Administración</h2>
+                <div class="actions">
+                    <span id="adminUserBadge" class="chip chip-success" style="display:none;">ADMIN</span>
+                    <button id="logoutBtn" class="btn btn-primary">Cerrar sesión</button>
+                </div>
+            </header>
 
-      <!-- Content -->
-      <section class="members-content grid">
-  <div class="card">
-    <i class="fa-solid fa-users"></i>
-    <h2>Usuarios</h2>
-    <p>Gestiona roles, estado y accesos.</p>
-    <a href="./users.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/users.html';">
+            <!-- Content -->
+            <section class="members-content grid">
+                <div class="card">
+                    <i class="fa-solid fa-users"></i>
+                    <h2>Usuarios</h2>
+                    <p>Gestiona roles, estado y accesos.</p>
+                    <a href="./users.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/users.html';">
       Ir a Usuarios
     </a>
-  </div>
+                </div>
 
-  <div class="card">
-    <i class="fa-regular fa-folder-open"></i>
-    <h2>Secciones</h2>
-    <p>Configura las secciones del área de socios.</p>
-    <a href="./sections.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/sections.html';">
+                <div class="card">
+                    <i class="fa-regular fa-folder-open"></i>
+                    <h2>Secciones</h2>
+                    <p>Configura las secciones del área de socios.</p>
+                    <a href="./sections.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/sections.html';">
       Ir a Secciones
     </a>
-  </div>
+                </div>
 
-  <div class="card">
-    <i class="fa-regular fa-file-pdf"></i>
-    <h2>Documentos</h2>
-    <p>Sube y organiza recursos disponibles.</p>
-    <a href="./documents.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/documents.html';">
+                <div class="card">
+                    <i class="fa-regular fa-file-pdf"></i>
+                    <h2>Documentos</h2>
+                    <p>Sube y organiza recursos disponibles.</p>
+                    <a href="./documents.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/documents.html';">
       Ir a Documentos
     </a>
-  </div>
+                </div>
 
-  <div class="card">
-    <i class="fa-regular fa-newspaper"></i>
-    <h2>Noticias</h2>
-    <p>Publica comunicados y novedades.</p>
-    <a href="./news.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/news.html';">
+                <div class="card">
+                    <i class="fa-regular fa-newspaper"></i>
+                    <h2>Noticias</h2>
+                    <p>Publica comunicados y novedades.</p>
+                    <a href="./news.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/news.html';">
       Ir a Noticias
     </a>
-  </div>
-</section>
-    </main>
-  </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
-  <!-- Scripts -->
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <!-- Scripts -->
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
-<!-- Inicialización -->
-<script src="../../js/firebase-init.js"></script>
-<script src="../../js/auth.js"></script>
-<script src="../../js/members.js"></script>
-  <script src="../../js/admin.js"></script>
+    <!-- Inicialización -->
+    <script src="../../js/firebase-init.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/members.js"></script>
+    <script src="../../js/admin.js"></script>
 </body>
+
 </html>

@@ -1,86 +1,155 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <script>
-    (function () {
-      // Localhost o file:// → base "/"
-      // GitHub Pages → base "/asefweb/"
-      var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-      var base = document.createElement('base');
-      base.href = isLocal ? '/' : '/asefweb/';
-      document.head.prepend(base);
-    })();
+        (function() {
+            // Si corre en localhost → usa rutas relativas
+            // En GitHub Pages → usa /asefweb/
+            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+            var base = document.createElement('base');
+            base.href = isLocal ? '../../' : '/asefweb/';
+            document.head.prepend(base);
+        })();
     </script>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Socios · Dashboard</title>
-  <link rel="stylesheet" href="css/main.css"/>
-  <link rel="stylesheet" href="css/members.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socios · Dashboard</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/members.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
+
 <body>
-<div class="members-shell" id="app">
-  <!-- Sidebar -->
-  <aside class="members-sidebar">
-    <div class="members-brand">
-      <img src="../../dist/vite.svg" alt="ASEF"/>
-      <div>Área de Socios</div>
+    <div class="members-shell" id="app">
+        <!-- Sidebar -->
+        <aside class="members-sidebar">
+            <div class="members-brand">
+                <img src="../../dist/vite.svg" alt="ASEF" />
+                <div>Área de Socios</div>
+            </div>
+            <nav class="members-nav">
+                <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+                <a href="./profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+                <a id="logoutBtn" href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+            </nav>
+            <div class="members-foot sidebar-muted">
+                <div>Conectado: <span id="userEmail">—</span></div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="members-main">
+            <div class="members-topbar">
+                <div class="members-title">Dashboard</div>
+                <input class="input" id="dashSearch" placeholder="Buscar documentos o secciones..." />
+            </div>
+
+            <div class="members-content">
+                <div class="grid stats" id="quickStats">
+                    <div class="card">
+                        <h3>Secciones</h3>
+                        <div class="kpi" id="statSections">—</div>
+                    </div>
+                    <div class="card">
+                        <h3>Documentos</h3>
+                        <div class="kpi" id="statDocs">—</div>
+                    </div>
+                    <div class="card">
+                        <h3>Último ingreso</h3>
+                        <div class="kpi" id="statLastLogin">—</div>
+                    </div>
+                    <div class="card">
+                        <h3>Descargas (mes)</h3>
+                        <div class="kpi" id="statDownloads">0 <small>beta</small></div>
+                    </div>
+                    <div class="card">
+                        <h3>Estado de cuenta</h3>
+                        <div class="kpi"><span id="statStatus">—</span></div>
+                    </div>
+                </div>
+
+                <div class="grid" style="grid-template-columns: 2fr 1.2fr; margin-top:18px;">
+                    <div class="card">
+                        <h3>Últimos documentos agregados</h3>
+                        <div class="list" id="latestDocs"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Secciones destacadas</h3>
+                        <div class="list" id="featuredSections"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-    <nav class="members-nav">
-      <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-      <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-      <a href="./profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
-      <a id="logoutBtn" href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
-    </nav>
-    <div class="members-foot sidebar-muted">
-      <div>Conectado: <span id="userEmail">—</span></div>
-    </div>
-  </aside>
 
-  <!-- Main -->
-  <main class="members-main">
-    <div class="members-topbar">
-      <div class="members-title">Dashboard</div>
-      <input class="input" id="dashSearch" placeholder="Buscar documentos o secciones..." />
-    </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
-    <div class="members-content">
-      <!-- Quick Stats -->
-      <div class="grid stats" id="quickStats">
-        <div class="card"><h3>Secciones</h3><div class="kpi" id="statSections">—</div></div>
-        <div class="card"><h3>Documentos</h3><div class="kpi" id="statDocs">—</div></div>
-        <div class="card"><h3>Último ingreso</h3><div class="kpi" id="statLastLogin">—</div></div>
-        <div class="card"><h3>Descargas (mes)</h3><div class="kpi" id="statDownloads">0 <small>beta</small></div></div>
-        <div class="card"><h3>Estado de cuenta</h3><div class="kpi"><span id="statStatus">—</span></div></div>
-      </div>
+    <!-- Inicialización -->
+    <script src="js/firebase-init.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/members.js"></script>
 
-      <!-- Avisos / Novedades -->
-      <div class="grid" style="grid-template-columns: 2fr 1.2fr; margin-top:18px;">
-        <div class="card">
-          <h3>Últimos documentos agregados</h3>
-          <div class="list" id="latestDocs"></div>
-        </div>
-        <div class="card">
-          <h3>Secciones destacadas</h3>
-          <div class="list" id="featuredSections"></div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
+    <script>
+        // Protección de sesión
+        firebaseAuth.onAuthStateChanged(async(user) => {
+            if (!user) {
+                console.warn("Usuario no autenticado → redirigiendo al inicio...");
+                window.location.href = "index.html";
+                return;
+            }
 
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+            // Mostrar email
+            document.getElementById("userEmail").textContent = user.email;
 
-<!-- Inicialización -->
-<script src="../../js/firebase-init.js"></script>
-<script src="../../js/auth.js"></script>
-<script src="../../js/members.js"></script>
-<script src="js/members.js"></script>
-<script>window.members?.boot && window.members.boot('dashboard')</script>
+            // Verificar si está activo
+            const userRef = firebaseDB.collection("users").doc(user.uid);
+            const snap = await userRef.get();
+            if (!snap.exists) {
+                console.warn("Usuario sin registro en Firestore → cerrando sesión...");
+                await firebaseAuth.signOut();
+                window.location.href = "index.html";
+                return;
+            }
 
+            const data = snap.data();
+            if (data.status !== "active") {
+                alert("Tu cuenta está suspendida o inactiva.");
+                await firebaseAuth.signOut();
+                window.location.href = "index.html";
+                return;
+            }
+
+            // Mostrar stats mínimos
+            document.getElementById("statStatus").textContent = data.status;
+            document.getElementById("statLastLogin").textContent =
+                data.lastLoginAt ? .toDate ?
+                data.lastLoginAt.toDate().toLocaleString("es-AR") :
+                "—";
+        });
+
+        // Botón Cerrar sesión
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", async(e) => {
+                e.preventDefault();
+                try {
+                    await firebaseAuth.signOut();
+                    window.location.href = "index.html";
+                } catch (err) {
+                    console.error("Error al cerrar sesión:", err);
+                }
+            });
+        }
+    </script>
 </body>
+
 </html>

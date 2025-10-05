@@ -1,88 +1,104 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <base href="/asefweb/">
-  <base href="/asefweb/">
-  <base href="/asefweb/">
-<script>
-  (function () {
-    // Si corro en localhost o en un file:// quiero base "/".
-    // En GitHub Pages quiero "/asefweb/".
-    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-    var base = document.createElement('base');
-    base.href = isLocal ? '/' : '/asefweb/';
-    // Debe insertarse antes de que el browser resuelva los <link>/<script>
-    document.head.prepend(base);
-  })();
-</script>
+    <base href="/asefweb/">
+    <base href="/asefweb/">
+    <base href="/asefweb/">
+    <script>
+        (function() {
+            // Si corro en localhost o en un file:// quiero base "/".
+            // En GitHub Pages quiero "/asefweb/".
+            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+            var base = document.createElement('base');
+            base.href = isLocal ? '/' : '/asefweb/';
+            // Debe insertarse antes de que el browser resuelva los <link>/<script>
+            document.head.prepend(base);
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires</title>
-    
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="Asociación de Empresas de Servicios Fúnebres de la Provincia de Buenos Aires. Representamos y nucleamos a las empresas del sector funerario brindando servicios, capacitación y asistencia profesional.">
     <meta name="keywords" content="servicios funerarios, empresas fúnebres, Buenos Aires, ASEF, cementerios, funeral, servicios mortuorios">
     <meta name="author" content="ASEF">
     <meta name="robots" content="index, follow">
-    
+
     <!-- Open Graph Tags -->
     <meta property="og:title" content="ASEF - Asociación de Empresas de Servicios Fúnebres">
     <meta property="og:description" content="Representamos y nucleamos a las empresas del sector funerario de Buenos Aires">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://asef.com.ar">
     <meta property="og:image" content="https://images.pexels.com/photos/6980868/pexels-photo-6980868.jpeg">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://asef.com.ar">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
-    
+
     <!-- CSS Files -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/navigation.css">
     <link rel="stylesheet" href="css/carousel.css">
     <link rel="stylesheet" href="css/responsive.css">
-    
+
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Ajustes visuales del modal (más aire en título/contenedor) -->
     <style id="login-modal-tweaks">
-      /* contenedor del modal */
-      #loginModal .modal-content {
-        padding: 32px 26px 24px !important;   /* ↑ más espacio arriba */
-        box-sizing: border-box;
-      }
-      /* título del modal */
-      #loginModal .modal-content h2{
-        margin: 12px 36px 22px 0 !important;  /* 12 arriba, 22 abajo */
-        font-size: 20px !important;
-        font-weight: 600 !important;
-        line-height: 1.3 !important;
-        color: #fff !important;
-        text-align: left !important;
-      }
-      /* botón X */
-      #loginModal .modal-content .close{
-        position: absolute !important;
-        top: 12px !important;
-        right: 14px !important;
-        font-size: 18px !important;
-        line-height: 1 !important;
-        color: #cfd8e3 !important;
-        cursor: pointer;
-      }
-      #loginModal .modal-content .close:hover{ color:#fff !important; }
-      /* separación entre campos */
-      #loginModal .form-group{ margin-bottom: 18px !important; }
-      #loginModal .form-group:first-of-type{ margin-top: 6px !important; }
+        /* contenedor del modal */
+        
+        #loginModal .modal-content {
+            padding: 32px 26px 24px !important;
+            /* ↑ más espacio arriba */
+            box-sizing: border-box;
+        }
+        /* título del modal */
+        
+        #loginModal .modal-content h2 {
+            margin: 12px 36px 22px 0 !important;
+            /* 12 arriba, 22 abajo */
+            font-size: 20px !important;
+            font-weight: 600 !important;
+            line-height: 1.3 !important;
+            color: #fff !important;
+            text-align: left !important;
+        }
+        /* botón X */
+        
+        #loginModal .modal-content .close {
+            position: absolute !important;
+            top: 12px !important;
+            right: 14px !important;
+            font-size: 18px !important;
+            line-height: 1 !important;
+            color: #cfd8e3 !important;
+            cursor: pointer;
+        }
+        
+        #loginModal .modal-content .close:hover {
+            color: #fff !important;
+        }
+        /* separación entre campos */
+        
+        #loginModal .form-group {
+            margin-bottom: 18px !important;
+        }
+        
+        #loginModal .form-group:first-of-type {
+            margin-top: 6px !important;
+        }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -130,9 +146,9 @@
                         <a href="pages/contacto.html" class="nav-link">Contacto</a>
                     </li>
                     <li class="nav-item">
-                        <button id="loginBtn" class="btn-login">
-                            <i class="fas fa-user"></i> Acceder
-                        </button>
+                        <button id="loginBtn" class="btn btn-primary">Acceder</button>
+
+
                     </li>
                 </ul>
                 <div class="hamburger">
@@ -195,7 +211,8 @@
                 <div class="about-content">
                     <div class="about-text">
                         <h2>Nuestra Misión</h2>
-                        <p>La Asociación de Empresas de Servicios Fúnebres de la Provincia de Buenos Aires (ASEF) tiene como misión principal representar, nuclear y defender los intereses de las empresas del sector funerario, promoviendo la excelencia en el servicio y la profesionalización del sector.</p>
+                        <p>La Asociación de Empresas de Servicios Fúnebres de la Provincia de Buenos Aires (ASEF) tiene como misión principal representar, nuclear y defender los intereses de las empresas del sector funerario, promoviendo la excelencia en
+                            el servicio y la profesionalización del sector.</p>
                         <div class="stats">
                             <div class="stat-item">
                                 <h3>200+</h3>
@@ -359,97 +376,95 @@
 
     <!-- Login Modal -->
     <!-- Login Modal -->
-<div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="modal-content" role="document">
-    <span class="close" aria-label="Cerrar">&times;</span>
+    <div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-content" role="document">
+            <span class="close" aria-label="Cerrar">&times;</span>
 
-    <h2>Acceso para Socios</h2>
+            <h2>Acceso para Socios</h2>
 
-    <form id="loginForm" novalidate>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-      <div class="form-group">
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required>
-      </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
 
-      <button type="submit" class="btn-primary">Ingresar</button>
+                <button type="submit" class="btn-primary">Ingresar</button>
 
-      <p class="auth-link">
-        ¿No tiene cuenta?
-        <a href="#" id="registerLink">Registrarse</a>
-      </p>
-    </form>
+                <p class="auth-link">
+                    ¿No tiene cuenta?
+                    <a href="#" id="registerLink">Registrarse</a>
+                </p>
+            </form>
 
-    <!-- (opcional) formulario de registro deshabilitado -->
-    <div id="registerForm" style="display:none;">
-      <h2>Registro de Nuevo Socio</h2>
-      <form id="signupForm" novalidate>
-        <div class="form-group">
-          <label for="regEmail">Email:</label>
-          <input type="email" id="regEmail" name="regEmail" required>
+            <!-- (opcional) formulario de registro deshabilitado -->
+            <div id="registerForm" style="display:none;">
+                <h2>Registro de Nuevo Socio</h2>
+                <form id="signupForm" novalidate>
+                    <div class="form-group">
+                        <label for="regEmail">Email:</label>
+                        <input type="email" id="regEmail" name="regEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Contraseña:</label>
+                        <input type="password" id="regPassword" name="regPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyName">Nombre de la Empresa:</label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Registrarse</button>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="regPassword">Contraseña:</label>
-          <input type="password" id="regPassword" name="regPassword" required>
-        </div>
-        <div class="form-group">
-          <label for="companyName">Nombre de la Empresa:</label>
-          <input type="text" id="companyName" name="companyName" required>
-        </div>
-        <button type="submit" class="btn-primary">Registrarse</button>
-        <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
-      </form>
     </div>
-  </div>
-</div>
 
 
-    <!-- Firebase SDKs -->
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
-<!-- Inicialización y lógica global -->
-<script src="js/firebase-init.js"></script>
-<script src="js/auth.js"></script>
+    <script src="js/firebase-init.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/main.js"></script>
 
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires",
-        "description": "Representamos y nucleamos a las empresas del sector funerario de la Provincia de Buenos Aires",
-        "url": "https://asef.com.ar",
-        "logo": "https://asef.com.ar/logo.png",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+54-11-4567-8900",
-            "contactType": "Customer Service",
-            "areaServed": "AR",
-            "availableLanguage": "Spanish"
-        },
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Av. Corrientes 1234",
-            "addressLocality": "Ciudad Autónoma de Buenos Aires",
-            "addressCountry": "AR"
-        },
-        "sameAs": [
-            "https://www.facebook.com/asef",
-            "https://www.twitter.com/asef",
-            "https://www.linkedin.com/company/asef"
-        ]
-    }
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires",
+            "description": "Representamos y nucleamos a las empresas del sector funerario de la Provincia de Buenos Aires",
+            "url": "https://asef.com.ar",
+            "logo": "https://asef.com.ar/logo.png",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+54-11-4567-8900",
+                "contactType": "Customer Service",
+                "areaServed": "AR",
+                "availableLanguage": "Spanish"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Av. Corrientes 1234",
+                "addressLocality": "Ciudad Autónoma de Buenos Aires",
+                "addressCountry": "AR"
+            },
+            "sameAs": [
+                "https://www.facebook.com/asef",
+                "https://www.twitter.com/asef",
+                "https://www.linkedin.com/company/asef"
+            ]
+        }
     </script>
 </body>
+
 </html>
