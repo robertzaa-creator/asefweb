@@ -1,124 +1,95 @@
 import os
 import re
-from pathlib import Path
-import shutil
 
-# === CONFIGURACIÓN GENERAL ===
-ROOT = Path(__file__).parent
-PAGES = ROOT / "pages"
-SOCIOS = PAGES / "socios"
-CSS_DIR = ROOT / "css"
-JS_DIR = ROOT / "js"
+# Directorio raíz del proyecto (ajustá según tu entorno)
+ROOT = "C:/asefweb"
 
-# === RUTAS BASE ===
-BASE_LOCAL = "/"
-BASE_GHPAGES = "/asefweb/"
-JS_FILES = ["firebase-init.js", "auth.js", "members.js", "socios.js"]
-CSS_FILES = ["main.css", "members.css", "navigation.css", "responsive.css"]
-
-# === BLOQUE <base> CORRECTO ===
-BASE_BLOCK = """<script>
-(function() {
-  const isLocal = location.hostname === 'localhost' ||
-                  location.hostname === '127.0.0.1' ||
-                  location.protocol === 'file:';
-  const base = document.createElement('base');
-  base.href = isLocal ? '/pages/socios/' : '/asefweb/pages/socios/';
-  document.head.prepend(base);
-})();
-</script>
-"""
-
-# === Corrige el bloque <base> dinámico ===
-def fix_html_base(file_path: Path):
-    content = file_path.read_text(encoding="utf-8")
-
-    # Elimina cualquier bloque <script> previo con base.href o location.hostname
-    content = re.sub(
-        r"<script>.*?(base\.href|location\.hostname).*?</script>",
-        "",
-        content,
-        flags=re.S
-    )
-
-    # Inserta el bloque base limpio después de <head>
-    content = re.sub(r"(<head[^>]*>)", r"\1\n" + BASE_BLOCK, content, count=1)
-
-    file_path.write_text(content, encoding="utf-8")
-    print(f"✅ Base corregida → {file_path.name}")
-
-# === Corrige rutas CSS ===
-def fix_html_css(file_path: Path):
-    content = file_path.read_text(encoding="utf-8")
-    for css_name in CSS_FILES:
-        # Si aparece href="css/archivo.css", reemplaza con ../../css/
-        content = re.sub(
-            rf'href=["\']css/{css_name}["\']',
-            f'href="../../css/{css_name}"',
-            content
-        )
-    file_path.write_text(content, encoding="utf-8")
-    print(f"🎨 CSS corregido → {file_path.name}")
-
-# === Corrige rutas JS ===
-def fix_html_scripts(file_path: Path):
-    content = file_path.read_text(encoding="utf-8")
-    for js_name in JS_FILES:
-        content = re.sub(
-            rf'src=["\']js/{js_name}["\']',
-            f'src="../../js/{js_name}"',
-            content
-        )
-    file_path.write_text(content, encoding="utf-8")
-    print(f"🧩 JS corregido → {file_path.name}")
-
-# === Procesa todos los HTML de /pages/socios/ ===
-def process_socios_html():
-    if not SOCIOS.exists():
-        print("⚠️ No existe la carpeta /pages/socios/")
+def fix_admin_users_js():
+    path = os.path.join(ROOT, "js", "admin-users.js")
+    if not os.path.exists(path):
+        print("⚠️ No se encontró admin-users.js")
         return
-    for file in SOCIOS.glob("*.html"):
-        fix_html_base(file)
-        fix_html_css(file)
-        fix_html_scripts(file)
 
-# === Procesa todos los HTML del proyecto (para CSS/JS globales) ===
-def process_all_html():
-    for file in ROOT.rglob("*.html"):
-        if "node_modules" in str(file) or "dist" in str(file):
-            continue
-        fix_html_css(file)
-        fix_html_scripts(file)
+    with open(path, "r", encoding="utf-8") as f:
+        content = f.read()
 
-# === Reescribe vite.config.js correcto ===
-def ensure_vite_config():
-    vite_file = ROOT / "vite.config.js"
-    vite_content = """import { defineConfig } from 'vite';
+    fixed = re.sub(r"\?\s+\.", "?.", content)
+    if fixed != content:
+        backup = path + ".bak"
+        with open(backup, "w", encoding="utf-8") as f:
+            f.write(content)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(fixed)
+        print("✅ Corregido optional chaining en admin-users.js (backup creado).")
+    else:
+        print("✔ admin-users.js no requiere cambios.")
 
-export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/asefweb/' : '/',
-  build: { outDir: 'dist' },
-  server: { port: 5173 }
-});
-"""
-    vite_file.write_text(vite_content, encoding="utf-8")
-    print("🧱 vite.config.js regenerado correctamente.")
 
-# === Limpia caché .vite ===
-def cleanup_vite_cache():
-    vite_cache = ROOT / "node_modules" / ".vite"
-    if vite_cache.exists():
-        try:
-            shutil.rmtree(vite_cache)
-            print("🧹 Cache .vite eliminada (será regenerada por Vite).")
-        except Exception as e:
-            print(f"⚠️ No se pudo eliminar la cache .vite: {e}")
+def fix_firebase_init_js():
+    path = os.path.join(ROOT, "js", "firebase-init.js")
+    if not os.path.exists(path):
+        print("⚠️ No se encontró firebase-init.js")
+        return
 
-# === MAIN ===
-if __name__ == "__main__":
+    with open(path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    if "window.firebaseStorage" not in content:
+        if "firebase.initializeApp" in content:
+            insert_line = "\nwindow.firebaseStorage = firebase.storage();"
+            fixed = re.sub(r"(firebase\.initializeApp\(.*?\);)", r"\1" + insert_line, content)
+            backup = path + ".bak"
+            with open(backup, "w", encoding="utf-8") as f:
+                f.write(content)
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(fixed)
+            print("✅ Agregado window.firebaseStorage en firebase-init.js (backup creado).")
+        else:
+            print("⚠️ firebase.initializeApp no encontrado, no se hizo modificación.")
+    else:
+        print("✔ firebase-init.js ya define firebaseStorage.")
+
+
+def ensure_storage_sdk_in_html():
+    """Busca todos los .html del proyecto y asegura que tengan firebase-storage.js"""
+    storage_script = '<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>'
+    count = 0
+
+    for root, _, files in os.walk(ROOT):
+        for file in files:
+            if file.endswith(".html"):
+                path = os.path.join(root, file)
+                with open(path, "r", encoding="utf-8") as f:
+                    content = f.read()
+
+                if "firebase-storage.js" not in content and "firebase-app.js" in content:
+                    backup = path + ".bak"
+                    with open(backup, "w", encoding="utf-8") as f:
+                        f.write(content)
+
+                    fixed = content.replace(
+                        '<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>',
+                        '<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>\n' +
+                        storage_script
+                    )
+
+                    with open(path, "w", encoding="utf-8") as f:
+                        f.write(fixed)
+
+                    count += 1
+                    print(f"✅ Añadido firebase-storage.js en {file}")
+
+    if count == 0:
+        print("✔ Todos los HTML ya contienen firebase-storage.js.")
+
+
+def main():
     print("🔧 Corrigiendo estructura ASEF...")
-    process_socios_html()
-    process_all_html()
-    ensure_vite_config()
-    cleanup_vite_cache()
-    print("✅ Proyecto alineado correctamente para localhost y GitHub Pages.")
+    fix_admin_users_js()
+    fix_firebase_init_js()
+    ensure_storage_sdk_in_html()
+    print("\n✅ Correcciones completadas sin afectar módulos funcionales.")
+
+
+if __name__ == "__main__":
+    main()

@@ -174,67 +174,6 @@
         }
     </style>
 </head>
-<!-- 🔹 Modal para editar usuario -->
-<div id="editUserModal" class="modal hidden" style="
-  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-  display: none; align-items: center; justify-content: center; z-index: 9999;">
-    <div style="
-    background: white; border-radius: 8px; width: 400px; max-width: 90%;
-    padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: fadeIn .2s ease;">
-
-        <h2 style="margin-bottom:1rem; font-size:1.4rem;">Editar Usuario</h2>
-
-        <form id="editUserForm">
-            <input type="hidden" id="editUserId">
-
-            <div style="margin-bottom:1rem;">
-                <label for="editUserEmail" style="font-weight:600;">Email</label>
-                <input type="text" id="editUserEmail" disabled style="
-          width:100%; padding:0.4rem; border:1px solid #ccc; border-radius:6px;
-          background:#f8f8f8; margin-top:0.3rem;">
-            </div>
-
-            <div style="margin-bottom:1rem;">
-                <label for="editUserRole" style="font-weight:600;">Rol</label>
-                <select id="editUserRole" style="
-          width:100%; padding:0.4rem; border:1px solid #ccc; border-radius:6px;
-          margin-top:0.3rem;">
-          <option value="member">Socio</option>
-          <option value="admin">Administrador</option>
-        </select>
-            </div>
-
-            <div style="margin-bottom:1rem;">
-                <label for="editUserStatus" style="font-weight:600;">Estado</label>
-                <select id="editUserStatus" style="
-          width:100%; padding:0.4rem; border:1px solid #ccc; border-radius:6px;
-          margin-top:0.3rem;">
-          <option value="active">Activo</option>
-          <option value="blocked">Bloqueado</option>
-        </select>
-            </div>
-
-            <div style="text-align:right;">
-                <button type="button" id="cancelEditBtn" class="btn danger" style="margin-right:0.5rem;">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<style>
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-</style>
 
 <body>
     <div class="members-shell" id="app">
@@ -291,12 +230,10 @@
         </main>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-    <!-- 👈 este antes del init -->
+    <!-- SDK de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <!-- Inicialización -->
     <script src="../../js/firebase-init.js"></script>
