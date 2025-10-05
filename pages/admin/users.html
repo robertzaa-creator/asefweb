@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script>
+        (function() {
+            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+            var base = document.createElement('base');
+            base.href = isLocal ? '/' : '/asefweb/';
+            document.head.prepend(base);
+        })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASEF · Admin · Usuarios</title>
+
+    <link rel="stylesheet" href="../../css/main.css" />
+    <link rel="stylesheet" href="../../css/members.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <div class="members-shell" id="app">
+
+        <aside class="members-sidebar">
+            <div class="members-brand">
+                <img src="../../dist/vite.svg" alt="ASEF" />
+                <div>Panel Admin</div>
+            </div>
+            <nav class="members-nav">
+                <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a class="active" href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
+                <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+                <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
+                <a href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
+            </nav>
+        </aside>
+
+        <main class="members-main">
+            <header class="members-header">
+                <div class="header-left">
+                    <h1>Gestión de Usuarios</h1>
+                </div>
+                <div class="header-right">
+                    <button id="logoutBtn" class="btn logout">
+      <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+    </button>
+                </div>
+            </header>
+
+            <section class="members-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Listado de Usuarios</h2>
+                        <div class="actions">
+                            <input type="text" id="userSearch" placeholder="Buscar usuario..." />
+                            <button id="reloadUsers" class="btn sm">
+      <i class="fa-solid fa-rotate"></i>
+      <span>Recargar</span>
+    </button>
+                            <button id="btnNewUser" class="btn sm primary">
+      <i class="fa-solid fa-user-plus"></i>
+      <span>Nuevo</span>
+    </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <table class="members-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Fecha Alta</th>
+                                <th>Último acceso</th>
+                                <th>Último cierre</th>
+                                <th>Estado</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTbody"></tbody>
+
+                    </table>
+                </div>
+    </div>
+    </section>
+    </main>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Inicialización Firebase -->
+    <script src="../../js/firebase-init.js"></script>
+
+    <!-- Autenticación global -->
+    <script src="../../js/auth.js"></script>
+
+    <!-- ⚙️ Solo este módulo (NO cargar admin.js aquí) -->
+    <script src="../../js/admin-users.js"></script>
+</body>
+
+</html>
