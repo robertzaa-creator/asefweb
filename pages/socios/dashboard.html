@@ -21,8 +21,8 @@
     <title>Socios · Dashboard</title>
 
     <!-- Estilos -->
-    <link rel="stylesheet" href="/asefweb/main.css" />
-    <link rel="stylesheet" href="/asefweb/members.css" />
+    <link rel="stylesheet" href="/asefweb/css/main.css" />
+    <link rel="stylesheet" href="/asefweb/css/members.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
@@ -35,10 +35,10 @@
                 <div>Área de Socios</div>
             </div>
             <nav class="members-nav">
-                <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-                <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-                <a href="./profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
-                <a id="logoutBtn" href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+                <a class="active" href="/asefweb/css/./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="/asefweb/css/./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+                <a href="/asefweb/css/./profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+                <a id="logoutBtn" href="/asefweb/css/#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
             </nav>
             <div class="members-foot sidebar-muted">
                 <div>Conectado: <span id="userEmail">—</span></div>
@@ -91,15 +91,15 @@
     </div>
 
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
     <!-- Inicialización -->
-    <script src="/asefweb/firebase-init.js"></script>
-    <script src="/asefweb/auth.js"></script>
-    <script src="/asefweb/members.js"></script>
+    <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
+    <script type="module" defer src="/asefweb/js/auth.js"></script>
+    <script type="module" defer src="/asefweb/js/members.js"></script>
 
 
 </body>

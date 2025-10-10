@@ -17,9 +17,9 @@
     <meta name="description" content="Contáctese con ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires. Formulario de contacto, ubicación y datos institucionales.">
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="/asefweb/main.css">
-    <link rel="stylesheet" href="/asefweb/navigation.css">
-    <link rel="stylesheet" href="/asefweb/responsive.css">
+    <link rel="stylesheet" href="/asefweb/css/main.css">
+    <link rel="stylesheet" href="/asefweb/css/navigation.css">
+    <link rel="stylesheet" href="/asefweb/css/responsive.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,16 +35,16 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <i class="fas fa-dove nav-logo-icon"></i>
-                    <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <a href="/asefweb/css/../index.html" style="text-decoration: none; color: inherit;">
                         <span class="nav-logo-text">ASEF</span>
                     </a>
                 </div>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
-                    <li class="nav-item"><a href="desarrollo.html" class="nav-link">Desarrollo</a></li>
-                    <li class="nav-item"><a href="funerarias.html" class="nav-link">Funerarias</a></li>
-                    <li class="nav-item"><a href="contacto.html" class="nav-link active">Contacto</a></li>
+                    <li class="nav-item"><a href="/asefweb/css/index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="/asefweb/css/servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="/asefweb/css/desarrollo.html" class="nav-link">Desarrollo</a></li>
+                    <li class="nav-item"><a href="/asefweb/css/funerarias.html" class="nav-link">Funerarias</a></li>
+                    <li class="nav-item"><a href="/asefweb/css/contacto.html" class="nav-link active">Contacto</a></li>
                     <li class="nav-item">
                         <button id="loginBtn" class="btn-login">
                             <i class="fas fa-user"></i> Acceder
@@ -135,7 +135,7 @@
                                 <label class="checkbox-label">
                                     <input type="checkbox" id="privacy" name="privacy" required>
                                     <span class="checkmark"></span>
-                                    Acepto la <a href="#" target="_blank">Política de Privacidad</a> *
+                                    Acepto la <a href="/asefweb/css/#" target="_blank">Política de Privacidad</a> *
                                 </label>
                             </div>
 
@@ -196,19 +196,19 @@
                         <div class="social-media">
                             <h4>Síguenos en Redes Sociales</h4>
                             <div class="social-links">
-                                <a href="#" class="social-link">
+                                <a href="/asefweb/css/#" class="social-link">
                                     <i class="fab fa-facebook-f"></i>
                                     <span>Facebook</span>
                                 </a>
-                                <a href="#" class="social-link">
+                                <a href="/asefweb/css/#" class="social-link">
                                     <i class="fab fa-twitter"></i>
                                     <span>Twitter</span>
                                 </a>
-                                <a href="#" class="social-link">
+                                <a href="/asefweb/css/#" class="social-link">
                                     <i class="fab fa-linkedin-in"></i>
                                     <span>LinkedIn</span>
                                 </a>
-                                <a href="#" class="social-link">
+                                <a href="/asefweb/css/#" class="social-link">
                                     <i class="fab fa-instagram"></i>
                                     <span>Instagram</span>
                                 </a>
@@ -376,7 +376,7 @@
                     <input type="password" id="loginPassword" name="loginPassword" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-primary">Ingresar</button>
-                <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
+                <p class="auth-link">¿No tiene cuenta? <a href="/asefweb/css/#" id="registerLink">Registrarse</a></p>
             </form>
             <div id="registerForm" style="display: none;">
                 <h2>Registro de Nuevo Socio</h2>
@@ -394,7 +394,7 @@
                         <input type="text" id="companyName" name="companyName" required>
                     </div>
                     <button type="submit" class="btn-primary">Registrarse</button>
-                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="/asefweb/css/#" id="loginLink">Iniciar Sesión</a></p>
                 </form>
             </div>
         </div>
@@ -402,17 +402,17 @@
 
     <!-- Firebase SDKs -->
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
     <!-- Inicialización -->
-    <script src="/asefweb/firebase-init.js"></script>
-    <script src="/asefweb/auth.js"></script>
-    <script src="/asefweb/socios.js"></script>
-    <script src="/asefweb/navigation.js"></script>
-    <script src="/asefweb/main.js"></script>
+    <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
+    <script type="module" defer src="/asefweb/js/auth.js"></script>
+    <script type="module" defer src="/asefweb/js/socios.js"></script>
+    <script type="module" defer src="/asefweb/js/navigation.js"></script>
+    <script type="module" defer src="/asefweb/js/main.js"></script>
 
     <script>
         // FAQ functionality

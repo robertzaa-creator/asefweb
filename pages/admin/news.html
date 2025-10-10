@@ -13,8 +13,8 @@
 <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ASEF · Admin · Noticias</title>
-  <link rel="stylesheet" href="/asefweb/main.css"/>
-  <link rel="stylesheet" href="/asefweb/members.css"/>
+  <link rel="stylesheet" href="/asefweb/css/main.css"/>
+  <link rel="stylesheet" href="/asefweb/css/members.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
@@ -22,11 +22,11 @@
     <aside class="members-sidebar">
       <div class="members-brand"><img src="/asefweb/vite.svg" alt="ASEF"/><div>Panel Admin</div></div>
       <nav class="members-nav">
-        <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-        <a href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
-        <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-        <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
-        <a class="active" href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
+        <a href="/asefweb/css/./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+        <a href="/asefweb/css/./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
+        <a href="/asefweb/css/./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+        <a href="/asefweb/css/./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
+        <a class="active" href="/asefweb/css/./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
       </nav>
     </aside>
 
@@ -55,15 +55,15 @@
 
   <!-- Scripts -->
 <!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+<script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <!-- Inicialización -->
-<script src="/asefweb/firebase-init.js"></script>
-<script src="/asefweb/auth.js"></script>
-<script src="/asefweb/members.js"></script>
-  <script src="/asefweb/admin.js"></script>
+<script type="module" defer src="/asefweb/js/firebase-init.js"></script>
+<script type="module" defer src="/asefweb/js/auth.js"></script>
+<script type="module" defer src="/asefweb/js/members.js"></script>
+  <script type="module" defer src="/asefweb/js/admin.js"></script>
 </body>
 </html>
