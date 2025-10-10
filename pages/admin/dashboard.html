@@ -10,53 +10,35 @@
     var isLocal = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:");
     var baseHref = isLocal ? "/" : GH_BASE;
 
-    // limpia <base> existentes (por si el HTML trae varios)
-    try {
-      document.querySelectorAll("base").forEach(function(b) { b.parentNode && b.parentNode.removeChild(b); });
-    } catch (e) { /* noop */ }
+    document.querySelectorAll("base").forEach(function(b){b.remove();});
 
-    // garantiza <head> y agrega <base> al principio
-    var ensureHead = function() {
-      if (!document.head) {
-        var h = document.createElement("head");
-        document.documentElement.insertBefore(h, document.body || null);
-      }
-      return document.head;
-    };
-    var head = ensureHead();
-    var base = document.createElement("base");
+    if(!document.head){document.documentElement.insertBefore(document.createElement("head"), document.body);}
+    var head=document.head;
+    var base=document.createElement("base");
     base.setAttribute("href", baseHref);
     head.prepend(base);
 
     var rootPrefix = isLocal ? "" : GH_BASE.replace(/\/$/, "");
+    if(!String.prototype.startswith){String.prototype.startswith=function(s){return this.slice(0,s.length)===s;};}
 
-    // pequeño polyfill
-    if (!String.prototype.startswith) {
-      String.prototype.startswith = function(s) { return this.slice(0, s.length) === s; }
-    }
-
-    function fixAttr(selector, attr) {
-      document.querySelectorAll(selector).forEach(function(el) {
-        var val = el.getAttribute(attr);
-        if (!val) return;
-        var v = String(val);
-        if (/^(https?:)?\/\//i.test(v)) return; // absoluto o protocol-relative
-        if (/^(mailto:|tel:|data:|#)/i.test(v)) return;
-        if (v[0] === "/") { el.setAttribute(attr, rootPrefix + v); }
+    function fixAttr(sel,attr){
+      document.querySelectorAll(sel).forEach(function(el){
+        var v=el.getAttribute(attr);if(!v)return;
+        if(/^(https?:|mailto:|tel:|data:|#)/i.test(v))return;
+        if(v[0]==="/")el.setAttribute(attr,rootPrefix+v);
       });
     }
-
-    fixAttr('link[href]', 'href');
-    fixAttr('script[src]', 'src');
-    fixAttr('img[src]', 'src');
-    fixAttr('source[src]', 'src');
-    fixAttr('a[href]', 'href');
-  } catch (err) {
-    console && console.warn && console.warn("ASEF base-fix error:", err);
-  }
+    fixAttr('link[href]','href');
+    fixAttr('script[src]','src');
+    fixAttr('img[src]','src');
+    fixAttr('source[src]','src');
+    fixAttr('a[href]','href');
+  }catch(e){console.warn("ASEF base-fix error:",e);}
 })();
 </script>
 <!-- ASEF_BASE_FIX END -->
+
+
 
     <script>
         (function() {
