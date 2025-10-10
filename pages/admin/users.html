@@ -2,44 +2,6 @@
 <html lang="es">
 
 <head>
-<!-- ASEF_BASE_FIX START -->
-<script id="asef-base-fix">
-(function() {
-  try {
-    var GH_BASE = "/asefweb/".replace(/\/+$/, "/");
-    var isLocal = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:");
-    var baseHref = isLocal ? "/" : GH_BASE;
-
-    document.querySelectorAll("base").forEach(function(b){b.remove();});
-
-    if(!document.head){document.documentElement.insertBefore(document.createElement("head"), document.body);}
-    var head=document.head;
-    var base=document.createElement("base");
-    base.setAttribute("href", baseHref);
-    head.prepend(base);
-
-    var rootPrefix = isLocal ? "" : GH_BASE.replace(/\/$/, "");
-    if(!String.prototype.startswith){String.prototype.startswith=function(s){return this.slice(0,s.length)===s;};}
-
-    function fixAttr(sel,attr){
-      document.querySelectorAll(sel).forEach(function(el){
-        var v=el.getAttribute(attr);if(!v)return;
-        if(/^(https?:|mailto:|tel:|data:|#)/i.test(v))return;
-        if(v[0]==="/")el.setAttribute(attr,rootPrefix+v);
-      });
-    }
-    fixAttr('link[href]','href');
-    fixAttr('script[src]','src');
-    fixAttr('img[src]','src');
-    fixAttr('source[src]','src');
-    fixAttr('a[href]','href');
-  }catch(e){console.warn("ASEF base-fix error:",e);}
-})();
-</script>
-<!-- ASEF_BASE_FIX END -->
-
-
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ASEF · Admin · Usuarios</title>
@@ -54,7 +16,7 @@
        Estilos visuales específicos de esta vista
        (sin afectar a otros dashboards)
     ------------------------------------------*/
-
+        
         .users-container {
             flex: 1;
             display: flex;
@@ -62,7 +24,7 @@
             padding: 2rem;
             background: var(--bg-light);
         }
-
+        
         .users-header {
             display: flex;
             justify-content: space-between;
@@ -71,18 +33,18 @@
             border-bottom: 2px solid rgba(0, 0, 0, 0.05);
             padding-bottom: 0.5rem;
         }
-
+        
         .users-header h1 {
             font-size: 1.8rem;
             color: var(--text-color);
         }
-
+        
         .users-actions {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-
+        
         .users-actions input {
             border: 1px solid #ccc;
             border-radius: 6px;
@@ -91,12 +53,12 @@
             font-size: 0.95rem;
             transition: border 0.2s ease;
         }
-
+        
         .users-actions input:focus {
             outline: none;
             border-color: var(--accent-color);
         }
-
+        
         .users-actions button {
             border: none;
             padding: 0.45rem 0.9rem;
@@ -106,25 +68,25 @@
             font-weight: 500;
             font-size: 0.95rem;
         }
-
+        
         .users-actions .btn-refresh {
             background: var(--accent-color);
             color: #fff;
         }
-
+        
         .users-actions .btn-refresh:hover {
             background: #1f7cc0;
         }
-
+        
         .users-actions .btn-new {
             background: #2ecc71;
             color: #fff;
         }
-
+        
         .users-actions .btn-new:hover {
             background: #27ae60;
         }
-
+        
         .users-table-wrapper {
             background: #fff;
             border-radius: var(--border-radius);
@@ -132,12 +94,12 @@
             overflow: hidden;
             padding: 1rem 1.2rem;
         }
-
+        
         .users-table {
             width: 100%;
             border-collapse: collapse;
         }
-
+        
         .users-table th {
             background: #f4f6f8;
             color: var(--text-light);
@@ -147,18 +109,18 @@
             font-size: 0.9rem;
             border-bottom: 1px solid #e0e0e0;
         }
-
+        
         .users-table td {
             padding: 0.8rem;
             font-size: 0.95rem;
             color: var(--text-color);
             border-bottom: 1px solid #f0f0f0;
         }
-
+        
         .users-table tr:hover {
             background: #f9fbfd;
         }
-
+        
         .chip {
             display: inline-block;
             padding: 0.25rem 0.6rem;
@@ -168,35 +130,35 @@
             color: #fff;
             text-transform: capitalize;
         }
-
+        
         .chip-green {
             background: #27ae60;
         }
-
+        
         .chip-gray {
             background: #95a5a6;
         }
-
+        
         .btn.sm {
             font-size: 0.8rem;
             padding: 0.25rem 0.55rem;
             border-radius: 5px;
             margin-right: 0.25rem;
         }
-
+        
         .btn.danger {
             background: #e74c3c;
             color: #fff;
         }
-
+        
         .btn.danger:hover {
             background: #c0392b;
         }
-
+        
         .btn.sm i {
             margin-right: 0.25rem;
         }
-
+        
         @media (max-width: 768px) {
             .users-actions {
                 flex-direction: column;
@@ -212,67 +174,6 @@
         }
     </style>
 </head>
-<!-- 🔹 Modal para editar usuario -->
-<div id="editUserModal" class="modal hidden" style="
-  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-  display: none; align-items: center; justify-content: center; z-index: 9999;">
-    <div style="
-    background: white; border-radius: 8px; width: 400px; max-width: 90%;
-    padding: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    animation: fadeIn .2s ease;">
-
-        <h2 style="margin-bottom:1rem; font-size:1.4rem;">Editar Usuario</h2>
-
-        <form id="editUserForm">
-            <input type="hidden" id="editUserId">
-
-            <div style="margin-bottom:1rem;">
-                <label for="editUserEmail" style="font-weight:600;">Email</label>
-                <input type="text" id="editUserEmail" disabled style="
-          width:100%; padding:0.4rem; border:1px solid #ccc; border-radius:6px;
-          background:#f8f8f8; margin-top:0.3rem;">
-            </div>
-
-            <div style="margin-bottom:1rem;">
-                <label for="editUserRole" style="font-weight:600;">Rol</label>
-                <select id="editUserRole" style="
-          width:100%; padding:0.4rem; border:1px solid #ccc; border-radius:6px;
-          margin-top:0.3rem;">
-          <option value="member">Socio</option>
-          <option value="admin">Administrador</option>
-        </select>
-            </div>
-
-            <div style="margin-bottom:1rem;">
-                <label for="editUserStatus" style="font-weight:600;">Estado</label>
-                <select id="editUserStatus" style="
-          width:100%; padding:0.4rem; border:1px solid #ccc; border-radius:6px;
-          margin-top:0.3rem;">
-          <option value="active">Activo</option>
-          <option value="blocked">Bloqueado</option>
-        </select>
-            </div>
-
-            <div style="text-align:right;">
-                <button type="button" id="cancelEditBtn" class="btn danger" style="margin-right:0.5rem;">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<style>
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-</style>
 
 <body>
     <div class="members-shell" id="app">
@@ -329,12 +230,10 @@
         </main>
     </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-    <!-- 👈 este antes del init -->
+    <!-- SDK de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <!-- Inicialización -->
     <script src="/asefweb/firebase-init.js"></script>

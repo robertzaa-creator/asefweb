@@ -2,44 +2,6 @@
 <html lang="es">
 
 <head>
-<!-- ASEF_BASE_FIX START -->
-<script id="asef-base-fix">
-(function() {
-  try {
-    var GH_BASE = "/asefweb/".replace(/\/+$/, "/");
-    var isLocal = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:");
-    var baseHref = isLocal ? "/" : GH_BASE;
-
-    document.querySelectorAll("base").forEach(function(b){b.remove();});
-
-    if(!document.head){document.documentElement.insertBefore(document.createElement("head"), document.body);}
-    var head=document.head;
-    var base=document.createElement("base");
-    base.setAttribute("href", baseHref);
-    head.prepend(base);
-
-    var rootPrefix = isLocal ? "" : GH_BASE.replace(/\/$/, "");
-    if(!String.prototype.startswith){String.prototype.startswith=function(s){return this.slice(0,s.length)===s;};}
-
-    function fixAttr(sel,attr){
-      document.querySelectorAll(sel).forEach(function(el){
-        var v=el.getAttribute(attr);if(!v)return;
-        if(/^(https?:|mailto:|tel:|data:|#)/i.test(v))return;
-        if(v[0]==="/")el.setAttribute(attr,rootPrefix+v);
-      });
-    }
-    fixAttr('link[href]','href');
-    fixAttr('script[src]','src');
-    fixAttr('img[src]','src');
-    fixAttr('source[src]','src');
-    fixAttr('a[href]','href');
-  }catch(e){console.warn("ASEF base-fix error:",e);}
-})();
-</script>
-<!-- ASEF_BASE_FIX END -->
-
-
-
     <script>
         (function() {
             var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
