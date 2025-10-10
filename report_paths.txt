@@ -1,0 +1,84 @@
+
+⚠ Archivo: C:\asefweb\pages\contacto.html
+
+  Línea 39: ../index.html
+
+⚠ Archivo: C:\asefweb\pages\desarrollo.html
+
+  Línea 54: ../index.html
+
+⚠ Archivo: C:\asefweb\pages\funerarias.html
+
+  Línea 54: ../index.html
+  Línea 59: ../index.html
+
+⚠ Archivo: C:\asefweb\pages\recursos.html
+
+  Línea 54: ../index.html
+  Línea 59: ../index.html
+
+⚠ Archivo: C:\asefweb\pages\servicios.html
+
+  Línea 53: ../index.html
+
+⚠ Archivo: C:\asefweb\pages\admin\dashboard.html
+
+  Línea 30: ./dashboard.html
+  Línea 31: ./users.html
+  Línea 32: ./sections.html
+  Línea 33: ./documents.html
+  Línea 34: ./news.html
+  Línea 64: ./users.html
+  Línea 73: ./sections.html
+  Línea 82: ./documents.html
+  Línea 91: ./news.html
+
+⚠ Archivo: C:\asefweb\pages\admin\documents.html
+
+  Línea 24: ./dashboard.html
+  Línea 25: ./users.html
+  Línea 26: ./sections.html
+  Línea 27: ./documents.html
+  Línea 28: ./news.html
+
+⚠ Archivo: C:\asefweb\pages\admin\news.html
+
+  Línea 24: ./dashboard.html
+  Línea 25: ./users.html
+  Línea 26: ./sections.html
+  Línea 27: ./documents.html
+  Línea 28: ./news.html
+
+⚠ Archivo: C:\asefweb\pages\admin\sections.html
+
+  Línea 24: ./dashboard.html
+  Línea 25: ./users.html
+  Línea 26: ./sections.html
+  Línea 27: ./documents.html
+  Línea 28: ./news.html
+
+⚠ Archivo: C:\asefweb\pages\admin\users.html
+
+  Línea 188: ./dashboard.html
+  Línea 189: ./users.html
+  Línea 190: ./sections.html
+  Línea 191: ./documents.html
+  Línea 192: ./news.html
+
+⚠ Archivo: C:\asefweb\pages\socios\dashboard.html
+
+  Línea 39: ./dashboard.html
+  Línea 40: ./sections.html
+  Línea 41: ./profile.html
+
+⚠ Archivo: C:\asefweb\pages\socios\profile.html
+
+  Línea 33: ./dashboard.html
+  Línea 34: ./sections.html
+  Línea 35: ./profile.html
+
+⚠ Archivo: C:\asefweb\pages\socios\sections.html
+
+  Línea 34: ./dashboard.html
+  Línea 35: ./sections.html
+  Línea 36: ./profile.html
