@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+  (function () {
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+    var base = document.createElement('base');
+    base.href = isLocal ? '/' : '/asefweb/';
+    document.head.prepend(base);
+  })();
+</script>
+<meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aceptar invitación · ASEF</title>
+  <link rel="stylesheet" href="../../css/main.css"/>
+</head>
+<body>
+  <main class="container" style="max-width:600px;margin:40px auto;">
+    <h1>Aceptar invitación</h1>
+    <div class="card">
+      <div class="card-body">
+        <p id="inviteInfo">Cargando invitación…</p>
+        <form id="formAccept" class="mt-2" hidden>
+          <input class="input" name="name" placeholder="Nombre y apellido" required/ autocomplete="name">
+          <input class="input" name="email" type="email" placeholder="Email" required/ autocomplete="email">
+          <input class="input" name="password" type="password" placeholder="Contraseña" required/ autocomplete="current-password">
+          <button class="btn primary" type="submit">Crear mi cuenta</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+<!-- Inicialización -->
+<script src="../../js/firebase-init.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/members.js"></script>
+  <script src="../../js/accept-invite.js"></script>
+</body>
+</html>

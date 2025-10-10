@@ -1,62 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- ASEF_BASE_FIX START -->
-<script id="asef-base-fix">
-(function() {
-  try {
-    var GH_BASE = "/asefweb/".replace(/\/+$/, "/");
-    var isLocal = (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.protocol === "file:");
-    var baseHref = isLocal ? "/" : GH_BASE;
-
-    // limpia <base> existentes (por si el HTML trae varios)
-    try {
-      document.querySelectorAll("base").forEach(function(b) { b.parentNode && b.parentNode.removeChild(b); });
-    } catch (e) { /* noop */ }
-
-    // garantiza <head> y agrega <base> al principio
-    var ensureHead = function() {
-      if (!document.head) {
-        var h = document.createElement("head");
-        document.documentElement.insertBefore(h, document.body || null);
-      }
-      return document.head;
-    };
-    var head = ensureHead();
-    var base = document.createElement("base");
-    base.setAttribute("href", baseHref);
-    head.prepend(base);
-
-    var rootPrefix = isLocal ? "" : GH_BASE.replace(/\/$/, "");
-
-    // pequeño polyfill
-    if (!String.prototype.startswith) {
-      String.prototype.startswith = function(s) { return this.slice(0, s.length) === s; }
-    }
-
-    function fixAttr(selector, attr) {
-      document.querySelectorAll(selector).forEach(function(el) {
-        var val = el.getAttribute(attr);
-        if (!val) return;
-        var v = String(val);
-        if (/^(https?:)?\/\//i.test(v)) return; // absoluto o protocol-relative
-        if (/^(mailto:|tel:|data:|#)/i.test(v)) return;
-        if (v[0] === "/") { el.setAttribute(attr, rootPrefix + v); }
-      });
-    }
-
-    fixAttr('link[href]', 'href');
-    fixAttr('script[src]', 'src');
-    fixAttr('img[src]', 'src');
-    fixAttr('source[src]', 'src');
-    fixAttr('a[href]', 'href');
-  } catch (err) {
-    console && console.warn && console.warn("ASEF base-fix error:", err);
-  }
-})();
-</script>
-<!-- ASEF_BASE_FIX END -->
-
 <script>
   (function () {
     var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
@@ -67,7 +11,7 @@
 </script>
 <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ASEF · Admin · Noticias</title>
+  <title>ASEF · Admin · Documentos</title>
   <link rel="stylesheet" href="../../css/main.css"/>
   <link rel="stylesheet" href="../../css/members.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
@@ -80,8 +24,8 @@
         <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
         <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-        <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
-        <a class="active" href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
+        <a class="active" href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
+        <a href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
       </nav>
     </aside>
 
@@ -96,19 +40,19 @@
   })();
 </script>
 
-        <h1>Gestión de Noticias</h1>
+        <h1>Gestión de Documentos</h1>
         <button id="logoutBtn" class="btn">Cerrar sesión</button>
       </header>
 
       <section class="members-content grid">
         <div class="card">
-          <i class="fa-solid fa-pen-to-square fa-2x"></i>
-          <h2>Crear Noticia</h2>
+          <i class="fa-solid fa-upload fa-2x"></i>
+          <h2>Subir Documento</h2>
           <p>(Módulo en construcción)</p>
         </div>
         <div class="card">
           <i class="fa-solid fa-list fa-2x"></i>
-          <h2>Listado de Noticias</h2>
+          <h2>Listado de Documentos</h2>
           <p>(Módulo en construcción)</p>
         </div>
       </section>
