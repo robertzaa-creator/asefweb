@@ -2,16 +2,7 @@
 <html lang="es">
 
 <head>
-<script>
-(function() {
-  const isLocal = location.hostname === 'localhost' ||
-                  location.hostname === '127.0.0.1' ||
-                  location.protocol === 'file:';
-  const base = document.createElement('base');
-  base.href = isLocal ? '/pages/socios/' : '/asefweb/pages/socios/';
-  document.head.prepend(base);
-})();
-</script>
+
 
 
 
@@ -22,8 +13,8 @@
     <title>Socios · Dashboard</title>
 
     <!-- Estilos -->
-    <link rel="stylesheet" href="../../css/main.css" />
-    <link rel="stylesheet" href="../../css/members.css" />
+    <link rel="stylesheet" href="/asefweb/main.css" />
+    <link rel="stylesheet" href="/asefweb/members.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
@@ -32,7 +23,7 @@
         <!-- Sidebar -->
         <aside class="members-sidebar">
             <div class="members-brand">
-                <img src="../../dist/vite.svg" alt="ASEF" />
+                <img src="/asefweb/vite.svg" alt="ASEF" />
                 <div>Área de Socios</div>
             </div>
             <nav class="members-nav">
@@ -98,9 +89,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
     <!-- Inicialización -->
-    <script src="../../js/firebase-init.js"></script>
-    <script src="../../js/auth.js"></script>
-    <script src="../../js/members.js"></script>
+    <script src="/asefweb/firebase-init.js"></script>
+    <script src="/asefweb/auth.js"></script>
+    <script src="/asefweb/members.js"></script>
 
 
 </body>

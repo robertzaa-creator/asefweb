@@ -1,25 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script>
-  (function () {
-    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-    var base = document.createElement('base');
-    base.href = isLocal ? '/' : '/asefweb/';
-    document.head.prepend(base);
-  })();
-</script>
+
 <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ASEF · Admin · Secciones</title>
-  <link rel="stylesheet" href="../../css/main.css"/>
-  <link rel="stylesheet" href="../../css/members.css"/>
+  <link rel="stylesheet" href="/asefweb/main.css"/>
+  <link rel="stylesheet" href="/asefweb/members.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
   <div class="members-shell" id="app">
     <aside class="members-sidebar">
-      <div class="members-brand"><img src="../../dist/vite.svg" alt="ASEF"/><div>Panel Admin</div></div>
+      <div class="members-brand"><img src="/asefweb/vite.svg" alt="ASEF"/><div>Panel Admin</div></div>
       <nav class="members-nav">
         <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
         <a href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
@@ -31,14 +24,7 @@
 
     <main class="members-main">
       <header class="members-header">
-<script>
-  (function () {
-    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-    var base = document.createElement('base');
-    base.href = isLocal ? '/' : '/asefweb/';
-    document.head.prepend(base);
-  })();
-</script>
+
 
         <h1>Gestión de Secciones</h1>
         <button id="logoutBtn" class="btn">Cerrar sesión</button>
@@ -74,9 +60,9 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <!-- Inicialización -->
-<script src="../../js/firebase-init.js"></script>
-<script src="../../js/auth.js"></script>
-<script src="../../js/members.js"></script>
-  <script src="../../js/admin.js"></script>
+<script src="/asefweb/firebase-init.js"></script>
+<script src="/asefweb/auth.js"></script>
+<script src="/asefweb/members.js"></script>
+  <script src="/asefweb/admin.js"></script>
 </body>
 </html>

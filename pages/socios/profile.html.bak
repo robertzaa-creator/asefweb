@@ -1,16 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script>
-(function() {
-  const isLocal = location.hostname === 'localhost' ||
-                  location.hostname === '127.0.0.1' ||
-                  location.protocol === 'file:';
-  const base = document.createElement('base');
-  base.href = isLocal ? '/pages/socios/' : '/asefweb/pages/socios/';
-  document.head.prepend(base);
-})();
-</script>
+
 
 
 
@@ -18,8 +9,8 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Socios · Mi Perfil</title>
-  <link rel="stylesheet" href="../../css/main.css"/>
-  <link rel="stylesheet" href="../../css/members.css"/>
+  <link rel="stylesheet" href="/asefweb/main.css"/>
+  <link rel="stylesheet" href="/asefweb/members.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 </head>
@@ -27,7 +18,7 @@
 <div class="members-shell">
   <aside class="members-sidebar">
     <div class="members-brand">
-      <img src="../../dist/vite.svg" alt="ASEF"/><div>Área de Socios</div>
+      <img src="/asefweb/vite.svg" alt="ASEF"/><div>Área de Socios</div>
     </div>
     <nav class="members-nav">
       <a href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
@@ -75,9 +66,9 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
 <!-- Core -->
-<script src="../../js/firebase-init.js" defer></script>
-<script src="../../js/auth.js" defer></script>
-<script src="../../js/members.js" defer></script>
+<script src="/asefweb/firebase-init.js" defer></script>
+<script src="/asefweb/auth.js" defer></script>
+<script src="/asefweb/members.js" defer></script>
 
 
 </body>

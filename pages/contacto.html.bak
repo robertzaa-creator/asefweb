@@ -2,25 +2,16 @@
 <html lang="es">
 
 <head>
-    <script>
-        (function() {
-            // Localhost o file:// → base "/"
-            // GitHub Pages → base "/asefweb/"
-            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-            var base = document.createElement('base');
-            base.href = isLocal ? '/' : '/asefweb/';
-            document.head.prepend(base);
-        })();
-    </script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - ASEF</title>
     <meta name="description" content="Contáctese con ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires. Formulario de contacto, ubicación y datos institucionales.">
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../../css/main.css">
-    <link rel="stylesheet" href="../../css/navigation.css">
-    <link rel="stylesheet" href="../../css/responsive.css">
+    <link rel="stylesheet" href="/asefweb/main.css">
+    <link rel="stylesheet" href="/asefweb/navigation.css">
+    <link rel="stylesheet" href="/asefweb/responsive.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -409,11 +400,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
     <!-- Inicialización -->
-    <script src="../../js/firebase-init.js"></script>
-    <script src="../../js/auth.js"></script>
-    <script src="../../js/socios.js"></script>
-    <script src="../js/navigation.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="/asefweb/firebase-init.js"></script>
+    <script src="/asefweb/auth.js"></script>
+    <script src="/asefweb/socios.js"></script>
+    <script src="/asefweb/navigation.js"></script>
+    <script src="/asefweb/main.js"></script>
 
     <script>
         // FAQ functionality

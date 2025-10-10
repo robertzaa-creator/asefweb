@@ -2,14 +2,15 @@
 <html lang="es">
 
 <head>
-    <script>
-        (function() {
-            var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-            var base = document.createElement('base');
-            base.href = isLocal ? '/' : '/asefweb/';
-            document.head.prepend(base);
-        })();
-    </script>
+  <script>
+(function() {
+  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+  var base = document.createElement('base');
+  base.href = isLocal ? '/' : '/asefweb/';
+  document.head.prepend(base);
+})();
+</script>
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ASEF · Panel Admin</title>
@@ -39,14 +40,7 @@
         <main class="members-main">
             <!-- Topbar -->
             <header class="members-topbar">
-                <script>
-                    (function() {
-                        var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-                        var base = document.createElement('base');
-                        base.href = isLocal ? '/' : '/asefweb/';
-                        document.head.prepend(base);
-                    })();
-                </script>
+                
 
                 <h2 class="members-title">Dashboard de Administración</h2>
                 <div class="actions">
