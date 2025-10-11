@@ -1,13 +1,14 @@
 ===== RESUMEN ASEF VALIDACIÓN =====
 
-Correct   : 243
-Incorrect : 58
-External  : 112
-Fixed     : 58
+Correct   : 157
+Incorrect : 106
+External  : 150
+Fixed     : 106
 Total analizado: 413
 
 Archivos con rutas incorrectas:
   - index.html
+  - dist\index.html
   - pages\contacto.html
   - pages\desarrollo.html
   - pages\funerarias.html

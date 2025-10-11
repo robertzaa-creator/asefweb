@@ -1,39 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  
-
-  
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ASEF · Panel Admin</title>
-    <link rel="stylesheet" href="/asefweb/main.css" />
+    <link rel="stylesheet" href="/asefweb/css/main.css" />
     <link rel="stylesheet" href="/asefweb/members.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-
 <body>
     <div class="members-shell" id="app">
         <!-- Sidebar -->
@@ -50,20 +24,16 @@
                 <a href="/asefweb/news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
             </nav>
         </aside>
-
         <!-- Main -->
         <main class="members-main">
             <!-- Topbar -->
             <header class="members-topbar">
-                
-
                 <h2 class="members-title">Dashboard de Administración</h2>
                 <div class="actions">
                     <span id="adminUserBadge" class="chip chip-success" style="display:none;">ADMIN</span>
                     <button id="logoutBtn" class="btn btn-primary">Cerrar sesión</button>
                 </div>
             </header>
-
             <!-- Content -->
             <section class="members-content grid">
                 <div class="card">
@@ -74,7 +44,6 @@
       Ir a Usuarios
     </a>
                 </div>
-
                 <div class="card">
                     <i class="fa-regular fa-folder-open"></i>
                     <h2>Secciones</h2>
@@ -83,7 +52,6 @@
       Ir a Secciones
     </a>
                 </div>
-
                 <div class="card">
                     <i class="fa-regular fa-file-pdf"></i>
                     <h2>Documentos</h2>
@@ -92,7 +60,6 @@
       Ir a Documentos
     </a>
                 </div>
-
                 <div class="card">
                     <i class="fa-regular fa-newspaper"></i>
                     <h2>Noticias</h2>
@@ -104,19 +71,16 @@
             </section>
         </main>
     </div>
-
     <!-- Scripts -->
     <!-- Firebase SDKs -->
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
     <!-- Inicialización -->
     <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
     <script type="module" defer src="/asefweb/js/auth.js"></script>
     <script type="module" defer src="/asefweb/js/members.js"></script>
     <script type="module" defer src="/asefweb/js/admin.js"></script>
 </body>
-
 </html>

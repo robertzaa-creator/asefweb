@@ -1,78 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  
-
-  
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    
-    
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires</title>
-
-    <!-- SEO Meta Tags -->
     <meta name="description" content="Asociación de Empresas de Servicios Fúnebres de la Provincia de Buenos Aires. Representamos y nucleamos a las empresas del sector funerario brindando servicios, capacitación y asistencia profesional.">
     <meta name="keywords" content="servicios funerarios, empresas fúnebres, Buenos Aires, ASEF, cementerios, funeral, servicios mortuorios">
     <meta name="author" content="ASEF">
     <meta name="robots" content="index, follow">
-
-    <!-- Open Graph Tags -->
     <meta property="og:title" content="ASEF - Asociación de Empresas de Servicios Fúnebres">
     <meta property="og:description" content="Representamos y nucleamos a las empresas del sector funerario de Buenos Aires">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://asef.com.ar">
     <meta property="og:image" content="https://images.pexels.com/photos/6980868/pexels-photo-6980868.jpeg">
-
-    <!-- Canonical URL -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%3C/svg%3E">
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/asefweb/main.css">
-    <link rel="stylesheet" href="/asefweb/navigation.css">
-    <link rel="stylesheet" href="/asefweb/carousel.css">
-    <link rel="stylesheet" href="/asefweb/responsive.css">
-
+    <link rel="icon" href="/asefweb/favicon.svg"><text y='.9em' font-size='90'>🏛️</text></svg>">
+    <link rel="stylesheet" href="/asefweb/css/main.css">
+    <link rel="stylesheet" href="/asefweb/css/navigation.css">
+    <link rel="stylesheet" href="/asefweb/css/carousel.css">
+    <link rel="stylesheet" href="/asefweb/css/responsive.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <!-- Ajustes visuales del modal (más aire en título/contenedor) -->
     <style id="login-modal-tweaks">
         /* contenedor del modal */
-
         #loginModal .modal-content {
             padding: 32px 26px 24px !important;
             /* ↑ más espacio arriba */
             box-sizing: border-box;
         }
         /* título del modal */
-
         #loginModal .modal-content h2 {
             margin: 12px 36px 22px 0 !important;
             /* 12 arriba, 22 abajo */
@@ -83,7 +41,6 @@
             text-align: left !important;
         }
         /* botón X */
-
         #loginModal .modal-content .close {
             position: absolute !important;
             top: 12px !important;
@@ -93,22 +50,18 @@
             color: #cfd8e3 !important;
             cursor: pointer;
         }
-
         #loginModal .modal-content .close:hover {
             color: #fff !important;
         }
         /* separación entre campos */
-
         #loginModal .form-group {
             margin-bottom: 18px !important;
         }
-
         #loginModal .form-group:first-of-type {
             margin-top: 6px !important;
         }
     </style>
 </head>
-
 <body>
     <!-- Header -->
     <header class="header">
@@ -120,30 +73,30 @@
                 </div>
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="/asefweb/#inicio" class="nav-link">Inicio</a>
+                        <a href="#inicio" class="nav-link">Inicio</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="/asefweb/#" class="nav-link">Servicios <i class="fas fa-chevron-down"></i></a>
+                        <a href="#" class="nav-link">Servicios <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/asefweb/pages/servicios.html">Servicios a Socios</a></li>
-                            <li><a href="/asefweb/pages/desarrollo.html">Desarrollo Profesional</a></li>
-                            <li><a href="/asefweb/pages/planificacion.html">Planificación del Funeral</a></li>
+                            <li><a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/servicios.html">Servicios a Socios</a></li>
+                            <li><a href="/asefweb//asefweb//asefweb//asefweb/pages/desarrollo.html">Desarrollo Profesional</a></li>
+                            <li><a href="/asefweb//asefweb/pages/planificacion.html">Planificación del Funeral</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="/asefweb/#" class="nav-link">Información <i class="fas fa-chevron-down"></i></a>
+                        <a href="#" class="nav-link">Información <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/asefweb/pages/funerarias.html">Funerarias</a></li>
-                            <li><a href="/asefweb/pages/museo.html">Museo Virtual</a></li>
-                            <li><a href="/asefweb/pages/prensa.html">Prensa</a></li>
+                            <li><a href="/asefweb//asefweb//asefweb//asefweb/pages/funerarias.html">Funerarias</a></li>
+                            <li><a href="/asefweb//asefweb/pages/museo.html">Museo Virtual</a></li>
+                            <li><a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/prensa.html">Prensa</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="/asefweb/#" class="nav-link">Recursos <i class="fas fa-chevron-down"></i></a>
+                        <a href="#" class="nav-link">Recursos <i class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/asefweb/pages/recursos.html" id="recursos-link">Documentos</a></li>
+                            <li><a href="/asefweb//asefweb//asefweb/pages/recursos.html" id="recursos-link">Documentos</a></li>
                             <li><a href="/asefweb/pages/clasificados.html">Clasificados</a></li>
-                            <li><a href="/asefweb/pages/newsletter.html">Newsletter</a></li>
+                            <li><a href="/asefweb//asefweb/pages/newsletter.html">Newsletter</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -153,12 +106,10 @@
                         <a href="/asefweb/pages/links.html" class="nav-link">Links Útiles</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/asefweb/pages/contacto.html" class="nav-link">Contacto</a>
+                        <a href="/asefweb//asefweb/pages/contacto.html" class="nav-link">Contacto</a>
                     </li>
                     <li class="nav-item">
                         <button id="loginBtn" class="btn btn-primary">Acceder</button>
-
-
                     </li>
                 </ul>
                 <div class="hamburger">
@@ -169,7 +120,6 @@
             </div>
         </nav>
     </header>
-
     <!-- Main Content -->
     <main>
         <!-- Hero Carousel -->
@@ -181,7 +131,7 @@
                         <div class="carousel-content">
                             <h1>Asociación de Empresas de Servicios Fúnebres</h1>
                             <p>Representamos y nucleamos a las empresas del sector funerario de la Provincia de Buenos Aires</p>
-                            <a href="/asefweb/pages/servicios.html" class="btn-primary">Conocer Servicios</a>
+                            <a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/servicios.html" class="btn-primary">Conocer Servicios</a>
                         </div>
                     </div>
                     <div class="carousel-slide">
@@ -189,7 +139,7 @@
                         <div class="carousel-content">
                             <h1>Desarrollo Profesional Continuo</h1>
                             <p>Capacitaciones, cursos y eventos para la profesionalización del sector</p>
-                            <a href="/asefweb/pages/desarrollo.html" class="btn-primary">Ver Capacitaciones</a>
+                            <a href="/asefweb//asefweb//asefweb//asefweb/pages/desarrollo.html" class="btn-primary">Ver Capacitaciones</a>
                         </div>
                     </div>
                     <div class="carousel-slide">
@@ -197,7 +147,7 @@
                         <div class="carousel-content">
                             <h1>Red de Empresas Asociadas</h1>
                             <p>Más de 200 empresas comprometidas con la excelencia en servicios funerarios</p>
-                            <a href="/asefweb/pages/funerarias.html" class="btn-primary">Ver Directorio</a>
+                            <a href="/asefweb//asefweb//asefweb//asefweb/pages/funerarias.html" class="btn-primary">Ver Directorio</a>
                         </div>
                     </div>
                 </div>
@@ -214,7 +164,6 @@
                 </div>
             </div>
         </section>
-
         <!-- About Section -->
         <section class="about-section">
             <div class="container">
@@ -244,7 +193,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Services Preview -->
         <section class="services-preview">
             <div class="container">
@@ -256,7 +204,7 @@
                         </div>
                         <h3>Servicios a Socios</h3>
                         <p>Beneficios exclusivos, asistencia técnica y convenios especiales para empresas asociadas.</p>
-                        <a href="/asefweb/pages/servicios.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
+                        <a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/servicios.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
@@ -264,7 +212,7 @@
                         </div>
                         <h3>Desarrollo Profesional</h3>
                         <p>Capacitaciones, cursos y eventos para la profesionalización continua del sector.</p>
-                        <a href="/asefweb/pages/desarrollo.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
+                        <a href="/asefweb//asefweb//asefweb//asefweb/pages/desarrollo.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
@@ -272,7 +220,7 @@
                         </div>
                         <h3>Directorio de Funerarias</h3>
                         <p>Listado completo de empresas asociadas con buscador avanzado por ubicación.</p>
-                        <a href="/asefweb/pages/funerarias.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
+                        <a href="/asefweb//asefweb//asefweb//asefweb/pages/funerarias.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
@@ -280,12 +228,11 @@
                         </div>
                         <h3>Recursos y Documentos</h3>
                         <p>Acceso a reglamentos, instructivos y documentación técnica del sector.</p>
-                        <a href="/asefweb/pages/recursos.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
+                        <a href="/asefweb//asefweb//asefweb/pages/recursos.html" class="service-link">Ver más <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </section>
-
         <!-- News Section -->
         <section class="news-section">
             <div class="container">
@@ -297,7 +244,7 @@
                             <span class="news-date">15 Dic 2024</span>
                             <h3>Nueva Normativa para Servicios Funerarios</h3>
                             <p>Se establecen nuevos protocolos de calidad para empresas del sector...</p>
-                            <a href="/asefweb/pages/prensa.html" class="news-link">Leer más</a>
+                            <a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/prensa.html" class="news-link">Leer más</a>
                         </div>
                     </div>
                     <div class="news-card">
@@ -306,7 +253,7 @@
                             <span class="news-date">10 Dic 2024</span>
                             <h3>Capacitación en Atención al Cliente</h3>
                             <p>Próximo curso sobre excelencia en atención durante procesos de duelo...</p>
-                            <a href="/asefweb/pages/prensa.html" class="news-link">Leer más</a>
+                            <a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/prensa.html" class="news-link">Leer más</a>
                         </div>
                     </div>
                     <div class="news-card">
@@ -315,13 +262,12 @@
                             <span class="news-date">05 Dic 2024</span>
                             <h3>Convenio con Proveedores</h3>
                             <p>Nuevos acuerdos comerciales que benefician a todas las empresas asociadas...</p>
-                            <a href="/asefweb/pages/prensa.html" class="news-link">Leer más</a>
+                            <a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/prensa.html" class="news-link">Leer más</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
         <!-- CTA Section -->
         <section class="cta-section">
             <div class="container">
@@ -329,14 +275,13 @@
                     <h2>¿Desea formar parte de ASEF?</h2>
                     <p>Únase a la red más importante de empresas funerarias de Buenos Aires y acceda a beneficios exclusivos.</p>
                     <div class="cta-buttons">
-                        <a href="/asefweb/pages/contacto.html" class="btn-primary">Contactar</a>
-                        <a href="/asefweb/pages/servicios.html" class="btn-secondary">Ver Beneficios</a>
+                        <a href="/asefweb//asefweb/pages/contacto.html" class="btn-primary">Contactar</a>
+                        <a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/servicios.html" class="btn-secondary">Ver Beneficios</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -345,28 +290,28 @@
                     <h3><i class="fas fa-dove"></i> ASEF</h3>
                     <p>Asociación de Empresas de Servicios Fúnebres de la Provincia de Buenos Aires</p>
                     <div class="social-links">
-                        <a href="/asefweb/#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="/asefweb/#"><i class="fab fa-twitter"></i></a>
-                        <a href="/asefweb/#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="/asefweb/#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
                     <h4>Servicios</h4>
                     <ul>
-                        <li><a href="/asefweb/pages/servicios.html">Servicios a Socios</a></li>
-                        <li><a href="/asefweb/pages/desarrollo.html">Desarrollo Profesional</a></li>
-                        <li><a href="/asefweb/pages/planificacion.html">Planificación del Funeral</a></li>
-                        <li><a href="/asefweb/pages/funerarias.html">Directorio</a></li>
+                        <li><a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/servicios.html">Servicios a Socios</a></li>
+                        <li><a href="/asefweb//asefweb//asefweb//asefweb/pages/desarrollo.html">Desarrollo Profesional</a></li>
+                        <li><a href="/asefweb//asefweb/pages/planificacion.html">Planificación del Funeral</a></li>
+                        <li><a href="/asefweb//asefweb//asefweb//asefweb/pages/funerarias.html">Directorio</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Información</h4>
                     <ul>
-                        <li><a href="/asefweb/pages/museo.html">Museo Virtual</a></li>
-                        <li><a href="/asefweb/pages/prensa.html">Prensa</a></li>
-                        <li><a href="/asefweb/pages/recursos.html">Recursos</a></li>
-                        <li><a href="/asefweb/pages/newsletter.html">Newsletter</a></li>
+                        <li><a href="/asefweb//asefweb/pages/museo.html">Museo Virtual</a></li>
+                        <li><a href="/asefweb//asefweb//asefweb//asefweb//asefweb/pages/prensa.html">Prensa</a></li>
+                        <li><a href="/asefweb//asefweb//asefweb/pages/recursos.html">Recursos</a></li>
+                        <li><a href="/asefweb//asefweb/pages/newsletter.html">Newsletter</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -383,34 +328,27 @@
             </div>
         </div>
     </footer>
-
     <!-- Login Modal -->
     <!-- Login Modal -->
     <div id="loginModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
         <div class="modal-content" role="document">
             <span class="close" aria-label="Cerrar">&times;</span>
-
             <h2>Acceso para Socios</h2>
-
             <form id="loginForm" novalidate>
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required autocomplete="email">
                 </div>
-
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                 </div>
-
                 <button type="submit" class="btn-primary">Ingresar</button>
-
                 <p class="auth-link">
                     ¿No tiene cuenta?
-                    <a href="/asefweb/#" id="registerLink">Registrarse</a>
+                    <a href="#" id="registerLink">Registrarse</a>
                 </p>
             </form>
-
             <!-- (opcional) formulario de registro deshabilitado -->
             <div id="registerForm" style="display:none;">
                 <h2>Registro de Nuevo Socio</h2>
@@ -428,24 +366,20 @@
                         <input type="text" id="companyName" name="companyName" required>
                     </div>
                     <button type="submit" class="btn-primary">Registrarse</button>
-                    <p class="auth-link">¿Ya tiene cuenta? <a href="/asefweb/#" id="loginLink">Iniciar Sesión</a></p>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
                 </form>
             </div>
         </div>
     </div>
-
-
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
     <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
     <script type="module" defer src="/asefweb/js/auth.js"></script>
     <script type="module" defer src="/asefweb/js/carousel.js"></script>
     <script type="module" defer src="/asefweb/js/navigation.js"></script>
     <script type="module" defer src="/asefweb/js/main.js"></script>
-
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
         {
@@ -476,5 +410,4 @@
         }
     </script>
 </body>
-
 </html>

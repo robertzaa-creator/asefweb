@@ -1,34 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  
-
-  
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-<meta charset="utf-8"/>
+  <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ASEF · Admin · Secciones</title>
-  <link rel="stylesheet" href="/asefweb/main.css"/>
+  <link rel="stylesheet" href="/asefweb/css/main.css"/>
   <link rel="stylesheet" href="/asefweb/members.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
@@ -44,15 +20,11 @@
         <a href="/asefweb/news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
       </nav>
     </aside>
-
     <main class="members-main">
       <header class="members-header">
-
-
         <h1>Gestión de Secciones</h1>
         <button id="logoutBtn" class="btn">Cerrar sesión</button>
       </header>
-
       <section class="members-content">
         <div class="card">
           <h2>Crear Sección</h2>
@@ -63,7 +35,6 @@
             <button type="submit" class="btn">Crear sección</button>
           </form>
         </div>
-
         <div class="card">
           <h2>Listado de Secciones</h2>
           <table class="members-table">
@@ -74,14 +45,12 @@
       </section>
     </main>
   </div>
-
   <!-- Scripts -->
 <!-- Firebase SDKs -->
 <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
 <!-- Inicialización -->
 <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
 <script type="module" defer src="/asefweb/js/auth.js"></script>

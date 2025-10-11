@@ -1,22 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script>(function(){var isLocal = location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:';var base=document.createElement('base');base.href=isLocal?'/':'/asefweb/';document.head.prepend(base);})();</script>
-  <script>
-(function() {
-  var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-  var base = document.createElement('base');
-  base.href = isLocal ? '/' : '/asefweb/';
-  document.head.prepend(base);
-})();
-</script>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recursos para Socios - ASEF</title>
     <meta name="description" content="Área exclusiva para socios de ASEF. Acceso a documentos, reglamentos, instructivos y recursos técnicos del sector funerario.">
-    <link rel="stylesheet" href="/asefweb/main.css">
-    <link rel="stylesheet" href="/asefweb/navigation.css">
-    <link rel="stylesheet" href="/asefweb/responsive.css">
+    <link rel="stylesheet" href="/asefweb/css/main.css">
+    <link rel="stylesheet" href="/asefweb/css/navigation.css">
+    <link rel="stylesheet" href="/asefweb/css/responsive.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -399,7 +390,7 @@
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-primary">Ingresar</button>
-                <p class="auth-link">¿No tiene cuenta? <a href="/asefweb/#" id="registerLink">Registrarse</a></p>
+                <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
             </form>
             <div id="registerForm" style="display: none;">
                 <h2>Registro de Nuevo Socio</h2>
@@ -417,7 +408,7 @@
                         <input type="text" id="companyName" name="companyName" required>
                     </div>
                     <button type="submit" class="btn-primary">Registrarse</button>
-                    <p class="auth-link">¿Ya tiene cuenta? <a href="/asefweb/#" id="loginLink">Iniciar Sesión</a></p>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
                 </form>
             </div>
         </div>

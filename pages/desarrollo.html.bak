@@ -1,52 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  
-
-  
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desarrollo Profesional - ASEF</title>
     <meta name="description" content="Capacitaciones, cursos y eventos de desarrollo profesional para el sector funerario. Formación continua y certificaciones oficiales.">
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/asefweb/main.css">
-    <link rel="stylesheet" href="/asefweb/navigation.css">
-    <link rel="stylesheet" href="/asefweb/responsive.css">
-
+    <link rel="stylesheet" href="/asefweb/css/main.css">
+    <link rel="stylesheet" href="/asefweb/css/navigation.css">
+    <link rel="stylesheet" href="/asefweb/css/responsive.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-
-
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
@@ -75,7 +44,6 @@
             </div>
         </nav>
     </header>
-
     <main id="main-content" style="padding-top: 80px;">
         <!-- Page Header -->
         <section class="page-header">
@@ -84,13 +52,11 @@
                 <p>Capacitación continua para la excelencia en servicios funerarios</p>
             </div>
         </section>
-
         <!-- Current Courses -->
         <section class="current-courses">
             <div class="container">
                 <h2>Cursos Vigentes</h2>
                 <div class="courses-grid">
-
                     <div class="course-card featured">
                         <div class="course-badge">Próximo</div>
                         <img src="https://images.pexels.com/photos/5699456/pexels-photo-5699456.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Tanatopraxia">
@@ -113,7 +79,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="course-card">
                         <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Atención al Cliente">
                         <div class="course-content">
@@ -134,7 +99,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="course-card">
                         <img src="https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Gestión Empresarial">
                         <div class="course-content">
@@ -155,17 +119,14 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
-
         <!-- Upcoming Events -->
         <section class="upcoming-events">
             <div class="container">
                 <h2>Próximos Eventos</h2>
                 <div class="events-timeline">
-
                     <div class="event-item">
                         <div class="event-date">
                             <span class="day">28</span>
@@ -184,7 +145,6 @@
                             <button class="btn-secondary">Registrarse</button>
                         </div>
                     </div>
-
                     <div class="event-item">
                         <div class="event-date">
                             <span class="day">10</span>
@@ -203,7 +163,6 @@
                             <button class="btn-primary">Inscribirse</button>
                         </div>
                     </div>
-
                     <div class="event-item">
                         <div class="event-date">
                             <span class="day">18</span>
@@ -222,17 +181,14 @@
                             <button class="btn-primary">Ver Programa</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
-
         <!-- Certification Programs -->
         <section class="certification-programs">
             <div class="container">
                 <h2>Programas de Certificación</h2>
                 <div class="programs-grid">
-
                     <div class="program-card">
                         <div class="program-header">
                             <i class="fas fa-certificate"></i>
@@ -257,7 +213,6 @@
                             <button class="btn-primary">Más Información</button>
                         </div>
                     </div>
-
                     <div class="program-card">
                         <div class="program-header">
                             <i class="fas fa-user-tie"></i>
@@ -282,17 +237,14 @@
                             <button class="btn-primary">Más Información</button>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
-
         <!-- Faculty Section -->
         <section class="faculty-section">
             <div class="container">
                 <h2>Nuestro Cuerpo Docente</h2>
                 <div class="faculty-grid">
-
                     <div class="faculty-card">
                         <img src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Dr. Carlos Mendez">
                         <div class="faculty-info">
@@ -305,7 +257,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="faculty-card">
                         <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Lic. Ana Rodriguez">
                         <div class="faculty-info">
@@ -318,7 +269,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="faculty-card">
                         <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Ing. Roberto Silva">
                         <div class="faculty-info">
@@ -331,11 +281,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
-
         <!-- Registration CTA -->
         <section class="registration-cta">
             <div class="container">
@@ -358,13 +306,12 @@
                     </div>
                     <div class="cta-buttons">
                         <a href="/asefweb/contacto.html" class="btn-primary">Solicitar Información</a>
-                        <a href="/asefweb/#courses" class="btn-secondary">Ver Cursos</a>
+                        <a href="#courses" class="btn-secondary">Ver Cursos</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -380,7 +327,7 @@
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-primary">Ingresar</button>
-                <p class="auth-link">¿No tiene cuenta? <a href="/asefweb/#" id="registerLink">Registrarse</a></p>
+                <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
             </form>
             <div id="registerForm" style="display: none;">
                 <h2>Registro de Nuevo Socio</h2>
@@ -398,23 +345,20 @@
                         <input type="text" id="companyName" name="companyName" required>
                     </div>
                     <button type="submit" class="btn-primary">Registrarse</button>
-                    <p class="auth-link">¿Ya tiene cuenta? <a href="/asefweb/#" id="loginLink">Iniciar Sesión</a></p>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
                 </form>
             </div>
         </div>
     </div>
-
     <!-- Firebase SDKs -->
     <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
     <!-- JavaScript Files -->
     <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
     <script type="module" defer src="/asefweb/js/auth.js"></script>
     <script type="module" defer src="/asefweb/js/navigation.js"></script>
     <script type="module" defer src="/asefweb/js/main.js"></script>
-
     <style>
         .page-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -423,23 +367,19 @@
             padding: 80px 0 60px;
             margin-bottom: 60px;
         }
-
         .page-header h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
-
         .current-courses {
             padding: 0 0 80px;
         }
-
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-
         .course-card {
             background: white;
             border-radius: var(--border-radius);
@@ -448,16 +388,13 @@
             transition: var(--transition);
             position: relative;
         }
-
         .course-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
         }
-
         .course-card.featured {
             border: 2px solid var(--accent-color);
         }
-
         .course-badge {
             position: absolute;
             top: 15px;
@@ -470,23 +407,19 @@
             font-weight: 500;
             z-index: 2;
         }
-
         .course-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
-
         .course-content {
             padding: 25px;
         }
-
         .course-content h3 {
             color: var(--primary-color);
             margin-bottom: 1rem;
             font-size: 1.3rem;
         }
-
         .course-meta {
             display: flex;
             flex-wrap: wrap;
@@ -495,20 +428,17 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
-
         .course-meta span {
             display: flex;
             align-items: center;
             gap: 5px;
         }
-
         .course-features {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin: 1rem 0;
         }
-
         .feature {
             background: var(--bg-light);
             color: var(--primary-color);
@@ -517,7 +447,6 @@
             font-size: 0.8rem;
             font-weight: 500;
         }
-
         .course-footer {
             display: flex;
             justify-content: space-between;
@@ -526,34 +455,28 @@
             padding-top: 1rem;
             border-top: 1px solid #eee;
         }
-
         .price {
             font-size: 1.2rem;
             font-weight: 600;
             color: var(--primary-color);
         }
-
         .price small {
             display: block;
             font-size: 0.8rem;
             color: var(--accent-color);
             font-weight: 400;
         }
-
         .course-btn {
             padding: 8px 20px;
             font-size: 0.9rem;
         }
-
         .upcoming-events {
             background: var(--bg-light);
             padding: 80px 0;
         }
-
         .events-timeline {
             margin-top: 40px;
         }
-
         .event-item {
             display: flex;
             align-items: center;
@@ -564,7 +487,6 @@
             box-shadow: var(--shadow);
             gap: 20px;
         }
-
         .event-date {
             background: var(--accent-color);
             color: white;
@@ -573,28 +495,23 @@
             border-radius: var(--border-radius);
             min-width: 80px;
         }
-
         .event-date .day {
             display: block;
             font-size: 2rem;
             font-weight: 700;
             line-height: 1;
         }
-
         .event-date .month {
             font-size: 0.9rem;
             text-transform: uppercase;
         }
-
         .event-info {
             flex: 1;
         }
-
         .event-info h4 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
-
         .event-meta {
             display: flex;
             flex-wrap: wrap;
@@ -603,22 +520,18 @@
             color: var(--text-light);
             margin-top: 0.5rem;
         }
-
         .event-action {
             flex-shrink: 0;
         }
-
         .certification-programs {
             padding: 80px 0;
         }
-
         .programs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-
         .program-card {
             background: white;
             border-radius: var(--border-radius);
@@ -626,46 +539,38 @@
             overflow: hidden;
             transition: var(--transition);
         }
-
         .program-card:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-hover);
         }
-
         .program-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 30px;
             text-align: center;
         }
-
         .program-header i {
             font-size: 3rem;
             margin-bottom: 1rem;
             color: var(--accent-color);
         }
-
         .program-header h3 {
             color: white;
             margin: 0;
         }
-
         .program-content {
             padding: 30px;
         }
-
         .program-modules {
             list-style: none;
             margin: 1.5rem 0;
         }
-
         .program-modules li {
             padding: 0.5rem 0;
             position: relative;
             padding-left: 1.5rem;
             color: var(--text-light);
         }
-
         .program-modules li::before {
             content: "✓";
             color: var(--accent-color);
@@ -673,7 +578,6 @@
             position: absolute;
             left: 0;
         }
-
         .program-info {
             display: flex;
             gap: 20px;
@@ -681,7 +585,6 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
-
         .program-footer {
             display: flex;
             justify-content: space-between;
@@ -689,25 +592,21 @@
             padding: 20px 30px;
             background: var(--bg-light);
         }
-
         .program-price {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-color);
         }
-
         .faculty-section {
             background: var(--bg-light);
             padding: 80px 0;
         }
-
         .faculty-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-
         .faculty-card {
             background: white;
             border-radius: var(--border-radius);
@@ -716,33 +615,27 @@
             text-align: center;
             transition: var(--transition);
         }
-
         .faculty-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
         }
-
         .faculty-card img {
             width: 100%;
             height: 250px;
             object-fit: cover;
         }
-
         .faculty-info {
             padding: 25px;
         }
-
         .faculty-info h4 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
-
         .faculty-title {
             color: var(--accent-color);
             font-weight: 500;
             margin-bottom: 1rem;
         }
-
         .faculty-credentials {
             display: flex;
             flex-wrap: wrap;
@@ -750,7 +643,6 @@
             justify-content: center;
             margin-top: 1rem;
         }
-
         .faculty-credentials span {
             background: var(--accent-color);
             color: white;
@@ -758,19 +650,16 @@
             border-radius: 15px;
             font-size: 0.8rem;
         }
-
         .registration-cta {
             background: var(--primary-color);
             color: white;
             padding: 80px 0;
             text-align: center;
         }
-
         .registration-cta h2 {
             color: white;
             margin-bottom: 1rem;
         }
-
         .cta-stats {
             display: flex;
             justify-content: center;
@@ -778,36 +667,29 @@
             margin: 3rem 0;
             flex-wrap: wrap;
         }
-
         .cta-stats .stat-item h3 {
             font-size: 3rem;
             color: var(--accent-color);
             margin-bottom: 0.5rem;
         }
-
         .cta-stats .stat-item p {
             color: rgba(255, 255, 255, 0.9);
             margin: 0;
         }
-
         @media (max-width: 768px) {
             .page-header h1 {
                 font-size: 2.5rem;
             }
-
             .courses-grid, .programs-grid {
                 grid-template-columns: 1fr;
             }
-
             .event-item {
                 flex-direction: column;
                 text-align: center;
             }
-
             .cta-stats {
                 gap: 30px;
             }
-
             .faculty-grid {
                 grid-template-columns: 1fr;
             }
