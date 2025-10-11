@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
 
     <meta charset="UTF-8">
@@ -28,17 +45,17 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <i class="fas fa-dove nav-logo-icon"></i>
-                    <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <a href="/asefweb/./index.html" style="text-decoration: none; color: inherit;">
                         <span class="nav-logo-text">ASEF</span>
                     </a>
                 </div>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
-                    <li class="nav-item"><a href="desarrollo.html" class="nav-link">Desarrollo</a></li>
-                    <li class="nav-item"><a href="funerarias.html" class="nav-link">Funerarias</a></li>
-                    <li class="nav-item"><a href="recursos.html" class="nav-link active">Recursos</a></li>
-                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="/asefweb/./index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="/asefweb/servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="/asefweb/desarrollo.html" class="nav-link">Desarrollo</a></li>
+                    <li class="nav-item"><a href="/asefweb/funerarias.html" class="nav-link">Funerarias</a></li>
+                    <li class="nav-item"><a href="/asefweb/recursos.html" class="nav-link active">Recursos</a></li>
+                    <li class="nav-item"><a href="/asefweb/contacto.html" class="nav-link">Contacto</a></li>
                     <li class="nav-item">
                         <button id="loginBtn" class="btn-login">
                             <i class="fas fa-user"></i> Acceder
@@ -416,7 +433,7 @@
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-primary">Ingresar</button>
-                <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
+                <p class="auth-link">¿No tiene cuenta? <a href="/asefweb/#" id="registerLink">Registrarse</a></p>
             </form>
             <div id="registerForm" style="display: none;">
                 <h2>Registro de Nuevo Socio</h2>
@@ -434,22 +451,22 @@
                         <input type="text" id="companyName" name="companyName" required>
                     </div>
                     <button type="submit" class="btn-primary">Registrarse</button>
-                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="/asefweb/#" id="loginLink">Iniciar Sesión</a></p>
                 </form>
             </div>
         </div>
     </div>
 
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Files -->
-    <script src="/asefweb/firebase-init.js"></script>
-    <script src="/asefweb/auth.js"></script>
-    <script src="/asefweb/navigation.js"></script>
-    <script src="/asefweb/main.js"></script>
+    <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
+    <script type="module" defer src="/asefweb/js/auth.js"></script>
+    <script type="module" defer src="/asefweb/js/navigation.js"></script>
+    <script type="module" defer src="/asefweb/js/main.js"></script>
 
     <script>
         // Resources page functionality
@@ -511,7 +528,7 @@
                     // Create a sample downloadable content
                     const sampleContent = createSampleDocument(filename);
                     const blob = new Blob([sampleContent], {type: getFileType(filename)});
-                    const url = window.URL.createObjectURL(blob);
+                    const url = window.URL.createObjecturl("/asefweb/blob");
 
                     const a = document.createElement('a');
                     a.href = url;
@@ -519,7 +536,7 @@
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
+                    window.URL.revokeObjecturl("/asefweb/url");
 
                 }, 1500);
             }

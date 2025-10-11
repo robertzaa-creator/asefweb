@@ -2,6 +2,23 @@
 <html lang="es">
 
 <head>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
     
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,11 +37,11 @@
                 <div>Panel Admin</div>
             </div>
             <nav class="members-nav">
-                <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-                <a href="./users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
-                <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-                <a href="./documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
-                <a href="./news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
+                <a class="active" href="/asefweb/dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="/asefweb/users.html"><i class="fa-solid fa-users"></i> Usuarios</a>
+                <a href="/asefweb/sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+                <a href="/asefweb/documents.html"><i class="fa-regular fa-file-pdf"></i> Documentos</a>
+                <a href="/asefweb/news.html"><i class="fa-regular fa-newspaper"></i> Noticias</a>
             </nav>
         </aside>
 
@@ -47,7 +64,7 @@
                     <i class="fa-solid fa-users"></i>
                     <h2>Usuarios</h2>
                     <p>Gestiona roles, estado y accesos.</p>
-                    <a href="./users.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/users.html';">
+                    <a href="/asefweb/users.html" class="btn sm" onclick="event.preventDefault(); location.href="/asefweb/pages/admin/users.html";">
       Ir a Usuarios
     </a>
                 </div>
@@ -56,7 +73,7 @@
                     <i class="fa-regular fa-folder-open"></i>
                     <h2>Secciones</h2>
                     <p>Configura las secciones del área de socios.</p>
-                    <a href="./sections.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/sections.html';">
+                    <a href="/asefweb/sections.html" class="btn sm" onclick="event.preventDefault(); location.href="/asefweb/pages/admin/sections.html";">
       Ir a Secciones
     </a>
                 </div>
@@ -65,7 +82,7 @@
                     <i class="fa-regular fa-file-pdf"></i>
                     <h2>Documentos</h2>
                     <p>Sube y organiza recursos disponibles.</p>
-                    <a href="./documents.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/documents.html';">
+                    <a href="/asefweb/documents.html" class="btn sm" onclick="event.preventDefault(); location.href="/asefweb/pages/admin/documents.html";">
       Ir a Documentos
     </a>
                 </div>
@@ -74,7 +91,7 @@
                     <i class="fa-regular fa-newspaper"></i>
                     <h2>Noticias</h2>
                     <p>Publica comunicados y novedades.</p>
-                    <a href="./news.html" class="btn sm" onclick="event.preventDefault(); location.href='pages/admin/news.html';">
+                    <a href="/asefweb/news.html" class="btn sm" onclick="event.preventDefault(); location.href="/asefweb/pages/admin/news.html";">
       Ir a Noticias
     </a>
                 </div>
@@ -84,16 +101,16 @@
 
     <!-- Scripts -->
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
     <!-- Inicialización -->
-    <script src="/asefweb/firebase-init.js"></script>
-    <script src="/asefweb/auth.js"></script>
-    <script src="/asefweb/members.js"></script>
-    <script src="/asefweb/admin.js"></script>
+    <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
+    <script type="module" defer src="/asefweb/js/auth.js"></script>
+    <script type="module" defer src="/asefweb/js/members.js"></script>
+    <script type="module" defer src="/asefweb/js/admin.js"></script>
 </body>
 
 </html>

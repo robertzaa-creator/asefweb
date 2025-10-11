@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
 
 
     <meta charset="UTF-8">
@@ -28,16 +45,16 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <i class="fas fa-dove nav-logo-icon"></i>
-                    <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <a href="/asefweb/./index.html" style="text-decoration: none; color: inherit;">
                         <span class="nav-logo-text">ASEF</span>
                     </a>
                 </div>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
-                    <li class="nav-item"><a href="desarrollo.html" class="nav-link">Desarrollo</a></li>
-                    <li class="nav-item"><a href="funerarias.html" class="nav-link active">Funerarias</a></li>
-                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="/asefweb/./index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="/asefweb/servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="/asefweb/desarrollo.html" class="nav-link">Desarrollo</a></li>
+                    <li class="nav-item"><a href="/asefweb/funerarias.html" class="nav-link active">Funerarias</a></li>
+                    <li class="nav-item"><a href="/asefweb/contacto.html" class="nav-link">Contacto</a></li>
                     <li class="nav-item">
                         <button id="loginBtn" class="btn-login">
                             <i class="fas fa-user"></i> Acceder
@@ -129,7 +146,7 @@
                                 <span class="service-tag">Tanatopraxia</span>
                             </div>
                             <div class="funeraria-actions">
-                                <a href="tel:02214231234" class="btn-primary btn-sm">
+                                <a href="/asefweb/tel:02214231234" class="btn-primary btn-sm">
                                     <i class="fas fa-phone"></i> Llamar
                                 </a>
                                 <button class="btn-secondary btn-sm" onclick="showDetails('funeraria-1')">
@@ -158,7 +175,7 @@
                                 <span class="service-tag">Traslados</span>
                             </div>
                             <div class="funeraria-actions">
-                                <a href="tel:01147475678" class="btn-primary btn-sm">
+                                <a href="/asefweb/tel:01147475678" class="btn-primary btn-sm">
                                     <i class="fas fa-phone"></i> Llamar
                                 </a>
                                 <button class="btn-secondary btn-sm" onclick="showDetails('funeraria-2')">
@@ -186,7 +203,7 @@
                                 <span class="service-tag">Tanatopraxia</span>
                             </div>
                             <div class="funeraria-actions">
-                                <a href="tel:01142923456" class="btn-primary btn-sm">
+                                <a href="/asefweb/tel:01142923456" class="btn-primary btn-sm">
                                     <i class="fas fa-phone"></i> Llamar
                                 </a>
                                 <button class="btn-secondary btn-sm" onclick="showDetails('funeraria-3')">
@@ -215,7 +232,7 @@
                                 <span class="service-tag">Flores</span>
                             </div>
                             <div class="funeraria-actions">
-                                <a href="tel:01142537890" class="btn-primary btn-sm">
+                                <a href="/asefweb/tel:01142537890" class="btn-primary btn-sm">
                                     <i class="fas fa-phone"></i> Llamar
                                 </a>
                                 <button class="btn-secondary btn-sm" onclick="showDetails('funeraria-4')">
@@ -242,7 +259,7 @@
                                 <span class="service-tag">Crematorio</span>
                             </div>
                             <div class="funeraria-actions">
-                                <a href="tel:01146271122" class="btn-primary btn-sm">
+                                <a href="/asefweb/tel:01146271122" class="btn-primary btn-sm">
                                     <i class="fas fa-phone"></i> Llamar
                                 </a>
                                 <button class="btn-secondary btn-sm" onclick="showDetails('funeraria-5')">
@@ -270,7 +287,7 @@
                                 <span class="service-tag">Flores</span>
                             </div>
                             <div class="funeraria-actions">
-                                <a href="tel:01147493344" class="btn-primary btn-sm">
+                                <a href="/asefweb/tel:01147493344" class="btn-primary btn-sm">
                                     <i class="fas fa-phone"></i> Llamar
                                 </a>
                                 <button class="btn-secondary btn-sm" onclick="showDetails('funeraria-6')">
@@ -305,8 +322,8 @@
                     <h2>¿Su empresa no aparece en el directorio?</h2>
                     <p>Forme parte de la red más importante de empresas funerarias de Buenos Aires y acceda a todos los beneficios de ser socio.</p>
                     <div class="cta-buttons">
-                        <a href="contacto.html" class="btn-primary">Solicitar Membresía</a>
-                        <a href="servicios.html" class="btn-secondary">Ver Beneficios</a>
+                        <a href="/asefweb/contacto.html" class="btn-primary">Solicitar Membresía</a>
+                        <a href="/asefweb/servicios.html" class="btn-secondary">Ver Beneficios</a>
                     </div>
                 </div>
             </div>
@@ -338,7 +355,7 @@
                     <input type="password" id="password" name="password" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-primary">Ingresar</button>
-                <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
+                <p class="auth-link">¿No tiene cuenta? <a href="/asefweb/#" id="registerLink">Registrarse</a></p>
             </form>
             <div id="registerForm" style="display: none;">
                 <h2>Registro de Nuevo Socio</h2>
@@ -356,22 +373,22 @@
                         <input type="text" id="companyName" name="companyName" required>
                     </div>
                     <button type="submit" class="btn-primary">Registrarse</button>
-                    <p class="auth-link">¿Ya tiene cuenta? <a href="#" id="loginLink">Iniciar Sesión</a></p>
+                    <p class="auth-link">¿Ya tiene cuenta? <a href="/asefweb/#" id="loginLink">Iniciar Sesión</a></p>
                 </form>
             </div>
         </div>
     </div>
 
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <!-- JavaScript Files -->
-    <script src="/asefweb/firebase-init.js"></script>
-    <script src="/asefweb/auth.js"></script>
-    <script src="/asefweb/navigation.js"></script>
-    <script src="/asefweb/main.js"></script>
+    <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
+    <script type="module" defer src="/asefweb/js/auth.js"></script>
+    <script type="module" defer src="/asefweb/js/navigation.js"></script>
+    <script type="module" defer src="/asefweb/js/main.js"></script>
 
     <script>
         // Funerarias functionality
@@ -492,10 +509,10 @@
                     </div>
 
                     <div class="detail-actions">
-                        <a href="tel:${data.phone.replace(/\D/g, '')}" class="btn-primary">
+                        <a href="/asefweb/tel:${data.phone.replace(/\D/g,"')}" class="btn-primary">
                             <i class="fas fa-phone"></i> Llamar Ahora
                         </a>
-                        <a href="mailto:${data.email}" class="btn-secondary">
+                        <a href="/asefweb/mailto:${data.email}" class="btn-secondary">
                             <i class="fas fa-envelope"></i> Enviar Email
                         </a>
                     </div>

@@ -1,56 +1,50 @@
 # =========================================
-# ASEFWEB - Deploy Automático (PowerShell)
+# ASEFWEB - Deploy Automático Integrado
 # -----------------------------------------
-# Corrige HTML, valida rutas y ejecuta build + push.
+# Ejecuta todos los fixers y valida rutas antes del build.
 # Compatible con localhost y GitHub Pages.
 # =========================================
 
 Write-Host "🚀 Iniciando deploy automático ASEF..." -ForegroundColor Cyan
 
 # ------------------------------------------------------------
-# 1️⃣ Corregir HTML antes de validar
+# 1️⃣ Inserta <base> dinámico (GitHub Pages / Localhost)
+# ------------------------------------------------------------
+Write-Host "`n🧩 Insertando base dinámico en HTMLs..." -ForegroundColor Yellow
+python fix_base_paths.py
+if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en fix_base_paths.py"; exit 1 }
+
+# ------------------------------------------------------------
+# 2️⃣ Corrige HTML general (favicon, type=module, limpieza)
 # ------------------------------------------------------------
 Write-Host "`n🧹 Corrigiendo HTML de todas las páginas..." -ForegroundColor Yellow
 python asef_fix_html_all.py
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error al ejecutar asef_fix_html_all.py. Abortando." -ForegroundColor Red
-    exit 1
-}
+if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_fix_html_all.py"; exit 1 }
 
 # ------------------------------------------------------------
-# 2️⃣ Validar y corregir rutas en HTML/CSS
+# 3️⃣ Valida y corrige rutas internas
 # ------------------------------------------------------------
-Write-Host "`n🔍 Validando rutas en HTML y CSS..." -ForegroundColor Yellow
+Write-Host "`n🔍 Validando rutas HTML/CSS..." -ForegroundColor Yellow
 python asef_validate_paths.py --fix
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error durante la validación de rutas. Abortando." -ForegroundColor Red
-    exit 1
-}
+if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_validate_paths.py"; exit 1 }
 
 # ------------------------------------------------------------
-# 3️⃣ Compilar el sitio con Vite
+# 4️⃣ Compila el sitio con Vite
 # ------------------------------------------------------------
 Write-Host "`n🏗 Ejecutando build con Vite..." -ForegroundColor Yellow
 npm run build
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Error durante el build. Abortando." -ForegroundColor Red
-    exit 1
-}
+if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error durante el build. Abortando."; exit 1 }
 
 # ------------------------------------------------------------
-# 4️⃣ Preparar commit y push a GitHub Pages
+# 5️⃣ Commit + Push automático
 # ------------------------------------------------------------
 Write-Host "`n📂 Preparando commit..." -ForegroundColor Yellow
 git add -A
-
 $fecha = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-$mensaje = "deploy automático ASEF: validación + corrección de rutas ($fecha)"
+$mensaje = "deploy automático ASEF (base + rutas + build) - $fecha"
 git commit -m $mensaje
 
-Write-Host "`n⬆️  Subiendo cambios a GitHub..." -ForegroundColor Yellow
+Write-Host "`n⬆️ Subiendo cambios a GitHub..." -ForegroundColor Yellow
 git push
 
 if ($LASTEXITCODE -eq 0) {
