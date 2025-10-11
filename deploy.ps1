@@ -22,6 +22,14 @@ python asef_fix_html_all.py
 if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_fix_html_all.py"; exit 1 }
 
 # ------------------------------------------------------------
+# 2.5️⃣ Corrige rutas de CSS/JS
+# ------------------------------------------------------------
+Write-Host "`n🎨 Corrigiendo rutas de CSS/JS..." -ForegroundColor Yellow
+python asef_fix_assets.py
+if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_fix_assets.py"; exit 1 }
+
+
+# ------------------------------------------------------------
 # 3️⃣ Valida y corrige rutas internas
 # ------------------------------------------------------------
 Write-Host "`n🔍 Validando rutas HTML/CSS..." -ForegroundColor Yellow
@@ -34,6 +42,8 @@ if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_validate_paths.py"; exi
 Write-Host "`n🏗 Ejecutando build con Vite..." -ForegroundColor Yellow
 npm run build
 if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error durante el build. Abortando."; exit 1 }
+
+
 
 # ------------------------------------------------------------
 # 5️⃣ Commit + Push automático
