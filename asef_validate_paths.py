@@ -1,122 +1,136 @@
-# -*- coding: utf-8 -*-
-"""
-asef_validate_paths.py — Validador y reparador de rutas ASEF Web
-
-✅ Escanea todos los .html y .css del proyecto
-✅ Verifica que las rutas empiecen con /asefweb/ o sean válidas
-✅ Clasifica en Correctas, Incorrectas y Externas
-✅ Con --fix corrige automáticamente las incorrectas
-✅ Genera report_paths.txt con el resumen
-"""
-
+import os
 import re
-import sys
-from pathlib import Path
+import argparse
 
-# --- Configuración ---
-BASE_PATH = "/asefweb/"
-ROOT = Path(__file__).parent
-TARGET_EXT = [".html", ".css"]
-REPORT_FILE = ROOT / "report_paths.txt"
+# ============================================================
+# ASEF · Validador y Corrector de Rutas en HTML/CSS
+# Compatible con localhost y GitHub Pages
+# ------------------------------------------------------------
+# - Ignora rutas data: (favicons inline)
+# - Corrige href/src relativos agregando /asefweb/
+# - Genera reporte detallado report_paths.txt
+# ============================================================
 
-# --- Expresiones regulares ---
-RE_SRC = re.compile(r'(src|href)=["\']([^"\']+)["\']', re.IGNORECASE)
-RE_URL = re.compile(r'url\(["\']?([^)"\']+)["\']?\)', re.IGNORECASE)
+ROOT = "C:/asefweb"
+VALID_PREFIX = "/asefweb/"
+REPORT_FILE = os.path.join(ROOT, "report_paths.txt")
 
-# --- Clasificación ---
-correct = []
-incorrect = []
-external = []
-fixed = []
-
-
-def is_external(url: str):
-    return url.startswith(("http://", "https://", "mailto:", "tel:", "#", "//"))
+# Expresiones regulares
+HTML_LINK_RE = re.compile(r'(?:href|src)\s*=\s*["\']([^"\']+)["\']', re.IGNORECASE)
+CSS_URL_RE = re.compile(r'url\(["\']?([^"\')]+)["\']?\)', re.IGNORECASE)
 
 
-def validate_file(path: Path, fix: bool = False):
-    global correct, incorrect, external, fixed
-
-    text = path.read_text(encoding="utf-8", errors="ignore")
-    modified = False
-
-    # Reemplaza rutas en src/href
-    def replacer(m):
-        nonlocal modified
-        attr, url = m.groups()
-        if is_external(url):
-            external.append((path, url))
-            return m.group(0)
-        if url.startswith(BASE_PATH):
-            correct.append((path, url))
-            return m.group(0)
-        if not url.startswith("/"):
-            incorrect.append((path, url))
-            if fix:
-                modified = True
-                new_url = f"{BASE_PATH}{url.lstrip('/')}"
-                fixed.append((path, f"{url} → {new_url}"))
-                return f'{attr}="{new_url}"'
-        return m.group(0)
-
-    text2 = RE_SRC.sub(replacer, text)
-
-    # Corrige url(...) en CSS
-    def css_replacer(m):
-        nonlocal modified
-        url = m.group(1)
-        if is_external(url):
-            external.append((path, url))
-            return m.group(0)
-        if url.startswith(BASE_PATH):
-            correct.append((path, url))
-            return m.group(0)
-        incorrect.append((path, url))
-        if fix:
-            modified = True
-            new_url = f"{BASE_PATH}{url.lstrip('/')}"
-            fixed.append((path, f"{url} → {new_url}"))
-            return f'url("{new_url}")'
-        return m.group(0)
-
-    text3 = RE_URL.sub(css_replacer, text2)
-
-    if fix and modified:
-        path.write_text(text3, encoding="utf-8")
+def is_external(url: str) -> bool:
+    """Determina si una URL es externa o especial."""
+    return url.startswith(("http://", "https://", "mailto:", "tel:", "#", "data:"))
 
 
-def main():
-    fix = "--fix" in sys.argv
-    print("🔍 Validando rutas en HTML y CSS...\n")
+def fix_path(path: str) -> str:
+    """Corrige una ruta local agregando /asefweb/ si es necesario."""
+    if not path or is_external(path):
+        return path
 
-    for path in ROOT.rglob("*"):
-        if path.suffix.lower() in TARGET_EXT and not path.name.endswith(".bak"):
-            validate_file(path, fix=fix)
+    # Evitar duplicados o paths absolutos ya correctos
+    if path.startswith(VALID_PREFIX):
+        return path
 
-    # --- Generar reporte ---
-    report = []
-    report.append("===== RESUMEN ASEF VALIDACIÓN =====\n")
-    report.append(f"Correct   : {len(correct)}")
-    report.append(f"Incorrect : {len(incorrect)}")
-    report.append(f"External  : {len(external)}")
-    if fix:
-        report.append(f"Fixed     : {len(fixed)}")
-    report.append(f"Total analizado: {len(correct)+len(incorrect)+len(external)}\n")
+    # Evita tocar rutas absolutas del sistema o de root
+    if path.startswith(("/", "./", "../")):
+        clean = path.lstrip("/.")
+        return f"{VALID_PREFIX}{clean}"
 
-    if incorrect:
-        report.append("Archivos con rutas incorrectas:")
-        seen = set()
-        for f, _ in incorrect:
-            if f not in seen:
-                report.append(f"  - {f.name}")
-                seen.add(f)
-        report.append("")
+    return f"{VALID_PREFIX}{path}"
 
-    REPORT_FILE.write_text("\n".join(report), encoding="utf-8")
-    print("\n".join(report))
-    print(f"Reporte completo guardado en: {REPORT_FILE}\n")
-    print("✔ Finalizado.")
+
+def process_file(path: str):
+    """Analiza y corrige rutas dentro de un archivo."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+    except Exception as e:
+        print(f"❌ No se pudo leer {path}: {e}")
+        return 0, 0, 0, 0
+
+    links = HTML_LINK_RE.findall(content) + CSS_URL_RE.findall(content)
+    if not links:
+        return 0, 0, 0, 0
+
+    correct = incorrect = external = fixed = 0
+
+    for link in links:
+        if is_external(link):
+            external += 1
+            continue
+
+        if link.startswith(VALID_PREFIX):
+            correct += 1
+        else:
+            incorrect += 1
+            fixed_link = fix_path(link)
+            if fixed_link != link:
+                # 🔒 No corregir data:image ni anclas internas
+                if not link.startswith("data:") and not link.startswith("#"):
+                    content = content.replace(link, fixed_link)
+                    fixed += 1
+
+    if fixed > 0:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"✅ Corregido: {os.path.relpath(path, ROOT)}")
+
+    return correct, incorrect, external, fixed
+
+
+def scan_directory(root_dir: str):
+    """Escanea y valida rutas en todos los HTML y CSS."""
+    total_correct = total_incorrect = total_external = total_fixed = 0
+    files_with_errors = []
+
+    for subdir, _, files in os.walk(root_dir):
+        for file in files:
+            if file.endswith((".html", ".css")):
+                path = os.path.join(subdir, file)
+                correct, incorrect, external, fixed = process_file(path)
+                total_correct += correct
+                total_incorrect += incorrect
+                total_external += external
+                total_fixed += fixed
+                if incorrect > 0:
+                    files_with_errors.append(os.path.relpath(path, ROOT))
+
+    # --- Reporte resumen ---
+    with open(REPORT_FILE, "w", encoding="utf-8") as rpt:
+        rpt.write("===== RESUMEN ASEF VALIDACIÓN =====\n\n")
+        rpt.write(f"Correct   : {total_correct}\n")
+        rpt.write(f"Incorrect : {total_incorrect}\n")
+        rpt.write(f"External  : {total_external}\n")
+        rpt.write(f"Fixed     : {total_fixed}\n")
+        rpt.write(f"Total analizado: {total_correct + total_incorrect + total_external}\n\n")
+        if files_with_errors:
+            rpt.write("Archivos con rutas incorrectas:\n")
+            for f in files_with_errors:
+                rpt.write(f"  - {f}\n")
+
+    print("\n===== RESUMEN ASEF VALIDACIÓN =====\n")
+    print(f"Correct   : {total_correct}")
+    print(f"Incorrect : {total_incorrect}")
+    print(f"External  : {total_external}")
+    print(f"Fixed     : {total_fixed}")
+    print(f"Total analizado: {total_correct + total_incorrect + total_external}\n")
+
+    if files_with_errors:
+        print("Archivos con rutas incorrectas:")
+        for f in files_with_errors:
+            print(f"  - {f}")
+
+    print(f"\nReporte completo guardado en: {REPORT_FILE}")
+    print("\n✔ Finalizado.")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Valida y corrige rutas HTML/CSS del proyecto ASEF.")
+    parser.add_argument("--fix", action="store_true", help="Corrige rutas incorrectas automáticamente.")
+    args = parser.parse_args()
+
+    print("🔍 Validando rutas en HTML y CSS...\n")
+    scan_directory(ROOT)

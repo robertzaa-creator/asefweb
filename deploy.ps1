@@ -1,32 +1,55 @@
 # =========================================
-# ASEFWEB - Script de Deploy Automático (PowerShell)
+# ASEFWEB - Deploy Automático (PowerShell)
 # -----------------------------------------
-# Ejecuta validación de rutas, corrige errores, hace commit y push a GitHub Pages.
-# Uso:
-#   ./deploy.ps1
+# Corrige HTML, valida rutas y ejecuta build + push.
+# Compatible con localhost y GitHub Pages.
 # =========================================
 
 Write-Host "🚀 Iniciando deploy automático ASEF..." -ForegroundColor Cyan
 
-# 1. Validar y corregir rutas
-Write-Host "`n🔍 Validando rutas en HTML/CSS..." -ForegroundColor Yellow
-python asef_validate_paths.py --fix
+# ------------------------------------------------------------
+# 1️⃣ Corregir HTML antes de validar
+# ------------------------------------------------------------
+Write-Host "`n🧹 Corrigiendo HTML de todas las páginas..." -ForegroundColor Yellow
+python asef_fix_html_all.py
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "`n❌ Error durante la validación. Abortando." -ForegroundColor Red
+    Write-Host "❌ Error al ejecutar asef_fix_html_all.py. Abortando." -ForegroundColor Red
     exit 1
 }
 
-# 2. Confirmar git status
+# ------------------------------------------------------------
+# 2️⃣ Validar y corregir rutas en HTML/CSS
+# ------------------------------------------------------------
+Write-Host "`n🔍 Validando rutas en HTML y CSS..." -ForegroundColor Yellow
+python asef_validate_paths.py --fix
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "❌ Error durante la validación de rutas. Abortando." -ForegroundColor Red
+    exit 1
+}
+
+# ------------------------------------------------------------
+# 3️⃣ Compilar el sitio con Vite
+# ------------------------------------------------------------
+Write-Host "`n🏗 Ejecutando build con Vite..." -ForegroundColor Yellow
+npm run build
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "❌ Error durante el build. Abortando." -ForegroundColor Red
+    exit 1
+}
+
+# ------------------------------------------------------------
+# 4️⃣ Preparar commit y push a GitHub Pages
+# ------------------------------------------------------------
 Write-Host "`n📂 Preparando commit..." -ForegroundColor Yellow
 git add -A
 
-# 3. Commit con mensaje automático (usa fecha/hora)
 $fecha = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-$mensaje = "deploy automático ASEF: validación y corrección de rutas ($fecha)"
+$mensaje = "deploy automático ASEF: validación + corrección de rutas ($fecha)"
 git commit -m $mensaje
 
-# 4. Push a GitHub
 Write-Host "`n⬆️  Subiendo cambios a GitHub..." -ForegroundColor Yellow
 git push
 
