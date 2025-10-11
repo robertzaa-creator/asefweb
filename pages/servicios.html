@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+
+
+<script id="asef-dynamic-base">
+(function () {
+  try {
+    if (document.getElementById('asef-dynamic-base-installed')) return;
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+    var base = document.createElement('base');
+    base.id = 'asef-dynamic-base-installed';
+    base.href = isLocal ? '/' : '/asefweb/';
+    document.head.prepend(base);
+  } catch(e) { /* noop */ }
+})();
+</script>
+
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servicios · ASEF</title>
     <meta name="description" content="Conoce todos los beneficios, asistencias y convenios exclusivos que ASEF ofrece a sus empresas asociadas del sector funerario.">
-    <link rel="stylesheet" href="/asefweb/css/main.css">
-    <link rel="stylesheet" href="/asefweb/css/navigation.css">
-    <link rel="stylesheet" href="/asefweb/css/responsive.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -20,16 +37,16 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <i class="fas fa-dove nav-logo-icon"></i>
-                    <a href="/asefweb/./index.html" style="text-decoration: none; color: inherit;">
+                    <a href="index.html" style="text-decoration: none; color: inherit;">
                         <span class="nav-logo-text">ASEF</span>
                     </a>
                 </div>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="/asefweb/pages/index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item"><a href="/asefweb/pages/servicios.html" class="nav-link active">Servicios</a></li>
-                    <li class="nav-item"><a href="/asefweb//asefweb/pages/desarrollo.html" class="nav-link">Desarrollo</a></li>
-                    <li class="nav-item"><a href="/asefweb/pages/funerarias.html" class="nav-link">Funerarias</a></li>
-                    <li class="nav-item"><a href="/asefweb//asefweb/pages/contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="pages/index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="pages/servicios.html" class="nav-link active">Servicios</a></li>
+                    <li class="nav-item"><a href="pages/desarrollo.html" class="nav-link">Desarrollo</a></li>
+                    <li class="nav-item"><a href="pages/funerarias.html" class="nav-link">Funerarias</a></li>
+                    <li class="nav-item"><a href="pages/contacto.html" class="nav-link">Contacto</a></li>
                     <li class="nav-item">
                         <button id="loginBtn" class="btn-login">
                             <i class="fas fa-user"></i> Acceder
@@ -99,7 +116,7 @@
                             <li>Seminarios web</li>
                             <li>Certificaciones oficiales</li>
                         </ul>
-                        <a href="/asefweb//asefweb/pages/desarrollo.html" class="service-cta">Ver Cronograma</a>
+                        <a href="pages/desarrollo.html" class="service-cta">Ver Cronograma</a>
                     </div>
                     <!-- Representación -->
                     <div class="service-detail-card">
@@ -126,7 +143,7 @@
                             <li>Boletín informativo</li>
                             <li>Portal web exclusivo</li>
                         </ul>
-                        <a href="/asefweb/pages/newsletter.html" class="service-cta">Suscribirse</a>
+                        <a href="pages/newsletter.html" class="service-cta">Suscribirse</a>
                     </div>
                     <!-- Networking -->
                     <div class="service-detail-card">
@@ -210,8 +227,8 @@
                         </div>
                     </div>
                     <div class="cta-buttons">
-                        <a href="/asefweb//asefweb/pages/contacto.html" class="btn-primary">Solicitar Información</a>
-                        <a href="/asefweb//asefweb//asefweb/pages/index.html#contacto" class="btn-secondary">Asociarse</a>
+                        <a href="pages/contacto.html" class="btn-primary">Solicitar Información</a>
+                        <a href="/asefweb/pages/index.html#contacto" class="btn-secondary">Asociarse</a>
                     </div>
                 </div>
             </div>
@@ -260,10 +277,10 @@
     <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <!-- JavaScript Files -->
-    <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
-    <script type="module" defer src="/asefweb/js/auth.js"></script>
-    <script type="module" defer src="/asefweb/js/navigation.js"></script>
-    <script type="module" defer src="/asefweb/js/main.js"></script>
+    <script type="module" defer src="js/firebase-init.js"></script>
+    <script type="module" defer src="js/auth.js"></script>
+    <script type="module" defer src="js/navigation.js"></script>
+    <script type="module" defer src="js/main.js"></script>
     <style>
         .page-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));

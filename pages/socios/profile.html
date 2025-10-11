@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+
+
+<script id="asef-dynamic-base">
+(function () {
+  try {
+    if (document.getElementById('asef-dynamic-base-installed')) return;
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+    var base = document.createElement('base');
+    base.id = 'asef-dynamic-base-installed';
+    base.href = isLocal ? '/' : '/asefweb/';
+    document.head.prepend(base);
+  } catch(e) { /* noop */ }
+})();
+</script>
+
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Socios · Mi Perfil</title>
-  <link rel="stylesheet" href="/asefweb/css/main.css"/>
-  <link rel="stylesheet" href="/asefweb/members.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="members.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 <div class="members-shell">
   <aside class="members-sidebar">
     <div class="members-brand">
-      <img src="/asefweb/vite.svg" alt="ASEF"/><div>Área de Socios</div>
+      <img src="vite.svg" alt="ASEF"/><div>Área de Socios</div>
     </div>
     <nav class="members-nav">
-      <a href="/asefweb/dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-      <a href="/asefweb/sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-      <a class="active" href="/asefweb/profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+      <a href="dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a href="sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+      <a class="active" href="profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
       <a id="logoutBtn" href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
     </nav>
     <div class="members-foot sidebar-muted">Conectado: <span id="userEmail">—</span></div>
@@ -57,8 +74,8 @@
 <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 <!-- Core -->
-<script type="module" defer src="/asefweb/js/firebase-init.js" defer></script>
-<script type="module" defer src="/asefweb/js/auth.js" defer></script>
-<script type="module" defer src="/asefweb/js/members.js" defer></script>
+<script type="module" defer src="js/firebase-init.js" defer></script>
+<script type="module" defer src="js/auth.js" defer></script>
+<script type="module" defer src="js/members.js" defer></script>
 </body>
 </html>

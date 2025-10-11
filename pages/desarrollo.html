@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+
+
+<script id="asef-dynamic-base">
+(function () {
+  try {
+    if (document.getElementById('asef-dynamic-base-installed')) return;
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+    var base = document.createElement('base');
+    base.id = 'asef-dynamic-base-installed';
+    base.href = isLocal ? '/' : '/asefweb/';
+    document.head.prepend(base);
+  } catch(e) { /* noop */ }
+})();
+</script>
+
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desarrollo Profesional - ASEF</title>
     <meta name="description" content="Capacitaciones, cursos y eventos de desarrollo profesional para el sector funerario. Formación continua y certificaciones oficiales.">
-    <link rel="stylesheet" href="/asefweb/css/main.css">
-    <link rel="stylesheet" href="/asefweb/css/navigation.css">
-    <link rel="stylesheet" href="/asefweb/css/responsive.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -20,16 +37,16 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <i class="fas fa-dove nav-logo-icon"></i>
-                    <a href="/asefweb/./index.html" style="text-decoration: none; color: inherit;">
+                    <a href="index.html" style="text-decoration: none; color: inherit;">
                         <span class="nav-logo-text">ASEF</span>
                     </a>
                 </div>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="/asefweb/index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item"><a href="/asefweb/servicios.html" class="nav-link">Servicios</a></li>
-                    <li class="nav-item"><a href="/asefweb/desarrollo.html" class="nav-link active">Desarrollo</a></li>
-                    <li class="nav-item"><a href="/asefweb/funerarias.html" class="nav-link">Funerarias</a></li>
-                    <li class="nav-item"><a href="/asefweb/contacto.html" class="nav-link">Contacto</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="desarrollo.html" class="nav-link active">Desarrollo</a></li>
+                    <li class="nav-item"><a href="funerarias.html" class="nav-link">Funerarias</a></li>
+                    <li class="nav-item"><a href="contacto.html" class="nav-link">Contacto</a></li>
                     <li class="nav-item">
                         <button id="loginBtn" class="btn-login">
                             <i class="fas fa-user"></i> Acceder
@@ -305,7 +322,7 @@
                         </div>
                     </div>
                     <div class="cta-buttons">
-                        <a href="/asefweb/contacto.html" class="btn-primary">Solicitar Información</a>
+                        <a href="contacto.html" class="btn-primary">Solicitar Información</a>
                         <a href="#courses" class="btn-secondary">Ver Cursos</a>
                     </div>
                 </div>
@@ -355,10 +372,10 @@
     <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <!-- JavaScript Files -->
-    <script type="module" defer src="/asefweb/js/firebase-init.js"></script>
-    <script type="module" defer src="/asefweb/js/auth.js"></script>
-    <script type="module" defer src="/asefweb/js/navigation.js"></script>
-    <script type="module" defer src="/asefweb/js/main.js"></script>
+    <script type="module" defer src="js/firebase-init.js"></script>
+    <script type="module" defer src="js/auth.js"></script>
+    <script type="module" defer src="js/navigation.js"></script>
+    <script type="module" defer src="js/main.js"></script>
     <style>
         .page-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
