@@ -22,11 +22,27 @@ python asef_fix_html_all.py
 if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_fix_html_all.py"; exit 1 }
 
 # ------------------------------------------------------------
+# 2.5️⃣ Limpieza y reparación de rutas + meta duplicados
+# ------------------------------------------------------------
+Write-Host "`n🧹 Reparando rutas y limpiando duplicados (favicon/meta/base)..." -ForegroundColor Yellow
+python asef_fix_assets.py
+if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_fix_assets.py"; exit 1 }
+
+
+# ------------------------------------------------------------
 # 2.5️⃣ Corrige rutas de CSS/JS
 # ------------------------------------------------------------
 Write-Host "`n🎨 Corrigiendo rutas de CSS/JS..." -ForegroundColor Yellow
 python asef_fix_assets.py
 if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_fix_assets.py"; exit 1 }
+
+# ------------------------------------------------------------
+# 2.5️⃣ Limpieza y reparación de rutas + meta duplicados
+# ------------------------------------------------------------
+Write-Host "`n🧹 Reparando rutas y limpiando duplicados (favicon/meta/base)..." -ForegroundColor Yellow
+python asef_fix_assets.py
+if ($LASTEXITCODE -ne 0) { Write-Host "❌ Error en asef_fix_assets.py"; exit 1 }
+
 
 
 # ------------------------------------------------------------
