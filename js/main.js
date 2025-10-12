@@ -185,7 +185,8 @@ class ASEFApp {
             if (!newsContainer) return;
 
             // Sample news data
-            const news = [{
+            const news = [
+                {
                     title: 'Nueva Normativa para Servicios Funerarios',
                     excerpt: 'Se establecen nuevos protocolos de calidad para empresas del sector...',
                     date: '2024-12-15',
@@ -222,7 +223,8 @@ class ASEFApp {
 
     async loadFuneralHomes() {
         // Sample data - in production this would come from database
-        const funeralHomes = [{
+        const funeralHomes = [
+            {
                 name: 'Funeraria San José',
                 location: 'La Plata',
                 phone: '(0221) 423-1234',
@@ -243,7 +245,7 @@ class ASEFApp {
     }
 
     renderFuneralHomes(homes, container) {
-            container.innerHTML = homes.map(home => `
+        container.innerHTML = homes.map(home => `
             <div class="funeral-home-card searchable-item">
                 <h3>${home.name}</h3>
                 <p><i class="fas fa-map-marker-alt"></i> ${home.location}</p>
@@ -294,27 +296,18 @@ class ASEFApp {
     }
 
     setupAccessibilityFeatures() {
-        // Keyboard navigation improvements
         this.setupKeyboardNavigation();
-
-        // Skip to content link
         this.createSkipLink();
-
-        // Focus management
         this.manageFocus();
     }
 
     setupKeyboardNavigation() {
-        // Add keyboard support for interactive elements
         document.querySelectorAll('.card, .service-card, .news-card').forEach(element => {
             element.setAttribute('tabindex', '0');
-
             element.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     const link = element.querySelector('a');
-                    if (link) {
-                        link.click();
-                    }
+                    if (link) link.click();
                 }
             });
         });
@@ -337,41 +330,28 @@ class ASEFApp {
             z-index: 1000;
             transition: top 0.3s;
         `;
-
-        skipLink.addEventListener('focus', () => {
-            skipLink.style.top = '6px';
-        });
-
-        skipLink.addEventListener('blur', () => {
-            skipLink.style.top = '-40px';
-        });
-
+        skipLink.addEventListener('focus', () => skipLink.style.top = '6px');
+        skipLink.addEventListener('blur', () => skipLink.style.top = '-40px');
         document.body.insertBefore(skipLink, document.body.firstChild);
     }
 
     manageFocus() {
-        // Ensure focus is properly managed when modals open/close
         const modal = document.getElementById('loginModal');
         if (modal) {
             const observer = new MutationObserver((mutations) => {
                 mutations.forEach((mutation) => {
                     if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
                         if (modal.style.display === 'block') {
-                            // Focus first input when modal opens
                             const firstInput = modal.querySelector('input');
-                            if (firstInput) {
-                                setTimeout(() => firstInput.focus(), 100);
-                            }
+                            if (firstInput) setTimeout(() => firstInput.focus(), 100);
                         }
                     }
                 });
             });
-
             observer.observe(modal, { attributes: true });
         }
     }
 
-    // Utility functions
     formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleDateString('es-ES', {
@@ -382,10 +362,7 @@ class ASEFApp {
     }
 
     getMonthName(monthIndex) {
-        const months = [
-            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
-            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
-        ];
+        const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         return months[monthIndex];
     }
 
@@ -393,7 +370,6 @@ class ASEFApp {
         return new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    // Public methods for external use
     static showLoading(element) {
         element.innerHTML = '<span class="loading"></span> Cargando...';
         element.disabled = true;
@@ -417,11 +393,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const showModal = () => {
-    // Quita clases de oculto que puedas tener
     loginModal.classList.remove('hidden', 'is-hidden');
-    // Agrega clases de visible que puedas usar
     loginModal.classList.add('open', 'is-open', 'show');
-    // Fallback inline (por si el CSS depende de display)
     loginModal.style.display = 'block';
     loginModal.removeAttribute('aria-hidden');
   };
@@ -433,7 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loginModal.setAttribute('aria-hidden', 'true');
   };
 
-  // Abrir modal solo si el botón sigue diciendo “Acceder”
   loginBtn.addEventListener('click', (e) => {
     const label = loginBtn.textContent.trim().toLowerCase();
     if (label === 'acceder') {
@@ -442,10 +414,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Cerrar
   closeModal?.addEventListener('click', hideModal);
   loginModal.addEventListener('click', (e) => { if (e.target === loginModal) hideModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideModal(); });
 
   console.log('ASEF Website initialized');
+});
+
+
+// 🔹 Carga Firebase solo cuando se abre el modal de Acceder
+document.addEventListener('DOMContentLoaded', () => {
+  const loginBtn = document.getElementById('loginBtn');
+
+  async function loadFirebaseModules() {
+    if (window.firebaseApp) {
+      console.log('[Firebase] Ya inicializado, omitiendo carga dinámica.');
+      return;
+    }
+
+    console.log('[Firebase] Cargando SDKs por demanda...');
+    const scripts = [
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js',
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js',
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js',
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js'
+    ];
+
+    for (const src of scripts) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    console.log('[Firebase] SDKs cargados. Inicializando...');
+    const scriptInit = document.createElement('script');
+    scriptInit.src = 'js/firebase-init.js';
+    scriptInit.onload = () => {
+      const scriptAuth = document.createElement('script');
+      scriptAuth.src = 'js/auth.js';
+      document.head.appendChild(scriptAuth);
+    };
+    document.head.appendChild(scriptInit);
+  }
+
+  if (loginBtn) {
+    loginBtn.addEventListener('click', loadFirebaseModules);
+  }
 });
