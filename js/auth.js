@@ -111,17 +111,17 @@ if (window.__AUTH_JS__) {
         const isPublic =
           path.endsWith('index.html') ||
           path.endsWith('/') ||
-          path.includes('/pages/public/') ||
-          path.includes('/pages/servicios.html') ||
-          path.includes('/pages/desarrollo.html') ||
-          path.includes('/pages/planificacion.html') ||
-          path.includes('/pages/funerarias.html') ||
-          path.includes('/pages/contacto.html') ||
-          path.includes('/pages/links.html') ||
-          path.includes('/pages/grupo-panda.html') ||
-          path.includes('/pages/prensa.html') ||
-          path.includes('/pages/museo.html') ||
-          path.includes('/pages/recursos.html');
+          path.includes('./pages/public/') ||
+          path.includes('./pages/servicios.html') ||
+          path.includes('./pages/desarrollo.html') ||
+          path.includes('./pages/planificacion.html') ||
+          path.includes('./pages/funerarias.html') ||
+          path.includes('./pages/contacto.html') ||
+          path.includes('./pages/links.html') ||
+          path.includes('./pages/grupo-panda.html') ||
+          path.includes('./pages/prensa.html') ||
+          path.includes('./pages/museo.html') ||
+          path.includes('./pages/recursos.html');
 
         if (!user) {
           if (!isPublic) {

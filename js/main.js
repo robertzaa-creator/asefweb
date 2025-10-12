@@ -1,4 +1,6 @@
-// Main Application Logic
+// =======================================================
+// Main Application Logic - ASEF
+// =======================================================
 class ASEFApp {
     constructor() {
         this.init();
@@ -13,10 +15,11 @@ class ASEFApp {
         this.setupAccessibilityFeatures();
     }
 
+    // 📨 Contacto
     setupContactForm() {
         const contactForm = document.getElementById('contactForm');
         if (contactForm) {
-            contactForm.addEventListener('submit', async(e) => {
+            contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 await this.handleContactSubmission(e.target);
             });
@@ -26,18 +29,14 @@ class ASEFApp {
     async handleContactSubmission(form) {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
-
-        // Show loading state
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
         submitBtn.innerHTML = '<span class="loading"></span> Enviando...';
         submitBtn.disabled = true;
 
         try {
-            // Simulate API call - replace with actual endpoint
             await this.simulateAPICall(2000);
 
-            // Save to Firebase (if needed)
             if (window.firebaseDb) {
                 await window.firebaseDb.collection('contactMessages').add({
                     ...data,
@@ -46,7 +45,6 @@ class ASEFApp {
                 });
             }
 
-            // Success feedback
             if (window.authManager) {
                 window.authManager.showNotification('Mensaje enviado correctamente. Nos pondremos en contacto pronto.', 'success');
             }
@@ -64,6 +62,7 @@ class ASEFApp {
         }
     }
 
+    // 🔍 Búsqueda
     setupSearchFunctionality() {
         const searchInputs = document.querySelectorAll('.search-input');
         searchInputs.forEach(input => {
@@ -78,42 +77,25 @@ class ASEFApp {
         if (!resultsContainer) return;
 
         const items = resultsContainer.querySelectorAll('.searchable-item');
-
         items.forEach(item => {
             const text = item.textContent.toLowerCase();
             const matches = text.includes(query.toLowerCase());
-
             item.style.display = matches ? 'block' : 'none';
-
-            // Add highlight effect
-            if (matches && query.length > 2) {
-                this.highlightSearchTerm(item, query);
-            }
+            if (matches && query.length > 2) this.highlightSearchTerm(item, query);
         });
     }
 
     highlightSearchTerm(element, term) {
-        const walker = document.createTreeWalker(
-            element,
-            NodeFilter.SHOW_TEXT,
-            null,
-            false
-        );
-
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
         const textNodes = [];
         let node;
-
-        while (node = walker.nextNode()) {
-            textNodes.push(node);
-        }
+        while (node = walker.nextNode()) textNodes.push(node);
 
         textNodes.forEach(textNode => {
             const parent = textNode.parentNode;
-            if (parent.tagName === 'MARK') return; // Skip already highlighted
-
+            if (parent.tagName === 'MARK') return;
             const text = textNode.textContent;
             const regex = new RegExp(`(${term})`, 'gi');
-
             if (regex.test(text)) {
                 const highlightedText = text.replace(regex, '<mark>$1</mark>');
                 const wrapper = document.createElement('span');
@@ -123,10 +105,11 @@ class ASEFApp {
         });
     }
 
+    // 📰 Newsletter
     setupNewsletterForm() {
         const newsletterForm = document.getElementById('newsletterForm');
         if (newsletterForm) {
-            newsletterForm.addEventListener('submit', async(e) => {
+            newsletterForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 await this.handleNewsletterSubscription(e.target);
             });
@@ -136,12 +119,10 @@ class ASEFApp {
     async handleNewsletterSubscription(form) {
         const email = form.querySelector('input[type="email"]').value;
         const submitBtn = form.querySelector('button[type="submit"]');
-
         submitBtn.innerHTML = '<span class="loading"></span> Suscribiendo...';
         submitBtn.disabled = true;
 
         try {
-            // Save subscription to Firebase
             if (window.firebaseDb) {
                 await window.firebaseDb.collection('newsletterSubscriptions').add({
                     email: email,
@@ -167,41 +148,24 @@ class ASEFApp {
         }
     }
 
+    // 📦 Carga de contenido dinámico
     async loadDynamicContent() {
-        // Load news articles
         await this.loadNews();
-
-        // Load funeral homes
         await this.loadFuneralHomes();
-
-        // Load events
         await this.loadEvents();
     }
 
     async loadNews() {
         try {
-            // In a real app, this would fetch from API or Firebase
             const newsContainer = document.querySelector('.news-container');
             if (!newsContainer) return;
 
-            // Sample news data
             const news = [
-                {
-                    title: 'Nueva Normativa para Servicios Funerarios',
-                    excerpt: 'Se establecen nuevos protocolos de calidad para empresas del sector...',
-                    date: '2024-12-15',
-                    image: 'https://images.pexels.com/photos/4173624/pexels-photo-4173624.jpeg?auto=compress&cs=tinysrgb&w=400'
-                },
-                {
-                    title: 'Capacitación en Atención al Cliente',
-                    excerpt: 'Próximo curso sobre excelencia en atención durante procesos de duelo...',
-                    date: '2024-12-10',
-                    image: 'https://images.pexels.com/photos/5699456/pexels-photo-5699456.jpeg?auto=compress&cs=tinysrgb&w=400'
-                }
+                { title: 'Nueva Normativa para Servicios Funerarios', excerpt: 'Se establecen nuevos protocolos...', date: '2024-12-15', image: 'https://images.pexels.com/photos/4173624/pexels-photo-4173624.jpeg?auto=compress&cs=tinysrgb&w=400' },
+                { title: 'Capacitación en Atención al Cliente', excerpt: 'Próximo curso sobre excelencia...', date: '2024-12-10', image: 'https://images.pexels.com/photos/5699456/pexels-photo-5699456.jpeg?auto=compress&cs=tinysrgb&w=400' }
             ];
 
             this.renderNews(news, newsContainer);
-
         } catch (error) {
             console.error('Error loading news:', error);
         }
@@ -221,27 +185,14 @@ class ASEFApp {
         `).join('');
     }
 
+    // ⚰️ Funerarias
     async loadFuneralHomes() {
-        // Sample data - in production this would come from database
         const funeralHomes = [
-            {
-                name: 'Funeraria San José',
-                location: 'La Plata',
-                phone: '(0221) 423-1234',
-                services: ['Velatorio', 'Crematorio', 'Traslados']
-            },
-            {
-                name: 'Servicios Funerarios Norte',
-                location: 'San Isidro',
-                phone: '(011) 4747-5678',
-                services: ['Velatorio', 'Sepelio', 'Flores']
-            }
+            { name: 'Funeraria San José', location: 'La Plata', phone: '(0221) 423-1234', services: ['Velatorio', 'Crematorio', 'Traslados'] },
+            { name: 'Servicios Funerarios Norte', location: 'San Isidro', phone: '(011) 4747-5678', services: ['Velatorio', 'Sepelio', 'Flores'] }
         ];
-
         const container = document.querySelector('.funeral-homes-container');
-        if (container) {
-            this.renderFuneralHomes(funeralHomes, container);
-        }
+        if (container) this.renderFuneralHomes(funeralHomes, container);
     }
 
     renderFuneralHomes(homes, container) {
@@ -257,26 +208,14 @@ class ASEFApp {
         `).join('');
     }
 
+    // 📅 Eventos
     async loadEvents() {
         const events = [
-            {
-                title: 'Curso de Tanatopraxia',
-                date: '2024-12-20',
-                location: 'Sede ASEF',
-                type: 'Capacitación'
-            },
-            {
-                title: 'Asamblea General Ordinaria',
-                date: '2024-12-25',
-                location: 'Salón Principal',
-                type: 'Institucional'
-            }
+            { title: 'Curso de Tanatopraxia', date: '2024-12-20', location: 'Sede ASEF', type: 'Capacitación' },
+            { title: 'Asamblea General Ordinaria', date: '2024-12-25', location: 'Salón Principal', type: 'Institucional' }
         ];
-
         const container = document.querySelector('.events-container');
-        if (container) {
-            this.renderEvents(events, container);
-        }
+        if (container) this.renderEvents(events, container);
     }
 
     renderEvents(events, container) {
@@ -295,6 +234,7 @@ class ASEFApp {
         `).join('');
     }
 
+    // ♿ Accesibilidad
     setupAccessibilityFeatures() {
         this.setupKeyboardNavigation();
         this.createSkipLink();
@@ -319,15 +259,10 @@ class ASEFApp {
         skipLink.className = 'skip-link';
         skipLink.textContent = 'Saltar al contenido principal';
         skipLink.style.cssText = `
-            position: absolute;
-            top: -40px;
-            left: 6px;
-            background: var(--primary-color);
-            color: white;
-            padding: 8px;
-            text-decoration: none;
-            border-radius: 4px;
-            z-index: 1000;
+            position: absolute; top: -40px; left: 6px;
+            background: var(--primary-color); color: white;
+            padding: 8px; text-decoration: none;
+            border-radius: 4px; z-index: 1000;
             transition: top 0.3s;
         `;
         skipLink.addEventListener('focus', () => skipLink.style.top = '6px');
@@ -354,61 +289,46 @@ class ASEFApp {
 
     formatDate(dateString) {
         const date = new Date(dateString);
-        return date.toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+        return date.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
     }
 
-    getMonthName(monthIndex) {
-        const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-        return months[monthIndex];
+    getMonthName(i) {
+        const m = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        return m[i];
     }
 
     simulateAPICall(delay) {
         return new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    static showLoading(element) {
-        element.innerHTML = '<span class="loading"></span> Cargando...';
-        element.disabled = true;
-    }
-
-    static hideLoading(element, originalText) {
-        element.textContent = originalText;
-        element.disabled = false;
-    }
+    static showLoading(el) { el.innerHTML = '<span class="loading"></span> Cargando...'; el.disabled = true; }
+    static hideLoading(el, txt) { el.textContent = txt; el.disabled = false; }
 }
 
-// Initialize app when DOM is loaded
+// -------------------------------------------------------
+// Modal Acceso
+// -------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  const loginBtn   = document.getElementById('loginBtn');
+  const loginBtn = document.getElementById('loginBtn');
   const loginModal = document.getElementById('loginModal');
   const closeModal = document.getElementById('closeModal');
 
-  if (!loginBtn || !loginModal) {
-    console.info('[main.js] Sin loginBtn o loginModal en esta página (OK).');
-    return;
-  }
+  if (!loginBtn || !loginModal) return;
 
   const showModal = () => {
     loginModal.classList.remove('hidden', 'is-hidden');
     loginModal.classList.add('open', 'is-open', 'show');
     loginModal.style.display = 'block';
-    loginModal.removeAttribute('aria-hidden');
   };
 
   const hideModal = () => {
     loginModal.classList.add('hidden', 'is-hidden');
     loginModal.classList.remove('open', 'is-open', 'show');
     loginModal.style.display = 'none';
-    loginModal.setAttribute('aria-hidden', 'true');
   };
 
   loginBtn.addEventListener('click', (e) => {
-    const label = loginBtn.textContent.trim().toLowerCase();
-    if (label === 'acceder') {
+    if (loginBtn.textContent.trim().toLowerCase() === 'acceder') {
       e.preventDefault();
       showModal();
     }
@@ -417,22 +337,21 @@ document.addEventListener('DOMContentLoaded', () => {
   closeModal?.addEventListener('click', hideModal);
   loginModal.addEventListener('click', (e) => { if (e.target === loginModal) hideModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideModal(); });
-
-  console.log('ASEF Website initialized');
 });
 
-
-// 🔹 Carga Firebase solo cuando se abre el modal de Acceder
+// -------------------------------------------------------
+// Firebase: carga solo en páginas específicas o al acceder
+// -------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
   const loginBtn = document.getElementById('loginBtn');
 
   async function loadFirebaseModules() {
     if (window.firebaseApp) {
-      console.log('[Firebase] Ya inicializado, omitiendo carga dinámica.');
+      console.log('[Firebase] Ya inicializado.');
       return;
     }
 
-    console.log('[Firebase] Cargando SDKs por demanda...');
+    console.log('[Firebase] Cargando SDKs...');
     const scripts = [
       'https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js',
       'https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js',
@@ -461,6 +380,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.head.appendChild(scriptInit);
   }
 
+  // 🔸 Detecta si la página necesita Firebase
+  const path = window.location.pathname;
+  const pagesRequiringFirebase = [
+    '/contacto.html',
+    'pages/contacto.html',
+    '/pages/socios.html',
+    '/pages/admin.html'
+  ];
+  const needsFirebase = pagesRequiringFirebase.some(page => path.endsWith(page) || path.includes(page));
+
+  if (needsFirebase) {
+    console.log('[Firebase] Página con Firebase detectada → cargando módulos...');
+    loadFirebaseModules();
+  }
+
+  // 🔸 También al hacer clic en “Acceder”
   if (loginBtn) {
     loginBtn.addEventListener('click', loadFirebaseModules);
   }
