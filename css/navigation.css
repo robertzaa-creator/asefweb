@@ -234,3 +234,69 @@
     height: 2px;
     background: var(--accent-color);
 }
+
+/* Ajuste complementario del menú móvil ASEF */
+body.no-scroll {
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .dropdown-menu {
+    display: none;
+  }
+
+  .dropdown.open > .dropdown-menu {
+    display: block;
+  }
+
+  /* Alinear y mejorar el botón Acceder dentro del menú */
+  .nav-item button#loginBtn {
+    display: block;
+    margin: 12px auto;
+    width: 80%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
+/* === Ajustes visuales del menú móvil ASEF === */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Submenús con animación slide-down en móvil */
+@media screen and (max-width: 768px) {
+  .dropdown-menu {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .dropdown.open > .dropdown-menu {
+    max-height: 500px; /* suficiente para todos los items */
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Botón Acceder dentro del menú */
+  .nav-item button#loginBtn {
+    display: block;
+    width: 80%;
+    margin: 1rem auto;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+
+  .nav-item button#loginBtn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+  }
+}

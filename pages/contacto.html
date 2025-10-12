@@ -22,9 +22,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - ASEF</title>
     <meta name="description" content="Contáctese con ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires. Formulario de contacto, ubicación y datos institucionales.">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/navigation.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/responsive.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -42,11 +42,11 @@
                     </a>
                 </div>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
-                    <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
-                    <li class="nav-item"><a href="desarrollo.html" class="nav-link">Desarrollo</a></li>
-                    <li class="nav-item"><a href="funerarias.html" class="nav-link">Funerarias</a></li>
-                    <li class="nav-item"><a href="contacto.html" class="nav-link active">Contacto</a></li>
+                    <li class="nav-item"><a href="./index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="./pages/servicios.html" class="nav-link">Servicios</a></li>
+                    <li class="nav-item"><a href="./pages/desarrollo.html" class="nav-link">Desarrollo</a></li>
+                    <li class="nav-item"><a href="./pages/funerarias.html" class="nav-link">Funerarias</a></li>
+                    <li class="nav-item"><a href="./pages/contacto.html" class="nav-link active">Contacto</a></li>
                     <li class="nav-item">
                         <button id="loginBtn" class="btn-login">
                             <i class="fas fa-user"></i> Acceder
@@ -371,18 +371,10 @@
             </div>
         </div>
     </div>
-    <!-- Firebase SDKs -->
-    <!-- Firebase SDKs -->
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-    <!-- Inicialización -->
-    <script type="module" defer src="js/firebase-init.js"></script>
-    <script type="module" defer src="js/auth.js"></script>
-    <script type="module" defer src="js/socios.js"></script>
-    <script type="module" defer src="js/navigation.js"></script>
-    <script type="module" defer src="js/main.js"></script>
+
+<script defer src="../js/navigation.js"></script>
+<script defer src="../js/main.js"></script>
+
     <script>
         // FAQ functionality
         function toggleFAQ(element) {

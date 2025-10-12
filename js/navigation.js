@@ -37,6 +37,7 @@
     // Prefijar con ROOT para evitar /pages/pages/... cuando estamos dentro de /pages/
     if (
       href.endsWith('.html') ||
+      href.startsWith('./pages/') ||
       href.startsWith('pages/') ||
       href.startsWith('assets/') ||
       href.startsWith('img/') ||
@@ -47,7 +48,73 @@
     }
   }
 
+  // =======================================================
+  // Aplicar normalización una vez que el DOM está listo
+  // =======================================================
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href]').forEach(fixHref);
+
+    // =======================================================
+    // 🔹 Control del menú hamburguesa y submenús táctiles
+    // =======================================================
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if (hamburger && navMenu) {
+      // Abrir/cerrar menú principal
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        document.body.classList.toggle('no-scroll');
+      });
+
+      // Cerrar menú al hacer clic en cualquier link
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('active');
+          document.body.classList.remove('no-scroll');
+        });
+      });
+    }
+
+    // Submenús táctiles en móvil con animación
+    const dropdowns = document.querySelectorAll('.dropdown > .nav-link');
+    dropdowns.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const parent = link.parentElement;
+        const submenu = parent.querySelector('.dropdown-menu');
+
+        if (window.innerWidth < 768 && submenu) {
+          e.preventDefault();
+
+          // Cerrar otros dropdowns abiertos
+          document.querySelectorAll('.dropdown.open').forEach(d => {
+            if (d !== parent) d.classList.remove('open');
+          });
+
+          // Alternar este dropdown
+          parent.classList.toggle('open');
+
+          // Animación slide suave
+          if (parent.classList.contains('open')) {
+            submenu.style.maxHeight = submenu.scrollHeight + 'px';
+          } else {
+            submenu.style.maxHeight = null;
+          }
+        }
+      });
+    });
+
+    // =======================================================
+    // 🔹 Ajuste visual del botón Acceder (móvil)
+    // =======================================================
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) {
+      // Asegura clase principal para estilos comunes
+      loginBtn.classList.add('btn-primary');
+    }
   });
+
 })();
