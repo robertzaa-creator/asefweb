@@ -144,7 +144,7 @@
             <div class="carousel-container">
                 <div class="carousel">
                     <div class="carousel-slide active">
-                        <img src="https://images.pexels.com/photos/6980868/pexels-photo-6980868.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Servicios Funerarios Profesionales">
+                        <img src="images/carrusel1.png" alt="Servicios Funerarios Profesionales">
                         <div class="carousel-content">
                             <h1>Asociación de Empresas de Servicios Fúnebres</h1>
                             <p>Representamos y nucleamos a las empresas del sector funerario de la Provincia de Buenos Aires</p>
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                     <div class="carousel-slide">
-                        <img src="https://images.pexels.com/photos/8142045/pexels-photo-8142045.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" alt="Empresas Asociadas">
+                        <img src="images/carrusel2.png" alt="Empresas Asociadas">
                         <div class="carousel-content">
                             <h1>Red de Empresas Asociadas</h1>
                             <p>Más de 200 empresas comprometidas con la excelencia en servicios funerarios</p>
@@ -388,15 +388,57 @@
             </div>
         </div>
     </div>
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-    <script type="module" defer src="js/firebase-init.js"></script>
-    <script type="module" defer src="js/auth.js"></script>
-    <script type="module" defer src="js/carousel.js"></script>
-    <script type="module" defer src="js/navigation.js"></script>
-    <script type="module" defer src="js/main.js"></script>
+<!-- Componentes funcionales -->
+<script src="js/carousel.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/main.js"></script>
+
+<!-- 🔸 Carga dinámica de Firebase (solo al abrir “Acceder”) -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const loginBtn = document.getElementById('loginBtn');
+
+  async function loadFirebaseModules() {
+    if (window.firebaseApp) {
+      console.log('[Firebase] Ya inicializado, omitiendo carga dinámica.');
+      return;
+    }
+
+    console.log('[Firebase] Cargando SDKs por demanda...');
+    const scripts = [
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js',
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js',
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js',
+      'https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js'
+    ];
+
+    for (const src of scripts) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    console.log('[Firebase] SDKs cargados. Inicializando...');
+    const scriptInit = document.createElement('script');
+    scriptInit.src = 'js/firebase-init.js';
+    scriptInit.onload = () => {
+      const scriptAuth = document.createElement('script');
+      scriptAuth.src = 'js/auth.js';
+      document.head.appendChild(scriptAuth);
+    };
+    document.head.appendChild(scriptInit);
+  }
+
+  if (loginBtn) {
+    loginBtn.addEventListener('click', loadFirebaseModules);
+  }
+});
+</script>
+
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
         {

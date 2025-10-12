@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+  (function () {
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+    var base = document.createElement('base');
+    base.href = isLocal ? '/' : '/asefweb/';
+    document.head.prepend(base);
+  })();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planificación del Funeral · ASEF</title>
+<meta name="description" content="Guía integral para la planificación de un servicio funerario. ASEF acompaña a las familias y empresas en cada etapa del proceso, brindando orientación y apoyo.">
+
+<link rel="stylesheet" href="../../css/main.css">
+<link rel="stylesheet" href="../../css/navigation.css">
+<link rel="stylesheet" href="../../css/responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<header class="header">
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <i class="fas fa-dove nav-logo-icon"></i>
+        <a href="../index.html" style="text-decoration:none;color:inherit;">
+          <span class="nav-logo-text">ASEF</span>
+        </a>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="pages/index.html" class="nav-link">Inicio</a></li>
+        <li class="nav-item"><a href="pages/servicios.html" class="nav-link">Servicios</a></li>
+        <li class="nav-item"><a href="pages/desarrollo.html" class="nav-link">Desarrollo</a></li>
+        <li class="nav-item"><a href="pages/planificacion.html" class="nav-link active">Planificación</a></li>
+        <li class="nav-item"><a href="pages/funerarias.html" class="nav-link">Funerarias</a></li>
+        <li class="nav-item"><a href="pages/contacto.html" class="nav-link">Contacto</a></li>
+        <li class="nav-item">
+          <button id="loginBtn" class="btn-login"><i class="fas fa-user"></i> Acceder</button>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" style="padding-top:80px;">
+  <!-- Hero -->
+  <section class="page-header hero-planificacion">
+    <div class="overlay"></div>
+    <div class="container">
+      <h1>Planificación del Funeral</h1>
+      <p>Guía para una despedida organizada, respetuosa y sin sobresaltos</p>
+    </div>
+  </section>
+
+  <!-- Contenido principal -->
+  <section class="services-detail">
+    <div class="container">
+      <div class="services-grid">
+
+        <div class="service-detail-card">
+          <div class="service-icon"><i class="fas fa-list-ul"></i></div>
+          <h3>Etapas del Proceso</h3>
+          <ul>
+            <li>Orientación sobre trámites y documentación requerida.</li>
+            <li>Elección del tipo de servicio (inhumación, cremación, traslado).</li>
+            <li>Asesoramiento en la selección de féretro, sala velatoria y ceremonial.</li>
+            <li>Coordinación integral con cementerios, crematorios y parroquias.</li>
+          </ul>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-icon"><i class="fas fa-hands-helping"></i></div>
+          <h3>Acompañamiento Familiar</h3>
+          <ul>
+            <li>Contención y guía emocional durante el proceso de despedida.</li>
+            <li>Asistencia personalizada para la toma de decisiones difíciles.</li>
+            <li>Información clara sobre los pasos administrativos y legales.</li>
+            <li>Contacto con profesionales especializados en tanatología.</li>
+          </ul>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-icon"><i class="fas fa-file-signature"></i></div>
+          <h3>Trámites y Documentación</h3>
+          <ul>
+            <li>Gestión del certificado de defunción y documentación sanitaria.</li>
+            <li>Tramitación de permisos municipales y transporte.</li>
+            <li>Inscripción en registros civiles y religiosos.</li>
+            <li>Gestión de seguros y coberturas funerarias.</li>
+          </ul>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-icon"><i class="fas fa-feather-alt"></i></div>
+          <h3>Opciones Personalizadas</h3>
+          <ul>
+            <li>Servicios conmemorativos adaptados a cada creencia y tradición.</li>
+            <li>Diseño de ceremonias con elementos simbólicos o ecológicos.</li>
+            <li>Personalización de recordatorios y espacios de despedida.</li>
+            <li>Alternativas de planificación anticipada.</li>
+          </ul>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-icon"><i class="fas fa-calendar-check"></i></div>
+          <h3>Planificación Anticipada</h3>
+          <ul>
+            <li>Contratos y planes preventivos para aliviar la carga futura.</li>
+            <li>Opciones de pago y cobertura adaptadas a cada necesidad.</li>
+            <li>Resguardo de decisiones y voluntades personales.</li>
+            <li>Tranquilidad y organización para la familia.</li>
+          </ul>
+        </div>
+
+        <div class="service-detail-card">
+          <div class="service-icon"><i class="fas fa-phone-alt"></i></div>
+          <h3>Orientación Profesional ASEF</h3>
+          <p>ASEF ofrece asesoramiento gratuito a empresas y familias para planificar un servicio funerario adecuado, garantizando calidad, transparencia y acompañamiento humano.</p>
+          <div class="contact-info">
+            <p><i class="fas fa-phone"></i> (011) 4567-8900</p>
+            <p><i class="fas fa-envelope"></i> orientacion@asef.com.ar</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Recursos Descargables -->
+  <section class="recursos-section">
+    <div class="container">
+      <h2>Recursos Útiles para la Planificación</h2>
+      <p>Descargue nuestras guías prácticas para acompañar cada paso del proceso y facilitar la toma de decisiones.</p>
+      <div class="recursos-grid">
+        <div class="recurso-card">
+          <i class="fas fa-book-open recurso-icon"></i>
+          <h3>Guía ASEF para la Planificación del Funeral</h3>
+          <p>Información esencial sobre trámites, documentación, ceremonial y acompañamiento.</p>
+          <a href="../../docs/guia-planificacion.pdf" class="btn-primary" download>Descargar Guía</a>
+        </div>
+
+        <div class="recurso-card">
+          <i class="fas fa-clipboard-list recurso-icon"></i>
+          <h3>Checklist de Trámites y Documentación</h3>
+          <p>Una lista paso a paso para organizar la documentación y los procedimientos requeridos.</p>
+          <a href="../../docs/checklist-tramites.pdf" class="btn-secondary" download>Descargar Checklist</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="membership-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Planificar es brindar tranquilidad</h2>
+        <p>Conocer y anticipar cada etapa permite tomar decisiones conscientes, proteger a la familia y garantizar una despedida digna.</p>
+        <div class="cta-buttons">
+          <a href="pages/contacto.html" class="btn-primary">Solicitar Asesoramiento</a>
+          <a href="pages/funerarias.html" class="btn-secondary">Ver Empresas Asociadas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Acceso para Socios</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-primary">Ingresar</button>
+      <p class="auth-link">¿No tiene cuenta? <a href="#" id="registerLink">Registrarse</a></p>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="../js/firebase-init.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/main.js"></script>
+
+<style>
+.page-header {
+  position: relative;
+  background: url('https://images.pexels.com/photos/6958356/pexels-photo-6958356.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 120px 20px;
+  margin-bottom: 60px;
+}
+.page-header .overlay {
+  position: absolute;
+  top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.4);
+}
+.page-header .container {position:relative;z-index:2;}
+.page-header h1 {font-size:3rem;margin-bottom:1rem;text-shadow:0 2px 6px rgba(0,0,0,0.3);}
+.page-header p {font-size:1.2rem;color:rgba(255,255,255,0.9);}
+.services-detail {padding:0 0 60px;}
+.service-detail-card {
+  background:white;padding:40px 30px;border-radius:var(--border-radius);
+  box-shadow:var(--shadow);text-align:center;transition:var(--transition);
+  border-top:4px solid var(--accent-color);
+}
+.service-detail-card:hover {transform:translateY(-10px);box-shadow:var(--shadow-hover);}
+.service-detail-card .service-icon {font-size:3rem;color:var(--accent-color);margin-bottom:2rem;}
+.service-detail-card h3 {color:var(--primary-color);margin-bottom:1.5rem;font-size:1.5rem;}
+.service-detail-card ul {list-style:none;text-align:left;margin-bottom:2rem;}
+.service-detail-card ul li {padding:0.5rem 0;color:var(--text-light);position:relative;padding-left:1.5rem;}
+.service-detail-card ul li::before {content:"✓";color:var(--accent-color);font-weight:bold;position:absolute;left:0;}
+.contact-info {background:var(--bg-light);padding:1rem;border-radius:6px;margin-top:1rem;}
+.contact-info p {margin:0.5rem 0;color:var(--primary-color);font-weight:500;}
+.recursos-section {
+  background:var(--bg-light);
+  padding:80px 0;
+  text-align:center;
+}
+.recursos-section h2 {color:var(--primary-color);margin-bottom:1rem;}
+.recursos-section p {color:var(--text-light);max-width:700px;margin:0 auto 40px;}
+.recursos-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px;
+}
+.recurso-card {
+  background:white;
+  border-radius:var(--border-radius);
+  padding:40px 30px;
+  box-shadow:var(--shadow);
+  transition:var(--transition);
+}
+.recurso-card:hover {transform:translateY(-8px);box-shadow:var(--shadow-hover);}
+.recurso-icon {
+  font-size:3rem;
+  color:var(--accent-color);
+  margin-bottom:1rem;
+}
+.recurso-card h3 {color:var(--primary-color);margin-bottom:1rem;}
+.recurso-card p {color:var(--text-light);margin-bottom:1.5rem;}
+.membership-cta {
+  background:var(--primary-color);
+  color:white;
+  padding:80px 0;
+  text-align:center;
+}
+.membership-cta h2 {color:white;margin-bottom:1rem;}
+.membership-cta p {color:rgba(255,255,255,0.9);font-size:1.2rem;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto;}
+@media(max-width:768px){
+  .page-header h1{font-size:2.3rem;}
+  .services-grid{grid-template-columns:1fr;}
+}
+</style>
+</body>
+</html>

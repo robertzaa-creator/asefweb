@@ -9,7 +9,17 @@ if (window.__AUTH_JS__) {
 } else {
     window.__AUTH_JS__ = true;
 
-    (function() {
+    // Espera hasta que Firebase esté disponible
+    const waitFirebase = setInterval(() => {
+        if (window.firebase && firebase.auth && firebase.firestore) {
+            clearInterval(waitFirebase);
+            console.log('[auth.js] Firebase detectado, inicializando autenticación...');
+            initAuthLogic();
+        }
+    }, 200);
+
+    // Lógica de autenticación principal
+    function initAuthLogic() {
         const auth = firebase.auth();
         const db = firebase.firestore();
 
@@ -93,7 +103,17 @@ if (window.__AUTH_JS__) {
             const isPublic =
                 path.endsWith('index.html') ||
                 path.endsWith('/') ||
-                path.includes('/pages/public/');
+                path.includes('/pages/public/') ||
+                path.includes('/pages/servicios.html') ||
+                path.includes('/pages/desarrollo.html') ||
+                path.includes('/pages/planificacion.html') ||
+                path.includes('/pages/funerarias.html') ||
+                path.includes('/pages/contacto.html') ||
+                path.includes('/pages/links.html') ||
+                path.includes('/pages/grupo-panda.html') ||
+                path.includes('/pages/prensa.html') ||
+                path.includes('/pages/museo.html') ||
+                path.includes('/pages/recursos.html');
 
             if (!user) {
                 if (!isPublic) {
@@ -142,5 +162,5 @@ if (window.__AUTH_JS__) {
                 };
             }
         });
-    })();
+    }
 }
