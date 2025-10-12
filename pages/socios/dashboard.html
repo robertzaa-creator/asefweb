@@ -1,58 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-<script>
-(function() {
-  const isLocal = location.hostname === 'localhost' ||
-                  location.hostname === '127.0.0.1' ||
-                  location.protocol === 'file:';
-  const base = document.createElement('base');
-  base.href = isLocal ? '/pages/socios/' : '/asefweb/pages/socios/';
-  document.head.prepend(base);
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+
+
+<script id="asef-dynamic-base">
+(function () {
+  try {
+    if (document.getElementById('asef-dynamic-base-installed')) return;
+    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+    var base = document.createElement('base');
+    base.id = 'asef-dynamic-base-installed';
+    base.href = isLocal ? '/' : '/asefweb/';
+    document.head.prepend(base);
+  } catch(e) { /* noop */ }
 })();
 </script>
 
-
-
-
-
-    <meta charset="utf-8" />
+  <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socios · Dashboard</title>
-
     <!-- Estilos -->
-    <link rel="stylesheet" href="../../css/main.css" />
-    <link rel="stylesheet" href="../../css/members.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="members.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-
 <body>
     <div class="members-shell" id="app">
         <!-- Sidebar -->
         <aside class="members-sidebar">
             <div class="members-brand">
-                <img src="../../dist/vite.svg" alt="ASEF" />
+                <img src="vite.svg" alt="ASEF" />
                 <div>Área de Socios</div>
             </div>
             <nav class="members-nav">
-                <a class="active" href="./dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
-                <a href="./sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
-                <a href="./profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
+                <a class="active" href="dashboard.html"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+                <a href="sections.html"><i class="fa-regular fa-folder-open"></i> Secciones</a>
+                <a href="profile.html"><i class="fa-regular fa-user"></i> Mi Perfil</a>
                 <a id="logoutBtn" href="#"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
             </nav>
             <div class="members-foot sidebar-muted">
                 <div>Conectado: <span id="userEmail">—</span></div>
             </div>
         </aside>
-
         <!-- Main -->
         <main class="members-main">
             <div class="members-topbar">
                 <div class="members-title">Dashboard</div>
                 <input class="input" id="dashSearch" placeholder="Buscar documentos o secciones..." />
             </div>
-
             <div class="members-content">
                 <div class="grid stats" id="quickStats">
                     <div class="card">
@@ -76,7 +73,6 @@
                         <div class="kpi"><span id="statStatus">—</span></div>
                     </div>
                 </div>
-
                 <div class="grid" style="grid-template-columns: 2fr 1.2fr; margin-top:18px;">
                     <div class="card">
                         <h3>Últimos documentos agregados</h3>
@@ -90,19 +86,14 @@
             </div>
         </main>
     </div>
-
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
     <!-- Inicialización -->
-    <script src="../../js/firebase-init.js"></script>
-    <script src="../../js/auth.js"></script>
-    <script src="../../js/members.js"></script>
-
-
+    <script type="module" defer src="js/firebase-init.js"></script>
+    <script type="module" defer src="js/auth.js"></script>
+    <script type="module" defer src="js/members.js"></script>
 </body>
-
 </html>

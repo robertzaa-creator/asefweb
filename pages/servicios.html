@@ -1,56 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script>
-  (function () {
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+
+
+<script id="asef-dynamic-base">
+(function () {
+  try {
+    if (document.getElementById('asef-dynamic-base-installed')) return;
     var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
     var base = document.createElement('base');
+    base.id = 'asef-dynamic-base-installed';
     base.href = isLocal ? '/' : '/asefweb/';
     document.head.prepend(base);
-  })();
+  } catch(e) { /* noop */ }
+})();
 </script>
-<script>
-    (function () {
-      // Localhost o file:// → base "/"
-      // GitHub Pages → base "/asefweb/"
-      var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-      var base = document.createElement('base');
-      base.href = isLocal ? '/' : '/asefweb/';
-      document.head.prepend(base);
-    })();
-  </script>
-    <meta charset="UTF-8">
+
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servicios · ASEF</title>
     <meta name="description" content="Conoce todos los beneficios, asistencias y convenios exclusivos que ASEF ofrece a sus empresas asociadas del sector funerario.">
-
-    <link rel="stylesheet" href="../../css/main.css">
-    <link rel="stylesheet" href="../../css/navigation.css">
-    <link rel="stylesheet" href="../../css/responsive.css">
-
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-<script>
-  (function () {
-    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-    var base = document.createElement('base');
-    base.href = isLocal ? '/' : '/asefweb/';
-    document.head.prepend(base);
-  })();
-</script>
-
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
                     <i class="fas fa-dove nav-logo-icon"></i>
-                    <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <a href="index.html" style="text-decoration: none; color: inherit;">
                         <span class="nav-logo-text">ASEF</span>
                     </a>
                 </div>
@@ -74,7 +61,6 @@
             </div>
         </nav>
     </header>
-
     <main id="main-content" style="padding-top: 80px;">
         <!-- Page Header -->
         <section class="page-header">
@@ -83,12 +69,10 @@
                 <p>Beneficios exclusivos y asistencia integral para empresas asociadas</p>
             </div>
         </section>
-
         <!-- Services Grid -->
         <section class="services-detail">
             <div class="container">
                 <div class="services-grid">
-
                     <!-- Asistencia Técnica -->
                     <div class="service-detail-card">
                         <div class="service-icon">
@@ -106,7 +90,6 @@
                             <p><i class="fas fa-envelope"></i> asistencia@asef.com.ar</p>
                         </div>
                     </div>
-
                     <!-- Convenios Comerciales -->
                     <div class="service-detail-card">
                         <div class="service-icon">
@@ -121,7 +104,6 @@
                         </ul>
                         <a href="#convenios" class="service-cta">Ver Convenios Activos</a>
                     </div>
-
                     <!-- Capacitación -->
                     <div class="service-detail-card">
                         <div class="service-icon">
@@ -136,7 +118,6 @@
                         </ul>
                         <a href="pages/desarrollo.html" class="service-cta">Ver Cronograma</a>
                     </div>
-
                     <!-- Representación -->
                     <div class="service-detail-card">
                         <div class="service-icon">
@@ -150,7 +131,6 @@
                             <li>Negociaciones colectivas</li>
                         </ul>
                     </div>
-
                     <!-- Comunicación -->
                     <div class="service-detail-card">
                         <div class="service-icon">
@@ -165,7 +145,6 @@
                         </ul>
                         <a href="pages/newsletter.html" class="service-cta">Suscribirse</a>
                     </div>
-
                     <!-- Networking -->
                     <div class="service-detail-card">
                         <div class="service-icon">
@@ -179,17 +158,14 @@
                             <li>Asamblea general anual</li>
                         </ul>
                     </div>
-
                 </div>
             </div>
         </section>
-
         <!-- Convenios Section -->
         <section id="convenios" class="convenios-section">
             <div class="container">
                 <h2>Convenios Vigentes</h2>
                 <div class="convenios-grid">
-
                     <div class="convenio-card">
                         <img src="https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Seguros">
                         <div class="convenio-content">
@@ -201,7 +177,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="convenio-card">
                         <img src="https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Servicios Legales">
                         <div class="convenio-content">
@@ -213,7 +188,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="convenio-card">
                         <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Tecnología">
                         <div class="convenio-content">
@@ -225,11 +199,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
-
         <!-- Membership CTA -->
         <section class="membership-cta">
             <div class="container">
@@ -256,13 +228,12 @@
                     </div>
                     <div class="cta-buttons">
                         <a href="pages/contacto.html" class="btn-primary">Solicitar Información</a>
-                        <a href="pages/index.html#contacto" class="btn-secondary">Asociarse</a>
+                        <a href="/asefweb/pages/index.html#contacto" class="btn-secondary">Asociarse</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -301,14 +272,11 @@
             </div>
         </div>
     </div>
-
-
 <!-- Archivos locales -->
 <script src="../js/firebase-init.js"></script>
 <script src="../js/auth.js"></script>
 <script src="../js/navigation.js"></script>
 <script src="../js/main.js"></script>
-
 
     <style>
         .page-header {
@@ -318,21 +286,17 @@
             padding: 80px 0 60px;
             margin-bottom: 60px;
         }
-
         .page-header h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
-
         .page-header p {
             font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.9);
         }
-
         .services-detail {
             padding: 0 0 60px;
         }
-
         .service-detail-card {
             background: white;
             padding: 40px 30px;
@@ -342,37 +306,31 @@
             transition: var(--transition);
             border-top: 4px solid var(--accent-color);
         }
-
         .service-detail-card:hover {
             transform: translateY(-10px);
             box-shadow: var(--shadow-hover);
         }
-
         .service-detail-card .service-icon {
             font-size: 3rem;
             color: var(--accent-color);
             margin-bottom: 2rem;
         }
-
         .service-detail-card h3 {
             color: var(--primary-color);
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
         }
-
         .service-detail-card ul {
             list-style: none;
             text-align: left;
             margin-bottom: 2rem;
         }
-
         .service-detail-card ul li {
             padding: 0.5rem 0;
             color: var(--text-light);
             position: relative;
             padding-left: 1.5rem;
         }
-
         .service-detail-card ul li::before {
             content: "✓";
             color: var(--accent-color);
@@ -380,20 +338,17 @@
             position: absolute;
             left: 0;
         }
-
         .contact-info {
             background: var(--bg-light);
             padding: 1rem;
             border-radius: 6px;
             margin-top: 1rem;
         }
-
         .contact-info p {
             margin: 0.5rem 0;
             color: var(--primary-color);
             font-weight: 500;
         }
-
         .service-cta {
             display: inline-block;
             background: var(--accent-color);
@@ -404,24 +359,20 @@
             font-weight: 500;
             transition: var(--transition);
         }
-
         .service-cta:hover {
             background: #2980b9;
             transform: translateY(-2px);
         }
-
         .convenios-section {
             background: var(--bg-light);
             padding: 60px 0;
         }
-
         .convenios-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
-
         .convenio-card {
             background: white;
             border-radius: var(--border-radius);
@@ -429,34 +380,28 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
         }
-
         .convenio-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
         }
-
         .convenio-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
-
         .convenio-content {
             padding: 25px;
         }
-
         .convenio-content h4 {
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
-
         .convenio-benefits {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             margin-top: 1rem;
         }
-
         .benefit {
             background: var(--accent-color);
             color: white;
@@ -465,19 +410,16 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
-
         .membership-cta {
             background: var(--primary-color);
             color: white;
             padding: 80px 0;
             text-align: center;
         }
-
         .membership-cta h2 {
             color: white;
             margin-bottom: 1rem;
         }
-
         .membership-cta p {
             color: rgba(255, 255, 255, 0.9);
             font-size: 1.2rem;
@@ -486,7 +428,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         .membership-benefits {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -496,32 +437,26 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         .benefit-item {
             display: flex;
             align-items: center;
             gap: 10px;
             color: rgba(255, 255, 255, 0.95);
         }
-
         .benefit-item i {
             color: var(--accent-color);
             font-size: 1.2rem;
         }
-
         @media (max-width: 768px) {
             .page-header h1 {
                 font-size: 2.5rem;
             }
-
             .services-grid {
                 grid-template-columns: 1fr;
             }
-
             .convenios-grid {
                 grid-template-columns: 1fr;
             }
-
             .membership-benefits {
                 grid-template-columns: 1fr;
             }

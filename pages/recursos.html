@@ -1,62 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script>
-  (function () {
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+
+
+<script id="asef-dynamic-base">
+(function () {
+  try {
+    if (document.getElementById('asef-dynamic-base-installed')) return;
     var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
     var base = document.createElement('base');
+    base.id = 'asef-dynamic-base-installed';
     base.href = isLocal ? '/' : '/asefweb/';
     document.head.prepend(base);
-  })();
+  } catch(e) { /* noop */ }
+})();
 </script>
-<script>
-    (function () {
-      // Localhost o file:// → base "/"
-      // GitHub Pages → base "/asefweb/"
-      var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-      var base = document.createElement('base');
-      base.href = isLocal ? '/' : '/asefweb/';
-      document.head.prepend(base);
-    })();
-  </script>
-    <meta charset="UTF-8">
+
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recursos para Socios - ASEF</title>
     <meta name="description" content="Área exclusiva para socios de ASEF. Acceso a documentos, reglamentos, instructivos y recursos técnicos del sector funerario.">
-
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="../../css/main.css">
-    <link rel="stylesheet" href="../../css/navigation.css">
-    <link rel="stylesheet" href="../../css/responsive.css">
-
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-<script>
-  (function () {
-    var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
-    var base = document.createElement('base');
-    base.href = isLocal ? '/' : '/asefweb/';
-    document.head.prepend(base);
-  })();
-</script>
-
         <nav class="navbar">
             <div class="nav-container">
                 <div class="nav-logo">
                     <i class="fas fa-dove nav-logo-icon"></i>
-                    <a href="../index.html" style="text-decoration: none; color: inherit;">
+                    <a href="index.html" style="text-decoration: none; color: inherit;">
                         <span class="nav-logo-text">ASEF</span>
                     </a>
                 </div>
                 <ul class="nav-menu">
-                    <li class="nav-item"><a href="../index.html" class="nav-link">Inicio</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
                     <li class="nav-item"><a href="servicios.html" class="nav-link">Servicios</a></li>
                     <li class="nav-item"><a href="desarrollo.html" class="nav-link">Desarrollo</a></li>
                     <li class="nav-item"><a href="funerarias.html" class="nav-link">Funerarias</a></li>
@@ -76,7 +62,6 @@
             </div>
         </nav>
     </header>
-
     <main id="main-content" style="padding-top: 80px;">
         <!-- Member Check Section -->
         <div id="memberCheck" class="member-check-section">
@@ -92,7 +77,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Member Resources Section (Hidden by default) -->
         <div id="memberResources" style="display: none;">
             <!-- Page Header -->
@@ -102,7 +86,6 @@
                     <p>Documentos, reglamentos y recursos técnicos exclusivos</p>
                 </div>
             </section>
-
             <!-- Quick Access -->
             <section class="quick-access">
                 <div class="container">
@@ -131,7 +114,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- Search and Filters -->
             <section class="search-section">
                 <div class="container">
@@ -160,13 +142,11 @@
                     </div>
                 </div>
             </section>
-
             <!-- Resources Categories -->
             <section class="resources-categories">
                 <div class="container">
                     <h2>Categorías de Recursos</h2>
                     <div class="categories-grid">
-
                         <!-- Normativas -->
                         <div class="category-section">
                             <div class="category-header">
@@ -196,7 +176,6 @@
                                         </button>
                                     </div>
                                 </div>
-
                                 <div class="document-item">
                                     <div class="document-info">
                                         <i class="fas fa-file-pdf document-icon pdf"></i>
@@ -221,7 +200,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Instructivos -->
                         <div class="category-section">
                             <div class="category-header">
@@ -251,7 +229,6 @@
                                         </button>
                                     </div>
                                 </div>
-
                                 <div class="document-item">
                                     <div class="document-info">
                                         <i class="fas fa-file-word document-icon word"></i>
@@ -276,7 +253,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Formularios -->
                         <div class="category-section">
                             <div class="category-header">
@@ -306,7 +282,6 @@
                                         </button>
                                     </div>
                                 </div>
-
                                 <div class="document-item">
                                     <div class="document-info">
                                         <i class="fas fa-file-pdf document-icon pdf"></i>
@@ -331,7 +306,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Convenios -->
                         <div class="category-section">
                             <div class="category-header">
@@ -363,11 +337,9 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
-
             <!-- Recent Updates -->
             <section class="recent-updates">
                 <div class="container">
@@ -384,7 +356,6 @@
                                 <span class="update-tag">Normativa</span>
                             </div>
                         </div>
-
                         <div class="update-item">
                             <div class="update-date">
                                 <span class="day">10</span>
@@ -396,7 +367,6 @@
                                 <span class="update-tag">Convenios</span>
                             </div>
                         </div>
-
                         <div class="update-item">
                             <div class="update-date">
                                 <span class="day">8</span>
@@ -413,7 +383,6 @@
             </section>
         </div>
     </main>
-
     <!-- Document Preview Modal -->
     <div id="documentModal" class="modal">
         <div class="modal-content modal-large">
@@ -423,7 +392,6 @@
             </div>
         </div>
     </div>
-
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -462,24 +430,20 @@
             </div>
         </div>
     </div>
-
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script type="module" defer src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <!-- JavaScript Files -->
-    <script src="../js/firebase-init.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/navigation.js"></script>
-    <script src="../js/main.js"></script>
-
+    <script type="module" defer src="js/firebase-init.js"></script>
+    <script type="module" defer src="js/auth.js"></script>
+    <script type="module" defer src="js/navigation.js"></script>
+    <script type="module" defer src="js/main.js"></script>
     <script>
         // Resources page functionality
         document.addEventListener('DOMContentLoaded', function() {
             // Check authentication status on page load
             checkAuthentication();
-
             // Override auth manager to show resources when authenticated
             if (window.firebaseAuth) {
                 window.firebaseAuth.onAuthStateChanged((user) => {
@@ -491,7 +455,6 @@
                 });
             }
         });
-
         function checkAuthentication() {
             // For demo purposes, we'll show the resources if user is logged in
             // In production, this would check actual authentication status
@@ -501,17 +464,14 @@
                 showMemberCheck();
             }
         }
-
         function showMemberResources() {
             document.getElementById('memberCheck').style.display = 'none';
             document.getElementById('memberResources').style.display = 'block';
         }
-
         function showMemberCheck() {
             document.getElementById('memberCheck').style.display = 'block';
             document.getElementById('memberResources').style.display = 'none';
         }
-
         function showLogin() {
             if (window.authManager) {
                 window.authManager.showLoginModal();
@@ -519,100 +479,77 @@
                 document.getElementById('loginModal').style.display = 'block';
             }
         }
-
         function downloadDocument(filename) {
             // In a real application, this would trigger actual file download
             // For demo purposes, we'll simulate the download
-
             if (window.authManager) {
                 window.authManager.showNotification(`Descargando ${filename}...`, 'info');
-
                 // Simulate download delay
                 setTimeout(() => {
                     window.authManager.showNotification('Descarga completada', 'success');
-
                     // Create a sample downloadable content
                     const sampleContent = createSampleDocument(filename);
                     const blob = new Blob([sampleContent], {type: getFileType(filename)});
-                    const url = window.URL.createObjectURL(blob);
-
+                    const url = window.URL.createObjecturl("/asefweb/blob");
                     const a = document.createElement('a');
                     a.href = url;
                     a.download = filename;
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-
+                    window.URL.revokeObjecturl("/asefweb/url");
                 }, 1500);
             }
         }
-
         function previewDocument(filename) {
             const modal = document.getElementById('documentModal');
             const preview = document.getElementById('documentPreview');
-
             // Create preview content
             preview.innerHTML = createDocumentPreview(filename);
             modal.style.display = 'block';
         }
-
         function closeDocumentModal() {
             document.getElementById('documentModal').style.display = 'none';
         }
-
         function createSampleDocument(filename) {
             const templates = {
                 'reglamento-2024.pdf': `
 REGLAMENTO GENERAL ASEF 2024
-
 ASOCIACIÓN DE EMPRESAS DE SERVICIOS FÚNEBRES
 DE LA PROVINCIA DE BUENOS AIRES
-
 CAPÍTULO I - DISPOSICIONES GENERALES
-
 Artículo 1°: La presente normativa establece las pautas generales para el funcionamiento y organización de los servicios funerarios en el ámbito de la Provincia de Buenos Aires.
-
 Artículo 2°: Todas las empresas asociadas deberán cumplir con los estándares de calidad y profesionalismo establecidos en este reglamento.
-
 CAPÍTULO II - REQUISITOS TÉCNICOS
-
 Artículo 3°: Los establecimientos deberán contar con:
 - Instalaciones apropiadas y en óptimas condiciones higiénicas
 - Personal capacitado y certificado
 - Equipamiento técnico actualizado
 - Protocolos de bioseguridad vigentes
-
 [Documento completo disponible para descarga]
                 `,
                 'protocolo-tanatopraxia.docx': `
 PROTOCOLO DE TANATOPRAXIA
-
 1. INTRODUCCIÓN
 La tanatopraxia es el conjunto de técnicas y procedimientos destinados a la conservación temporal del cuerpo humano después de la muerte.
-
 2. OBJETIVOS
 - Preservar el cuerpo para el velatorio
 - Mantener la dignidad del difunto
 - Brindar apoyo a la familia en el proceso de duelo
-
 3. PROCEDIMIENTOS
 3.1 Preparación del área de trabajo
 3.2 Equipos de protección personal
 3.3 Técnicas de conservación
 3.4 Productos químicos autorizados
-
 4. PROTOCOLOS DE SEGURIDAD
 - Uso obligatorio de EPP
 - Ventilación adecuada
 - Manejo seguro de productos químicos
 - Disposición de residuos patológicos
-
 [Manual completo disponible para descarga]
                 `,
                 'planilla-registro-servicios.xlsx': `
 PLANILLA DE REGISTRO DE SERVICIOS FUNERARIOS
-
 Columnas:
 - Fecha de servicio
 - Nombre del difunto
@@ -622,20 +559,15 @@ Columnas:
 - Observaciones
 - Estado del servicio
 - Facturación
-
 Esta planilla permite llevar un control detallado de todos los servicios prestados por la empresa funeraria.
-
 [Archivo Excel completo disponible para descarga]
                 `
             };
-
             return templates[filename] || `Documento: ${filename}\n\nContenido del documento disponible para socios de ASEF.\n\nPara acceder al contenido completo, descargue el archivo.`;
         }
-
         function createDocumentPreview(filename) {
             const content = createSampleDocument(filename);
             const fileType = filename.split('.').pop().toLowerCase();
-
             return `
                 <div class="document-preview-header">
                     <h3><i class="fas fa-file-${getFileIcon(fileType)}"></i> ${filename}</h3>
@@ -650,7 +582,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
                 </div>
             `;
         }
-
         function getFileType(filename) {
             const extension = filename.split('.').pop().toLowerCase();
             const types = {
@@ -661,7 +592,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             };
             return types[extension] || 'text/plain';
         }
-
         function getFileIcon(extension) {
             const icons = {
                 'pdf': 'pdf',
@@ -674,7 +604,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             };
             return icons[extension] || 'alt';
         }
-
         // Close modal when clicking outside
         window.addEventListener('click', (e) => {
             const modal = document.getElementById('documentModal');
@@ -683,7 +612,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             }
         });
     </script>
-
     <style>
         .member-check-section {
             min-height: 60vh;
@@ -692,7 +620,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             justify-content: center;
             background: var(--bg-light);
         }
-
         .member-check-content {
             text-align: center;
             max-width: 500px;
@@ -701,24 +628,20 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
         }
-
         .member-check-content i {
             font-size: 4rem;
             color: var(--accent-color);
             margin-bottom: 2rem;
         }
-
         .member-check-content h2 {
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
-
         .member-check-content p {
             color: var(--text-light);
             margin-bottom: 1.5rem;
             line-height: 1.6;
         }
-
         .page-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -726,23 +649,19 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             padding: 80px 0 60px;
             margin-bottom: 60px;
         }
-
         .page-header h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
-
         .quick-access {
             padding: 0 0 60px;
         }
-
         .quick-access-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
             margin-top: 40px;
         }
-
         .quick-access-card {
             background: white;
             padding: 30px;
@@ -752,46 +671,38 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             transition: var(--transition);
             cursor: pointer;
         }
-
         .quick-access-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
         }
-
         .quick-access-card i {
             font-size: 3rem;
             color: var(--accent-color);
             margin-bottom: 1rem;
         }
-
         .quick-access-card h3 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
-
         .quick-access-card p {
             color: var(--text-light);
             margin: 0;
         }
-
         .search-section {
             background: var(--bg-light);
             padding: 40px 0;
         }
-
         .search-bar {
             display: flex;
             gap: 20px;
             align-items: center;
             flex-wrap: wrap;
         }
-
         .search-input-container {
             flex: 1;
             position: relative;
             min-width: 300px;
         }
-
         .search-input-container i {
             position: absolute;
             left: 15px;
@@ -799,7 +710,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             transform: translateY(-50%);
             color: var(--text-light);
         }
-
         .search-input {
             width: 100%;
             padding: 12px 15px 12px 45px;
@@ -807,37 +717,31 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             border-radius: var(--border-radius);
             font-size: 1rem;
         }
-
         .filter-controls {
             display: flex;
             gap: 15px;
         }
-
         .filter-select {
             padding: 12px 15px;
             border: 2px solid #e9ecef;
             border-radius: var(--border-radius);
             background: white;
         }
-
         .resources-categories {
             padding: 40px 0 80px;
         }
-
         .categories-grid {
             display: flex;
             flex-direction: column;
             gap: 40px;
             margin-top: 40px;
         }
-
         .category-section {
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             overflow: hidden;
         }
-
         .category-header {
             background: var(--primary-color);
             color: white;
@@ -846,25 +750,21 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             justify-content: space-between;
             align-items: center;
         }
-
         .category-header h3 {
             margin: 0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .document-count {
             background: rgba(255, 255, 255, 0.2);
             padding: 4px 12px;
             border-radius: 15px;
             font-size: 0.9rem;
         }
-
         .document-list {
             padding: 30px;
         }
-
         .document-item {
             display: flex;
             justify-content: space-between;
@@ -872,83 +772,69 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             padding: 20px 0;
             border-bottom: 1px solid #f0f0f0;
         }
-
         .document-item:last-child {
             border-bottom: none;
         }
-
         .document-info {
             display: flex;
             align-items: center;
             gap: 20px;
             flex: 1;
         }
-
         .document-icon {
             font-size: 2.5rem;
             width: 60px;
             text-align: center;
         }
-
         .document-icon.pdf { color: #e74c3c; }
         .document-icon.word { color: #2980b9; }
         .document-icon.excel { color: #27ae60; }
         .document-icon.powerpoint { color: #e67e22; }
-
         .document-details h4 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
         }
-
         .document-details p {
             color: var(--text-light);
             margin-bottom: 0.5rem;
         }
-
         .document-meta {
             display: flex;
             gap: 20px;
             font-size: 0.85rem;
             color: var(--text-light);
         }
-
         .document-meta span {
             display: flex;
             align-items: center;
             gap: 4px;
         }
-
         .file-size {
             background: var(--bg-light);
             padding: 2px 8px;
             border-radius: 10px;
             font-weight: 500;
         }
-
         .document-actions {
             display: flex;
             gap: 10px;
             flex-shrink: 0;
         }
-
         .btn-sm {
             padding: 8px 16px;
             font-size: 0.9rem;
         }
-
         .recent-updates {
             background: var(--bg-light);
             padding: 80px 0;
         }
-
         .updates-list {
             margin-top: 40px;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
-
         .update-item {
             background: white;
             border-radius: var(--border-radius);
@@ -959,7 +845,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             align-items: center;
             gap: 20px;
         }
-
         .update-date {
             background: var(--accent-color);
             color: white;
@@ -968,33 +853,27 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             border-radius: var(--border-radius);
             min-width: 80px;
         }
-
         .update-date .day {
             display: block;
             font-size: 2rem;
             font-weight: 700;
             line-height: 1;
         }
-
         .update-date .month {
             font-size: 0.9rem;
             text-transform: uppercase;
         }
-
         .update-content {
             flex: 1;
         }
-
         .update-content h4 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
-
         .update-content p {
             color: var(--text-light);
             margin-bottom: 0.5rem;
         }
-
         .update-tag {
             background: var(--bg-light);
             color: var(--primary-color);
@@ -1003,12 +882,10 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             font-size: 0.8rem;
             font-weight: 500;
         }
-
         .modal-large {
             max-width: 900px;
             width: 90%;
         }
-
         .document-preview-header {
             display: flex;
             justify-content: space-between;
@@ -1017,7 +894,6 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             border-bottom: 1px solid #eee;
             margin-bottom: 20px;
         }
-
         .document-preview-header h3 {
             color: var(--primary-color);
             margin: 0;
@@ -1025,12 +901,10 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             align-items: center;
             gap: 10px;
         }
-
         .document-preview-content {
             max-height: 600px;
             overflow-y: auto;
         }
-
         .document-preview-content pre {
             background: var(--bg-light);
             padding: 20px;
@@ -1039,40 +913,32 @@ Esta planilla permite llevar un control detallado de todos los servicios prestad
             line-height: 1.6;
             font-family: 'Inter', sans-serif;
         }
-
         @media (max-width: 768px) {
             .page-header h1 {
                 font-size: 2.5rem;
             }
-
             .member-check-content {
                 padding: 40px 20px;
             }
-
             .search-bar {
                 flex-direction: column;
                 align-items: stretch;
             }
-
             .search-input-container {
                 min-width: auto;
             }
-
             .filter-controls {
                 flex-wrap: wrap;
             }
-
             .document-item {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
-
             .document-actions {
                 width: 100%;
                 justify-content: center;
             }
-
             .update-item {
                 flex-direction: column;
                 text-align: center;

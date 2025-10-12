@@ -7,45 +7,69 @@ class CarouselManager {
         this.totalSlides = this.slides.length;
         this.autoPlayInterval = null;
         this.autoPlayDelay = 5000;
+        this.resumeTimeout = null;
         this.init();
     }
 
     init() {
         if (this.totalSlides === 0) return;
 
+        this.showSlide(0);
         this.startAutoPlay();
         this.setupEventListeners();
-        this.showSlide(0);
     }
 
     setupEventListeners() {
-        // Pause auto-play on hover
         const carousel = document.querySelector('.carousel-container');
-        if (carousel) {
-            carousel.addEventListener('mouseenter', () => this.pauseAutoPlay());
-            carousel.addEventListener('mouseleave', () => this.startAutoPlay());
-        }
+        if (!carousel) return;
 
-        // Touch/swipe support for mobile
-        let startX = 0;
-        let endX = 0;
+        // 🖱️ Hover (desktop)
+        carousel.addEventListener('mouseenter', () => this.pauseAutoPlay());
+        carousel.addEventListener('mouseleave', () => this.startAutoPlay());
 
-        carousel?.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
+        // 📱 Swipe (mobile)
+        let startX = 0, endX = 0;
+
+        carousel.addEventListener(
+            'touchstart',
+            (e) => {
+                startX = e.touches[0].clientX;
+                this.pauseAutoPlay();
+            },
+            { passive: true }
+        );
+
+        carousel.addEventListener(
+            'touchmove',
+            (e) => {
+                endX = e.touches[0].clientX;
+            },
+            { passive: true }
+        );
+
+        carousel.addEventListener(
+            'touchend',
+            (e) => {
+                endX = e.changedTouches[0].clientX;
+                this.handleSwipe(startX, endX);
+                this.resumeAutoPlay();
+            },
+            { passive: true }
+        );
+
+        // 🎯 Indicadores (manual navigation)
+        this.indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                this.pauseAutoPlay();
+                this.goToSlide(index);
+                this.resumeAutoPlay();
+            });
         });
 
-        carousel?.addEventListener('touchend', (e) => {
-            endX = e.changedTouches[0].clientX;
-            this.handleSwipe(startX, endX);
-        });
-
-        // Keyboard navigation
+        // ⌨️ Keyboard (desktop)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                this.prevSlide();
-            } else if (e.key === 'ArrowRight') {
-                this.nextSlide();
-            }
+            if (e.key === 'ArrowLeft') this.prevSlide();
+            if (e.key === 'ArrowRight') this.nextSlide();
         });
     }
 
@@ -54,26 +78,16 @@ class CarouselManager {
         const diff = startX - endX;
 
         if (Math.abs(diff) > threshold) {
-            if (diff > 0) {
-                this.nextSlide();
-            } else {
-                this.prevSlide();
-            }
+            diff > 0 ? this.nextSlide() : this.prevSlide();
         }
     }
 
     showSlide(index) {
-        // Remove active class from all slides and indicators
-        this.slides.forEach(slide => slide.classList.remove('active'));
-        this.indicators.forEach(indicator => indicator.classList.remove('active'));
+        this.slides.forEach((slide) => slide.classList.remove('active'));
+        this.indicators.forEach((ind) => ind.classList.remove('active'));
 
-        // Add active class to current slide and indicator
-        if (this.slides[index]) {
-            this.slides[index].classList.add('active');
-        }
-        if (this.indicators[index]) {
-            this.indicators[index].classList.add('active');
-        }
+        if (this.slides[index]) this.slides[index].classList.add('active');
+        if (this.indicators[index]) this.indicators[index].classList.add('active');
 
         this.currentSlide = index;
     }
@@ -94,9 +108,7 @@ class CarouselManager {
 
     startAutoPlay() {
         this.pauseAutoPlay();
-        this.autoPlayInterval = setInterval(() => {
-            this.nextSlide();
-        }, this.autoPlayDelay);
+        this.autoPlayInterval = setInterval(() => this.nextSlide(), this.autoPlayDelay);
     }
 
     pauseAutoPlay() {
@@ -104,29 +116,24 @@ class CarouselManager {
             clearInterval(this.autoPlayInterval);
             this.autoPlayInterval = null;
         }
+        if (this.resumeTimeout) {
+            clearTimeout(this.resumeTimeout);
+            this.resumeTimeout = null;
+        }
+    }
+
+    resumeAutoPlay(delay = 7000) {
+        this.pauseAutoPlay();
+        this.resumeTimeout = setTimeout(() => this.startAutoPlay(), delay);
     }
 }
 
-// Global functions for button clicks
-window.nextSlide = () => {
-    if (window.carousel) {
-        window.carousel.nextSlide();
-    }
-};
+// 🌍 Global controls
+window.nextSlide = () => window.carousel?.nextSlide();
+window.prevSlide = () => window.carousel?.prevSlide();
+window.currentSlide = (index) => window.carousel?.goToSlide(index - 1);
 
-window.prevSlide = () => {
-    if (window.carousel) {
-        window.carousel.prevSlide();
-    }
-};
-
-window.currentSlide = (index) => {
-    if (window.carousel) {
-        window.carousel.goToSlide(index - 1);
-    }
-};
-
-// Initialize carousel when DOM is loaded
+// 🚀 Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     window.carousel = new CarouselManager();
 });
