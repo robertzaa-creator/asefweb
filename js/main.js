@@ -383,10 +383,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 🔸 Detecta si la página necesita Firebase
   const path = window.location.pathname;
   const pagesRequiringFirebase = [
-    '/contacto.html',
-    'pages/contacto.html',
-    '/pages/socios.html',
-    '/pages/admin.html'
+    './pages/contacto.html',
+    './pages/socios.html',
+    './pages/admin.html'
   ];
   const needsFirebase = pagesRequiringFirebase.some(page => path.endsWith(page) || path.includes(page));
 
