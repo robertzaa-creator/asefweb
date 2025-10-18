@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script id="asef-dynamic-base">
+    (function () {
+      try {
+        if (document.getElementById('asef-dynamic-base-installed')) return;
+        var isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+        var base = document.createElement('base');
+        base.id = 'asef-dynamic-base-installed';
+        base.href = isLocal ? '/' : '/asefweb/';
+        document.head.prepend(base);
+      } catch (e) {}
+    })();
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASEF — Estamos renovando</title>
+
+  <!-- Estilos globales del proyecto -->
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/navigation.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/carousel.css">
+
+  <!-- Estilo específico para la landing -->
+  <link rel="stylesheet" href="../css/landing.css">
+</head>
+
+<body class="landing-page">
+<main class="landing-main">
+  <section class="landing-hero">
+  <div class="landing-overlay"></div>
+  <div class="landing-content">
+    <h1>ASEF</h1>
+
+   <div class="landing-messages">
+  <p class="message active">
+    Estamos renovando, pronto te estaremos acompañando<br>
+    en cada paso con respeto, compromiso y humanidad.
+  </p>
+  <p class="message">
+    Estamos trabajando para ofrecerte un espacio más cercano, claro y humano.
+  </p>
+  <p class="message">
+    Estamos Comprometidos con la excelencia y la serenidad en cada servicio.
+  </p>
+  <p class="message">
+    Avanzamos a tu lado, con profesionalismo y vocación de acompañar.
+  </p>
+  <p class="message">
+    Construimos un futuro donde el cuidado y la humanidad sean nuestra guía.
+  </p>
+</div>
+
+<div class="progress-container">
+  <div class="progress-bar"></div>
+</div>
+
+</main>
+
+  <!-- FOOTER INSTITUCIONAL -->
+  <footer class="landing-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <h3>ASEF</h3>
+        <p>Asociación de Empresas de Servicios Fúnebres<br>de la Provincia de Buenos Aires</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Servicios</h4>
+        <ul>
+          <li>Servicios a Socios</li>
+          <li>Desarrollo Profesional</li>
+          <li>Planificación del Funeral</li>
+          <li>Directorio</li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Información</h4>
+        <ul>
+          <li>Museo Virtual</li>
+          <li>Prensa</li>
+          <li>Recursos</li>
+          <li>Newsletter</li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Contacto</h4>
+        <ul>
+          <li>📍 Av. Corrientes 1234, CABA</li>
+          <li>📞 (011) 4567-8900</li>
+          <li>✉️ info@asef.com.ar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 ASEF - Asociación de Empresas de Servicios Fúnebres de Buenos Aires. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="../js/landing.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+/* ===========================================================
+   ASEF Landing Page — Footer + Logo institucional limpio
+   =========================================================== */
+
+/* === Footer institucional ASEF === */
+.landing-footer {
+  background-color: #243447;
+  color: #e2e8f0;
+  padding: 3rem 1.5rem 2rem;
+  font-size: 0.95rem;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-left h3 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-section h4 {
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section li {
+  margin: 0.4rem 0;
+  opacity: 0.9;
+}
+
+.footer-section li:hover {
+  opacity: 1;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/* === Logo ASEF institucional centrado (versión final) === */
+
+.landing-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+.logo-icon {
+  width: 56px;
+  height: 56px;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+  object-fit: contain;
+}
+
+.logo-text {
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #1e293b; /* tono institucional */
+  line-height: 1;
+}
+
+/* Si la landing tiene fondo oscuro o imagen, usamos texto blanco */
+.landing-hero .logo-text {
+  color: #ffffff;
+}
+
+/* Centrado vertical en viewport */
+/* === Hero institucional estilo ASEF === */
+.landing-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: url("../images/landing/hero-bg.jpg") center center / cover no-repeat;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Capa oscura para contraste */
+.landing-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 41, 59, 0.55); /* tono institucional */
+  backdrop-filter: blur(1px);
+}
+
+/* Contenido centrado */
+.landing-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 2rem;
+}
+
+/* Título principal */
+.landing-content h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
+}
+
+/* Mensaje dinámico */
+#landing-message {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: #e2e8f0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.8s ease;
+  white-space: nowrap;
+}
+
+/* Barra de progreso */
+.progress-container {
+  width: 70%;
+  max-width: 800px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  margin: 2.5rem auto 0;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd);
+  border-radius: 5px;
+  box-shadow: 0 0 12px rgba(147, 197, 253, 0.5);
+  transition: width 5s ease-in-out;
+}
+
+.landing-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.landing-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Texto */
+.landing-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: #fff;
+}
+
+.landing-content p {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .logo-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .logo-text {
+    font-size: 2rem;
+  }
+
+  .landing-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .landing-content p {
+    font-size: 1.1rem;
+  }
+}
+
+/* === Barra de progreso minimalista === */
+/* === Barra de progreso minimalista (versión definitiva) === */
+.progress-container {
+  width: 90vw;              /* 🔹 ocupa casi todo el ancho visible */
+  max-width: 1100px;        /* 🔹 límite razonable en monitores grandes */
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  margin: 2.5rem auto 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #93c5fd, #60a5fa);
+  border-radius: 5px;
+  animation: progressFill 6s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(147, 197, 253, 0.5);
+}
+
+@keyframes progressFill {
+  0% { width: 0%; opacity: 0.4; }
+  60% { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+.message {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  opacity: 0;
+  transition: opacity 1.3s ease, transform 1.3s ease;
+  font-size: clamp(1rem, 2.5vw, 1.6rem); /* 🔹 tamaño flexible */
+  color: #e5e7eb;
+  text-align: center;
+  white-space: nowrap; /* 🔹 prohíbe saltos */
+  width: 100%; /* 🔹 usa todo el ancho de la vista */
+  overflow: visible; /* 🔹 evita recortes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* Barra de progreso minimalista */
+.progress-container {
+  width: 280px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  margin: 2.5rem auto 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #93c5fd, #60a5fa);
+  border-radius: 4px;
+  animation: progressFill 6s ease-in-out infinite;
+}
+
+@keyframes progressFill {
+  0% { width: 0%; opacity: 0.4; }
+  60% { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+
+.message {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  opacity: 0;
+  transition: opacity 1.3s ease, transform 1.3s ease;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #e5e7eb;
+  text-align: center;
+}
+
+.message.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #93c5fd, #60a5fa);
+  border-radius: 4px;
+  animation: progressFill 6s ease-in-out infinite;
+}
+
+@keyframes progressFill {
+  0% { width: 0%; opacity: 0.4; }
+  60% { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+/* === Mensajes rotativos ASEF — versión final sin cortes === */
+.landing-messages {
+  position: relative;
+  height: 3.5rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.message {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  opacity: 0;
+  transition: opacity 1.3s ease, transform 1.3s ease;
+  font-size: clamp(1rem, 2.4vw, 1.5rem); /* se adapta automáticamente */
+  color: #e5e7eb;
+  white-space: nowrap; /* ✅ nunca hace salto de línea */
+  width: 100vw; /* ✅ ocupa todo el ancho visible */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* === Barra de progreso sincronizada === */
+.progress-container {
+  width: 60%; /* ✅ más larga y proporcional al ancho */
+  max-width: 600px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  margin: 2.5rem auto 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #93c5fd, #60a5fa);
+  border-radius: 4px;
+  animation: progressFill 6s ease-in-out infinite;
+}
+
+@keyframes progressFill {
+  0% { width: 0%; opacity: 0.4; }
+  60% { width: 100%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
+
+.landing-hero {
+  background-size: 110%;
+  animation: slowPan 30s ease-in-out infinite alternate;
+}
+
+@keyframes slowPan {
+  0% { background-position: center top; }
+  100% { background-position: center bottom; }
+}
+/* === Carrusel institucional ASEF con fade cruzado === */
+.landing-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  z-index: 0;
+}
+
+/* La capa visible al inicio */
+.landing-bg.active {
+  opacity: 1;
+}
